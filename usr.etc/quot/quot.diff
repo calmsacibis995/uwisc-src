@@ -1,0 +1,368 @@
+*** quot.c	Mon Sep 15 15:01:33 1986
+--- /usr/staff/tadl/nfs/usr.etc/quot.c	Sun May 18 18:58:25 1986
+***************
+*** 1,5 ****
+--- 1,6 ----
+  #ifndef lint
+!<static char *sccsid = "@(#)quot.c	4.11 (Berkeley) 85/09/09";
+  #endif
+  
+  /*
+---------------
+  #ifndef lint
+!>/* @(#)quot.c	2.1 86/04/17 NFSSRC */ 
+!>static	char *sccsid = "@(#)quot.c 1.1 86/02/05 SMI"; /* from UCB 4.9 83/09/22 */
+  #endif
+  
+  /*
+***************
+*** 8,17 ****
+--- 9,22 ----
+  
+  #include <stdio.h>
+  #include <ctype.h>
+  #include <sys/param.h>
+!<#include <sys/inode.h>
+!<#include <sys/fs.h>
+  #include <sys/file.h>
+  
+  #define	ISIZ	(MAXBSIZE/sizeof(struct dinode))
+  union {
+---------------
+  
+  #include <stdio.h>
+  #include <ctype.h>
++>#include <mntent.h>
+  #include <sys/param.h>
+!>#include <sys/time.h>
+!>#include <sys/vnode.h>
+!>#include <ufs/inode.h>
+!>#include <ufs/fs.h>
+  #include <sys/file.h>
++>#include <sys/stat.h>
+  
+  #define	ISIZ	(MAXBSIZE/sizeof(struct dinode))
+  union {
+***************
+*** 45,50 ****
+--- 50,56 ----
+---------------
+  int	cflg;
+  int	vflg;
+  int	hflg;
++>int	aflg;
+  long	now;
+  
+  unsigned	ino;
+***************
+*** 75,125 ****
+--- 81,133 ----
+  				vflg++; break;
+  			case 'h':
+  				hflg++; break;
+  			default:
+  				fprintf(stderr,
+!<				    "usage: quot [ -nfcvh ] [ device ... ]\n");
+  				exit(1);
+  			}
+  		argc--, argv++;
+  	}
+!<	if (argc == 0)
+  		quotall();
+!<	while (argc-- > 0)
+!<		if (check(*argv++, (char *)NULL) == 0)
+  			report();
+  	exit (0);
+  }
+  
+-<#include <fstab.h>
+-<
+  quotall()
+  {
+!<	register struct fstab *fs;
+  	register char *cp;
+  	char dev[80], *rindex();
+  
+!<	if (setfsent() == 0) {
+!<		fprintf(stderr, "quot: no %s file\n", FSTAB);
+  		exit(1);
+  	}
+!<	while (fs = getfsent()) {
+!<		if (strcmp(fs->fs_type, FSTAB_RO) &&
+!<		    strcmp(fs->fs_type, FSTAB_RW) &&
+!<		    strcmp(fs->fs_type, FSTAB_RQ))
+  			continue;
+!<		cp = rindex(fs->fs_spec, '/');
+  		if (cp == 0)
+  			continue;
+  		sprintf(dev, "/dev/r%s", cp + 1);
+!<		if (check(dev, fs->fs_file) == 0)
+  			report();
+  	}
+!<	endfsent();
+  }
+  
+!<check(file, fsdir)
+  	char *file;
+-<	char *fsdir;
+  {
+  	register int i, j, nfiles;
+  	register struct du **dp;
+---------------
+  				vflg++; break;
+  			case 'h':
+  				hflg++; break;
++>			case 'a':
++>				aflg++; break;
+  			default:
+  				fprintf(stderr,
+!>				    "usage: quot [-nfcvha] [filesystem ...]\n");
+  				exit(1);
+  			}
+  		argc--, argv++;
+  	}
+!>	if (aflg) {
+  		quotall();
+!>	}
+!>	while (argc-- > 0) {
+!>		if (getdev(argv) == 0 && check(*argv) == 0)
+  			report();
++>		argv++;
++>	}
+  	exit (0);
+  }
+  
+  quotall()
+  {
+!>	FILE *fstab;
+!>	register struct mntent *mntp;
+  	register char *cp;
+  	char dev[80], *rindex();
+  
+!>	fstab = setmntent(MNTTAB, "r");
+!>	if (fstab == NULL) {
+!>		fprintf(stderr, "quot: no %s file\n", MNTTAB);
+  		exit(1);
+  	}
+!>	while (mntp = getmntent(fstab)) {
+!>		if  (strcmp(mntp->mnt_type, MNTTYPE_42) != 0)
+  			continue;
+!>		cp = rindex(mntp->mnt_fsname, '/');
+  		if (cp == 0)
+  			continue;
+  		sprintf(dev, "/dev/r%s", cp + 1);
+!>		if (check(dev) == 0)
+  			report();
+  	}
+!>	endmntent(fstab);
+  }
+  
+!>check(file)
+  	char *file;
+  {
+  	register int i, j, nfiles;
+  	register struct du **dp;
+***************
+*** 143,157 ****
+--- 151,157 ----
+  		perror(file);
+  		return (-1);
+  	}
+!<	printf("%s", file);
+!<	if (fsdir == NULL) {
+!<		register struct fstab *fs = getfsspec(file);
+!<		if (fs != NULL)
+!<			fsdir = fs->fs_file;
+!<	}
+!<	if (fsdir != NULL && *fsdir != '\0')
+!<		printf(" (%s)", fsdir);
+!<	printf(":\n");
+  	sync();
+  	bread(fd, SBLOCK, (char *)&sblock, SBSIZE);
+  	if (nflg) {
+---------------
+  		perror(file);
+  		return (-1);
+  	}
+!>	printf("%s:\n", file);
+  	sync();
+  	bread(fd, SBLOCK, (char *)&sblock, SBSIZE);
+  	if (nflg) {
+***************
+*** 171,177 ****
+--- 171,176 ----
+  		}
+  	}
+  	close(fd);
+-<	return (0);
+  }
+  
+  acct(ip)
+---------------
+  }
+  
+  acct(ip)
+***************
+*** 180,186 ****
+--- 179,185 ----
+  	register struct du *dp;
+  	struct du **hp;
+  	long blks, frags, size;
+!<	int n;
+  	static fino;
+  
+  	if ((ip->di_mode & IFMT) == 0)
+---------------
+  	register struct du *dp;
+  	struct du **hp;
+  	long blks, frags, size;
+!>	char n;
+  	static fino;
+  
+  	if ((ip->di_mode & IFMT) == 0)
+***************
+*** 333,374 ****
+--- 332,431 ----
+  	}
+  }
+  
+-</* rest should be done with nameserver or database */
+-<
+  #include <pwd.h>
+-<#include <grp.h>
+  #include <utmp.h>
+  
+  struct	utmp utmp;
+  #define	NMAX	(sizeof (utmp.ut_name))
+-<#define SCPYN(a, b)	strncpy(a, b, NMAX)
+  
+!<#define NUID	64	/* power of 2 */
+!<#define UIDMASK	0x3f
+!<
+!<struct ncache {
+!<	int	uid;
+!<	char	name[NMAX+1];
+!<} nc[NUID];
+  char	outrangename[NMAX+1];
+  int	outrangeuid = -1;
+  
+  char *
+  getname(uid)
+  {
+  	register struct passwd *pw;
+  	struct passwd *getpwent();
+-<	extern int _pw_stayopen;
+-<	register int cp;
+  
+!<	_pw_stayopen = 1;
+!<	cp = uid & UIDMASK;
+!<	if (uid >= 0 && nc[cp].uid == uid && nc[cp].name[0])
+!<		return (nc[cp].name);
+!<	pw = getpwuid(uid);
+!<	if (!pw)
+  		return (0);
+!<	nc[cp].uid = uid;
+!<	SCPYN(nc[cp].name, pw->pw_name);
+!<	return (nc[cp].name);
+  }
+---------------
+  	}
+  }
+  
+  #include <pwd.h>
+  #include <utmp.h>
+  
+  struct	utmp utmp;
++>
++>#define NUID	2048
+  #define	NMAX	(sizeof (utmp.ut_name))
+  
+!>char	names[NUID][NMAX+1];
+  char	outrangename[NMAX+1];
+  int	outrangeuid = -1;
+  
+  char *
+  getname(uid)
++>	int uid;
+  {
+  	register struct passwd *pw;
++>	static init;
+  	struct passwd *getpwent();
+  
+!>	if (uid >= 0 && uid < NUID && names[uid][0])
+!>		return (&names[uid][0]);
+!>	if (uid >= 0 && uid == outrangeuid)
+!>		return (outrangename);
+!>rescan:
+!>	if (init == 2) {
+!>		if (uid < NUID)
+  			return (0);
+!>		setpwent();
+!>		while (pw = getpwent()) {
+!>			if (pw->pw_uid != uid)
+!>				continue;
+!>			outrangeuid = pw->pw_uid;
+!>			strncpy(outrangename, pw->pw_name, NMAX);
+!>			endpwent();
+!>			return (outrangename);
+!>		}
+!>		endpwent();
+!>		return (0);
+!>	}
+!>	if (init == 0)
+!>		setpwent(), init = 1;
+!>	while (pw = getpwent()) {
+!>		if (pw->pw_uid < 0 || pw->pw_uid >= NUID) {
+!>			if (pw->pw_uid == uid) {
+!>				outrangeuid = pw->pw_uid;
+!>				strncpy(outrangename, pw->pw_name, NMAX);
+!>				return (outrangename);
+!>			}
+!>			continue;
+!>		}
+!>		if (names[pw->pw_uid][0])
+!>			continue;
+!>		strncpy(names[pw->pw_uid], pw->pw_name, NMAX);
+!>		if (pw->pw_uid == uid)
+!>			return (&names[uid][0]);
+!>	}
+!>	init = 2;
+!>	goto rescan;
+!>}
+!>
+!>getdev(devpp)
+!>	char **devpp;
+!>{
+!>	struct stat statb;
+!>	FILE *fstab;
+!>	struct mntent *mntp;
+!>
+!>	if (stat(*devpp, &statb) < 0) {
+!>		perror(*devpp);
+!>		return (-1);
+!>	}
+!>	if ((statb.st_mode & S_IFMT) == S_IFBLK ||
+!>	    (statb.st_mode & S_IFMT) == S_IFCHR) 
+!>		return (0);
+!>	fstab = setmntent(MNTTAB, "r");
+!>	if (fstab == NULL) {
+!>		fprintf(stderr, "quot: no %s file\n", MNTTAB);
+!>		exit(1);
+!>	}
+!>	while (mntp = getmntent(fstab)) {
+!>		if (strcmp(mntp->mnt_dir, *devpp) == 0) {
+!>			if (strcmp(mntp->mnt_type, MNTTYPE_42) != 0) {
+!>				fprintf(stderr,
+!>				    "quot: %s not 4.2 filesystem\n",
+!>				    *devpp);
+!>				return (-1);
+!>			}
+!>			*devpp = malloc(strlen(mntp->mnt_fsname) + 1);
+!>			strcpy(*devpp, mntp->mnt_fsname);
+!>			endmntent(fstab);
+!>			return (0);
+!>		}
+!>	}
+!>	endmntent(fstab);
+!>	return (-1);
+  }

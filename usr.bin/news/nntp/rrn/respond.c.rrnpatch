@@ -1,0 +1,72 @@
+***************
+*** 237,242
+  	crmode();
+      }
+  s_bomb:
+      if (chdir(spool) || chdir(ngdir)) {
+  	printf(nocd,ngdir) FLUSH;
+  	sig_catcher(0);
+
+--- 234,242 -----
+  	crmode();
+      }
+  s_bomb:
++ #ifdef SERVER
++     if (chdir(spool)) {
++ #else
+      if (chdir(spool) || chdir(ngdir)) {
+  #endif
+  	printf(nocd,ngdir) FLUSH;
+***************
+*** 238,243
+      }
+  s_bomb:
+      if (chdir(spool) || chdir(ngdir)) {
+  	printf(nocd,ngdir) FLUSH;
+  	sig_catcher(0);
+      }
+
+--- 238,244 -----
+      if (chdir(spool)) {
+  #else
+      if (chdir(spool) || chdir(ngdir)) {
++ #endif
+  	printf(nocd,ngdir) FLUSH;
+  	sig_catcher(0);
+      }
+***************
+*** 417,422
+  #ifdef TERSE
+  	fputs("\n(+cbreak)\n",stdout) FLUSH;
+  #endif
+      if (chdir(spool) || chdir(ngdir)) {
+  	printf(nocd,ngdir) FLUSH;
+  	sig_catcher(0);
+
+--- 418,426 -----
+  #ifdef TERSE
+  	fputs("\n(+cbreak)\n",stdout) FLUSH;
+  #endif
++ #ifdef SERVER
++     if (chdir(spool)) {
++ #else
+      if (chdir(spool) || chdir(ngdir)) {
+  #endif
+  	printf(nocd,ngdir) FLUSH;
+***************
+*** 418,423
+  	fputs("\n(+cbreak)\n",stdout) FLUSH;
+  #endif
+      if (chdir(spool) || chdir(ngdir)) {
+  	printf(nocd,ngdir) FLUSH;
+  	sig_catcher(0);
+      }
+
+--- 422,428 -----
+      if (chdir(spool)) {
+  #else
+      if (chdir(spool) || chdir(ngdir)) {
++ #endif
+  	printf(nocd,ngdir) FLUSH;
+  	sig_catcher(0);
+      }

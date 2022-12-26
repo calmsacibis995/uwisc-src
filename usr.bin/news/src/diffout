@@ -1,0 +1,17 @@
+*** uname.c	Sun Nov 23 19:26:44 1986
+--- /tmp/uname.c	Tue Nov 25 08:37:58 1986
+***************
+*** 77,83 ****
+--- 82,93 ----
+  {
+  	char *cp;
+  	gethostname(uptr->nodename, sizeof (uptr->nodename));
++>#ifdef sel
++>	cp = MYDOMAIN;
++>	if (*cp == '\0') /* get domain name from hostname */
++>#else
+  	if (MYDOMAIN[0] == '\0') /* get domain name from hostname */
++>#endif sel
+  		return;
+  	cp = index(uptr->nodename, '.');
+  	if (cp)

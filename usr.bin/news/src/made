@@ -1,0 +1,60 @@
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c inews.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -c ifuncs.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -c iextern.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c control.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c fullname.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -DINEW -c pathinit.c
+mv pathinit.o ipathinit.o
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c funcs.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c funcs2.c
+expect 8 shift/reduce conflicts
+yacc getdate.y
+
+conflicts: 8 shift/reduce
+mv y.tab.c getdate.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c getdate.c
+rm -f getdate.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c header.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c ndir.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c uname.c
+cc  inews.o ifuncs.o iextern.o control.o fullname.o  ipathinit.o funcs.o funcs2.o getdate.o header.o ndir.o uname.o -o inews -ldbm  
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  uurec.c -o uurec
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  recnews.c -o recnews
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c sendnews.c
+cc  sendnews.o uname.o -o sendnews
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c expire.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -DEXP -c pathinit.c
+mv pathinit.o epathinit.o
+cc  -o expire expire.o header.o funcs.o getdate.o iextern.o epathinit.o  funcs2.o ndir.o uname.o -ldbm
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  batch.c -o batch
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  unbatch.c -o unbatch
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  caesar.c -o caesar -lm
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  recmail.c -o recmail
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c nntpxmit.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c rfc822.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c remote.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c get_tcp_conn.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c llist.c
+cc  nntpxmit.o rfc822.o remote.o get_tcp_conn.o getdate.o llist.o -o nntpxmit
+sed -e "s%LIBDIR%/usr/lib/news%g"  -e "s%UUXFLAGS%-r -z -n -gd%g"  -e "s%BATCHDIR%/usr/spool/batch%g" sendbatch.sh > sendbatch
+sed -e "s%LIBDIR%/usr/lib/news%g"  -e "s%FIXACTIVE%%g"  -e "s%SPOOLDIR%/usr/spool/news%g" rmgroup.sh > rmgroup
+sed -e "s%LIBDIR%/usr/lib/news%g" checkgroups.sh > checkgroups
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -c readnews.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c rfuncs.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c rfuncs2.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c rextern.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c readr.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c process.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -DREAD -c pathinit.c
+mv pathinit.o rpathinit.o
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c digest.c
+cc  readnews.o rfuncs.o rfuncs2.o rextern.o readr.o  process.o rpathinit.o digest.o funcs.o funcs2.o getdate.o header.o ndir.o uname.o -o readnews -ldbm
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c checknews.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  -DCHKN -c pathinit.c
+mv pathinit.o cpathinit.o
+cc  checknews.o process.o cpathinit.o rextern.o -o checknews
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c postnews.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW  postnews.o rextern.o rpathinit.o funcs.o uname.o -o postnews
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c visual.c
+cc  -O -DDBM -DRNEWS=\"/usr/bin/rnews\" -DSPOOLDIR=\"/usr/spool/news\"  -DBATCHDIR=\"/usr/spool/batch\" -DLIBDIR=\"/usr/lib/news\"  -DBINDIR=\"/usr/bin\" -DNEWSUSR=\"news\"  -DNEWSGRP=\"news\"   -DUW -c virtterm.c
+cc  readnews.o rfuncs.o rfuncs2.o rextern.o process.o rpathinit.o  funcs.o funcs2.o getdate.o header.o ndir.o uname.o visual.o virtterm.o -ltermlib -ldbm -o vnews

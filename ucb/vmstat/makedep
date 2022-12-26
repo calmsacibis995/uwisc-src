@@ -1,0 +1,16 @@
+vmstat: vmstat.c /usr/include/stdio.h /usr/include/ctype.h /usr/include/nlist.h
+vmstat: /usr/include/sys/param.h /usr/include/machine/machparam.h
+vmstat: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/file.h
+vmstat: /usr/include/sys/vm.h /usr/include/sys/vmparam.h
+vmstat: /usr/include/machine/vmparam.h /usr/include/sys/vmmac.h
+vmstat: /usr/include/sys/vmmeter.h /usr/include/sys/vmsystm.h
+vmstat: /usr/include/sys/dk.h /usr/include/sys/buf.h /usr/include/sys/dir.h
+vmstat: /usr/include/vaxuba/ubavar.h /usr/include/vaxmba/mbavar.h
+vmstat: vmstat.c /usr/include/stdio.h /usr/include/ctype.h /usr/include/nlist.h
+vmstat: /usr/include/sys/param.h /usr/include/machine/machparam.h
+vmstat: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/file.h
+vmstat: /usr/include/sys/vm.h /usr/include/sys/vmparam.h
+vmstat: /usr/include/machine/vmparam.h /usr/include/sys/vmmac.h
+vmstat: /usr/include/sys/vmmeter.h /usr/include/sys/vmsystm.h
+vmstat: /usr/include/sys/dk.h /usr/include/sys/buf.h /usr/include/sys/dir.h
+vmstat: /usr/include/vaxuba/ubavar.h /usr/include/vaxmba/mbavar.h

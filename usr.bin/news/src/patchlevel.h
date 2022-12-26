@@ -1,0 +1,3 @@
+#define	PATCHLEVEL	3
+
+#define NEWS_VERSION   "B 2.11 12/29/86"

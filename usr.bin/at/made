@@ -1,0 +1,10 @@
+cc -M  atq.c atrm.c at.c atrun.c |  awk ' { if ($1 != prev) { print rec; rec = $0; prev = $1; }  else { if (length(rec $2) > 78) { print rec; rec = $0; }  else rec = rec " " $2 } }  END { print rec } ' > makedep
+echo '/^# DO NOT DELETE THIS LINE/+2,$d' >eddep
+echo '$r makedep' >>eddep
+echo 'w' >>eddep
+cp Makefile Makefile.bak
+ed - Makefile < eddep
+rm eddep makedep
+echo '# DEPENDENCIES MUST END AT END OF FILE' >> Makefile
+echo '# IF YOU PUT STUFF HERE IT WILL GO AWAY' >> Makefile
+echo '# see make depend above' >> Makefile

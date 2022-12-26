@@ -1,0 +1,50 @@
+Mmain	main.c	/^main()$/
+act_cmp	active.c	/^act_cmp(ptr1, ptr2)$/
+ahbs	ahbs.c	/^ahbs(argc, argv)$/
+close_crnt	misc.c	/^close_crnt()$/
+compare	newnews.c	/^compare(s, t)$/
+disassoc	netaux.c	/^disassoc()$/
+distmatch	newnews.c	/^distmatch(distlist, distcount, grouplist, groupcou/
+dtol	time.c	/^dtol(date_ascii)$/
+dysize	time.c	/^#define	dysize(y)	((y % 4 ? 365 : 366))$/
+find_group	active.c	/^find_group(group, num_groups, low_msg, high_msg)$/
+findart	misc.c	/^findart(artname)$/
+get_distlist	misc.c	/^get_distlist(array, list)$/
+get_histlist	newnews.c	/^get_histlist(array, list)$/
+get_id	misc.c	/^get_id(art_fp, id)$/
+get_nglist	newnews.c	/^get_nglist(array, list)$/
+get_socket	netaux.c	/^get_socket()$/
+getword	newnews.c	/^getword(fp, w, line, linesize)$/
+gmt_to_local	time.c	/^gmt_to_local(date)$/
+group	group.c	/^group(argc, argv)$/
+help	help.c	/^help(argc, argv)$/
+host_access	access.c	/^host_access(canread, canpost, canxfer)$/
+ihave	ihave.c	/^ihave(argc, argv)$/
+intcmp	scandir.c	/^intcmp(x, y)$/
+list	list.c	/^list(argc, argv)$/
+local_to_gmt	time.c	/^local_to_gmt(date)$/
+lower	misc.c	/^char lower(c)$/
+ltod	time.c	/^ltod(date)$/
+make_stdio	netaux.c	/^make_stdio(sockt)$/
+newgroups	newgroups.c	/^newgroups(argc, argv)$/
+newnews	newnews.c	/^newnews(argc, argv)$/
+nextlast	nextlast.c	/^nextlast(argc, argv)$/
+ngmatch	newnews.c	/^ngmatch(nglist, ngcount, matchlist, matchcount)$/
+open_valid_art	misc.c	/^open_valid_art(artname, id)$/
+openartbyid	misc.c	/^openartbyid(msg_id)$/
+parsit	parsit.c	/^parsit(line, array)$/
+post	post.c	/^post(argc, argv)$/
+read_again	netaux.c	/^read_again()$/
+read_groups	active.c	/^read_groups()$/
+reaper	netaux.c	/^reaper()$/
+restreql	newnews.c	/^restreql(w, s)$/
+scan_dir	scandir.c	/^scan_dir(low_msg, high_msg)$/
+seekuntil	newnews.c	/^seekuntil(fp, key, line, linesize)$/
+serve	serve.c	/^serve()$/
+set_timer	netaux.c	/^set_timer()$/
+slave	slave.c	/^slave(argc, argv)$/
+spawn	misc.c	/^spawn(path, name, flag, cont_code, err_code)$/
+spew	misc.c	/^spew(fp, how)$/
+streql	misc.c	/^streql(a, b)$/
+twodigtoi	time.c	/^#define twodigtoi(x)	(((x\[0\]) - '0') + (x\[1\] - '0'/
+valid_art	common.h	/^#define	valid_art(s)	(atoi(s) != 0)$/

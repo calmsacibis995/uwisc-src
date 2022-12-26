@@ -1,0 +1,335 @@
+############################################################
+############################################################
+#####
+#####	GENERIC SENDMAIL CONFIGURATION FILE
+#####
+#####	Configured for host specified below
+#####	For your viewing pleasure, set your tabs to 8
+#####
+############################################################
+############################################################
+
+
+############################################################
+###	local info
+############################################################
+
+# internet hostname
+
+Cwjaneb.wisc.edu janeb uwisc wisconsin
+
+# internet hostname
+DAjaneb.wisc.edu
+
+# uucp forwarding name
+DUuwvax
+CUuwvax
+
+# local machine names
+FS/usr/lib/send.local
+
+# phone-net sites
+DCcsnet-relay.ARPA
+# bitnet sites forward to wiscvm
+DBwiscvm.ARPA
+# mailnet sites forward to multics.mit.edu
+DMmit-multics.ARPA
+
+# POP support
+DPpop
+CPpop
+
+############################################################
+#
+#	General configuration information
+#
+#	This information is basically just "boiler-plate"; it must be
+#	there, but is essentially constant.
+#
+#	Information in this file should be independent of location --
+#	i.e., although there are some policy decisions made, they are
+#	not specific to Berkeley per se.
+#
+#		@(#)base.m4	3.45		2/26/83
+#
+############################################################
+
+#	@(#)version.m4	3.7		2/26/83
+
+DV3.7
+
+
+##########################
+###   Special macros   ###
+##########################
+
+# my name
+DnMAILER-DAEMON
+# UNIX header format
+DlFrom $g  $d
+# delimiter (operator) characters
+Do.:%@!^=/[]
+# format of a total name
+Dq$g$?x ($x)$.
+# my official hostname
+Dj$A
+# SMTP login message
+De$j Sendmail $v/$V ready at $b
+
+###################
+###   Options   ###
+###################
+
+# location of alias file
+OA/usr/lib/aliases
+# default delivery mode (deliver in background)
+Odbackground
+# wait for aliases to be built
+Oa
+# (don't) connect to "expensive" mailers
+#Oc
+# mail back all errors
+Oem
+# temporary file mode
+OF0600
+# default GID
+Og1
+# location of help file
+OH/usr/lib/sendmail.hf
+# log level
+OL9
+# default messages to old style
+Oo
+# our network name
+ONWISC.EDU
+# queue directory
+OQ/usr/spool/mqueue
+# read timeout -- violates protocols
+Or2h
+# status file
+OS/usr/lib/sendmail.st
+# queue up everything before starting transmission
+Os
+# default timeout interval
+OT3d
+# time zone names (V6 only)
+OtCST,CDT
+# default UID
+Ou1
+# queue-only when load is above 9
+Ox9
+# wizard's password
+OWAU1Zdb5WFkNv6
+
+###############################
+###   Message precedences   ###
+###############################
+
+Pfirst-class=0
+Pspecial-delivery=100
+Pjunk=-100
+
+#########################
+###   Trusted users   ###
+#########################
+
+Troot
+Tdaemon
+Tuucp
+Tnameserv
+
+#############################
+###   Format of headers   ###
+#############################
+
+H?D?Date: $a
+H?F?From: $q
+H?x?Full-Name: $x
+HSubject:
+H?P?Return-Path: <$g>
+# HPosted-Date: $a
+# H?l?Received-Date: $b
+H?M?Message-Id: <$t.$i@$j>
+HReceived: $?sfrom $s $.by $j; $b
+# HReceived: $?sfrom $s $.by $j ($v/$V)
+# 	id $i; $b
+
+###########################
+###   Rewriting rules   ###
+###########################
+
+
+################################
+#  Sender Field Pre-rewriting  #
+################################
+S1
+
+###################################
+#  Recipient Field Pre-rewriting  #
+###################################
+S2
+
+#################################
+#  Final Output Post-rewriting  #
+#################################
+S4
+
+R@			$@			handle <> error addr
+
+# externalize local domain info
+R$*<$+>$*		$1$2$3			defocus
+R$*@$+.UUCP		$@$2!$1			fix uucp addresses
+R@$+:$+:$+		@$1,$2:$3		<route-addr> canonical
+
+R@$+,$+:$+		$@@$[$1$],$2:$3		get official domain name
+R@$+:$+			$@@$[$1$]:$2		get official domain name
+R$+@$+			$@$1@$[$2$]		get official domain name
+
+###########################
+#  Local hostname cleanup #
+###########################
+S6
+R$*<@$=M>$*		$@$1<@$2.uucp>$3	be nice to local uucp sites
+R$*<@$=M.wisc.edu>$*	$@$1<@$2.uucp>$3	be nice to local uucp sites
+R$*<@$*$=D.wisc.edu>$*	$@$1<@$2$3.wisc.edu.uucp>$4
+R$+<@$=S.uucp>		$@$1<@$2>		convert local uucp to arpastyle
+
+###########################
+#  Name Canonicalization  #
+###########################
+S3
+
+# handle "from:<>" special case
+R<>			$@@			turn into magic token
+
+# basic textual canonicalization
+R$*<$+>			$2			basic RFC821/822 parsing
+R$*<$*>$*		$1$2$3			in case recursive
+
+# make sure <@a,@b,@c:user@d> syntax is easy to parse -- undone later
+R@$+,$+			@$1:$2			change all "," to ":"
+
+# localize and dispose of domain-based addresses
+R@$+:$+			$@$>6<@$1>:$2		handle <route-addr>
+
+# more miscellaneous cleanup
+R$+:$*;$*		$@$1:$2;$3		list syntax
+R$+%$+			$1@$2			user%host to user@host
+R$+@$+			$:$1<@$2>		focus on domain
+R$+<@$*@$*>		$1%$2<@$3>		move gaze right
+R$+<@$+>		$@$>6$1<@$2>		already canonical
+
+# convert old-style addresses to a domain-based address
+R$+^$+			$1!$2			convert ^ to !
+R$-!$+			$@$>6$2<@$1.UUCP>	resolve uucp names
+R$+!$+			$@$>6$2<@$1>		resolve uucp names
+
+##################################
+#  Special UW recursion ruleset  #
+##################################
+S8
+R$*			$:$>3$1			first make it canonical again
+R$*			$:$>0$1			then resolve
+
+############################################################
+############################################################
+#####
+#####		RULESET ZERO PREAMBLE
+#####
+#####	The beginning of ruleset zero is constant through all
+#####	configurations.
+#####
+#####		@(#)zerobase.m4	3.3		2/24/83
+#####
+############################################################
+############################################################
+
+S0
+
+# handle special cases.....
+R@			$#local$:MAILER-DAEMON	handle <> form
+
+# now delete the local info
+R$*<@$=w>$*		$1<@>$3			thishost [ .domain ]
+R$*<@$=w.wisc.edu>$*	$1<@>$3			because "."s are significant
+
+R$*<$*.>$*		$1<$2>$3		drop trailing dot
+R<@>:$*			$@$>8$1			retry after route strip
+R$*<@>			$@$>8$1			strip null trash & retry
+
+
+###############################################
+###  Machine dependent part of rulset zero  ###
+###############################################
+
+R$+<@$*.$=P>		$#pop$@$2$:$1			subscriber@pop
+R$*<@$*.bitnet>		$:$1%$2.bitnet<@$B>		forward bitnet domain
+R$*<@$*.csnet>		$:$1%$2.csnet<@$C>		forward csnet domain
+R$*<@$*.mailnet>	$:$1%$2.mailnet<@$M>		forward mailnet domain
+R$*<@$*.dec>		$:$1%$2.dec<@decwrl.dec.com>	forward DEC domain
+R$*<@$*.fun>		$:$2!$1<@princeton.UUCP>	forward FUN domain
+R$*<@$*marquette.edu>$*	$:$1<@$2marquette.edu.UUCP>$3	fake out
+
+R<@$+.UUCP>:$+		<$1>!$2				to old format
+R$+<@$+.UUCP>$*		<$2>!$1$3			to old format
+
+R$*<@$+>$*		$:$1<@$[$2$]>$3			get official name
+R<$+>!$+		$:$1!$2<@rsch.wisc.edu>		forward uucp mail
+R$*<@$+>$*		$#tcp$@$2$:$1<@$2>$3		user@tcphost.ARPA
+
+R$+			$#local$:$1			local names
+
+############################################################
+############################################################
+#####
+#####		Local and Program Mailer specification
+#####
+#####		@(#)localm.m4	3.5		2/24/83
+#####
+############################################################
+############################################################
+
+
+Mlocal,	P=/bin/mail, F=FrlsSDMmn, S=10, R=20, A=mail -d $u
+Mprog,	P=/bin/csh,  F=lsDFMe,   S=10, R=20, A=csh -fc $u
+
+S10
+R@			MAILER-DAEMON		errors to mailer-daemon
+
+
+############################################################
+############################################################
+#####
+#####		Arpanet TCP Mailer specification
+#####
+#####		@(#)tcpm.m4	4.1		7/25/83
+#####
+############################################################
+############################################################
+
+Mtcp,	P=[IPC], F=nmsDFMueXL, S=14, R=14, A=IPC $h, E=\r\n
+
+S14
+
+# handle other external cases
+R$+<@$*.UUCP>		$@$2!$1<@$A>		fix uucp addressing
+R$*<@$+>$*		$@$1<@$2>$3		send standard form through
+R$+:;			$@$1:;			don't muck up lists
+
+# convert remaining addresses to old format and externalize appropriately
+R$+			$:$1<@$A>		tack on our hostname
+
+############################################################
+############################################################
+#####
+#####		MH POP mailer specification
+#####
+#####		@(#)popMH.m4	4.1	05/15/85
+#####
+############################################################
+############################################################
+
+Mpop, P=/usr/local/lib/mh.6/spop, F=nsmFDM, S=17, R=27, A=pop $u
+
+S27
+R@			MAILER-DAEMON		errors to mailer-daemon

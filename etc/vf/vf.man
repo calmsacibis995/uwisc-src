@@ -1,0 +1,118 @@
+.TH VF LOCAL uw
+. \" @(#)vfs.l	1.1 1/11/84
+.UC 4
+.SH NAME
+VF - Verify File Owners, Groups, Modes, and Types
+.SH SYNOPSIS
+.I vf 
+[-c] [file]
+.SH DESCRIPTION
+.I Vf
+will consult the named file, or 
+.I stdin 
+if no file
+is given, for file specifications. 
+If there are any discrepancies between the
+actual attributes of the named files and the way
+these are specified, 
+.I vf
+will output an error message to this effect.
+.PP
+If the 
+.I \-c
+option is given, then
+.I vf
+will attempt to correct the attributes of the files.
+Of course, some problems (file non-existent, file is 
+a symbolic link) require human intervention.
+.PP 
+Bearing in mind that directory specifcations
+.I must
+have a trailing slash, as in 
+.I /tmp/,
+the input file should contain lines 
+in the following 
+form:
+.TP
+.I pathname owner group mode
+.PP
+Where 
+.I owner
+and 
+.I group
+are symbolic names and 
+.I mode
+is an octal protection code.
+.SH DIAGNOSTICS
+.I Vf
+will attempt to process the whole list, even if 
+simple errors, such as missing files, should occur during processing.  The
+following exit stati are defined for the
+.I vf
+program:
+.TP
+.B EX_OK (0) normal exit
+No inconsistencies were discovered between the input file's idea
+of how things should be and the actual situation.
+.TP
+.B EX_USAGE (64) command line usage error
+The
+.I vf
+program was called with an improper argument count.
+.TP
+.B EX_TEMPFAIL (75) temporary failure
+All permission inconsistencies have been corrected by the program.
+If rerun, 
+.B vf
+should exit EX_OK.
+.TP 
+.B EX_DATAERR (65) data format error
+The input file contained inproperly formed input.
+.B Vf
+will notify the user of the line number in the input file
+at which the error occurred.
+.TP 
+.B EX_UNAVAILABLE (69) service unavailable
+Errors were encountered which could not be 
+corrected by 
+.B vf,
+such as incorrect file types or missing files.  Divine
+intervention (i.e. superuser) is required.
+.TP
+.B EX_NOPERM  (77) permission denied
+The program was run with the
+.B \-c
+option, and only the superuser can correct file owners.
+.TP
+.B EX_NOINPUT (66) cannot open input
+The specified input file did not exist.
+.TP
+.B EX_SOFTWARE (70) internal software error
+The 
+.I vf
+program needs to be recompiled with a higher
+constant array size used for storing user and group
+names and numeric ids.
+.SH FIXFILES
+The 
+.B fixfiles
+script runs 
+.B vf
+every morning, collecting diagnostics and mailing
+them to the system administrator.  No mail is
+generated if 
+.B vf
+exits with no errors (EX_OK).  
+.PP
+.B Input
+is set to /etc/files.perms
+and a copy of the error messages is kept in 
+/etc/files.errs,
+in addition to being sent to the system adminsistrator (root).
+.SH FUTURE WORK
+There is not yet a facility for specifying the way 
+files should be linked together.  
+.SH BUGS
+None known.
+.SH AUTHOR
+Tom Christiansen 

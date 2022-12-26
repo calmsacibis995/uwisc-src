@@ -1,0 +1,8 @@
+#!/bin/csh -f
+#
+# usage:
+#  /usr/local/ls -lgO ${target_directory}/* | this_file > files.perms
+#
+awk 'NF == 10 { if( $1 == "d" ) \
+	{ print $10 "/", $4, $5, $2 } \
+	else { print $10, $4, $5, $2 } }'

@@ -1,0 +1,88 @@
+diff ./ex_vmain.c /usr/src/ucb/ex/ex_vmain.c
+5d4
+< #include "ex_temp.h"
+17d15
+< static char include_buf[100];	/* for handling tagging on #include lines */
+841d838
+< #ifdef TAGSTACK
+843,854d839
+< 		 *	^T	Pop the tag stack if enabled or else reset it if not.
+< 		 */
+< 
+< 		case CTRL(t):
+< 			forbid (hadcnt);
+< 			vsave();
+< 			oglobp = globp;
+< 			globp = "pop";
+< 			goto gogo;
+< #endif TAGSTACK
+< 
+< 		/*
+859,876d843
+< #ifdef INCLUDE_TAGS
+< 			switch(grabtag()) {
+< 			 case 0:
+< 				oglobp = globp;
+< 				globp = "tag";
+< 				break;
+< 			 case 1:
+< 				forbid (hadcnt);
+< 				vsave();
+< 				ckaw();
+< 				oglobp = globp;
+< 				globp = include_buf;
+< 				break;
+< 			 case -1:
+< 				forbid(1);
+< 				break;
+< 			}
+< #else  INCLUDE_TAGS
+880d846
+< #endif INCLUDE_TAGS
+912d877
+< #ifndef MASSCOMP
+914d878
+< #endif MASSCOMP
+1150d1113
+< 
+1154d1116
+< 	char *index(),*rindex();
+1156,1187d1117
+< #ifdef INCLUDE_TAGS
+< 	if(linebuf[0] == '#') {	/* possibly a #include line */
+< 		if(value(AUTOWRITE))
+< 			strcpy(include_buf,"e! ");
+< 		else
+< 			strcpy(include_buf,"e ");
+< 		for(cp= &linebuf[1];isspace(*cp);cp++);
+< 		if(strncmp(cp,"include",7) == 0) { /* got one */
+< 			if(cp = index(linebuf,'<')) {
+< 				strcat(include_buf,"/usr/include/");
+< 				dp = index(include_buf,'\0');
+< 				for(cp++; *cp && *cp != '>'; *dp++ = *cp++);
+< 			} else if(cp = index(linebuf,'"')) {
+< 				if(*++cp != '/' && index(savedfile,'/')) {	
+< 					/* prepend cur file's path prefix */
+< 					strcat(include_buf,savedfile);
+< 					dp = rindex(include_buf,'/');
+< 					dp++;
+< 				} else
+< 					dp = index(include_buf,'\0');
+< 				for(; *cp && *cp != '"'; *dp++ = *cp++);
+< 			} else {
+< 				return(-1);
+< 			}
+< 			*dp = '\0';
+< 			if(value(FILESTACK))
+< 				savetag(savedfile);
+< 			return( 1 );
+< 		}
+< 	}
+< #endif INCLUDE_TAGS
+< 
+1195c1125
+< 		} while(*cp && (!isspace(*cp) && *cp != '('));
+---
+> 		} while (isalpha(*cp) || isdigit(*cp) || *cp == '_');
+1198d1127
+< 	return( 0 );

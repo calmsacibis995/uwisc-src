@@ -1,0 +1,134 @@
+ASSERT	uucplock.c	/^#define ASSERT(e, f, v) if (!(e)) {\\$/
+Mtip	tip.c	/^main(argc, argv)$/
+acuabort	acu.c	/^acuabort(s)$/
+acutype	acu.c	/^acutype(s)$/
+address	tip.h	/^#define address(v)	((((zzhack *)(&(v))))->zz_addre/
+alarmtr	aculib/dn11.c	/^alarmtr()$/
+any	tip.c	/^any(c, p)$/
+anyof	cmds.c	/^anyof(s1, s2)$/
+args	cmds.c	/^args(buf, a)$/
+biz22_abort	aculib/biz22.c	/^biz22_abort()$/
+biz22_disconnect	aculib/biz22.c	/^biz22_disconnect()$/
+biz22f_dialer	aculib/biz22.c	/^biz22f_dialer(num, acu)$/
+biz22w_dialer	aculib/biz22.c	/^biz22w_dialer(num, acu)$/
+biz31_abort	aculib/biz31.c	/^biz31_abort()$/
+biz31_disconnect	aculib/biz31.c	/^biz31_disconnect()$/
+biz31f_dialer	aculib/biz31.c	/^biz31f_dialer(num, acu)$/
+biz31w_dialer	aculib/biz31.c	/^biz31w_dialer(num, acu)$/
+biz_dialer	aculib/biz22.c	/^biz_dialer(num, mod)$/
+bizsync	aculib/biz31.c	/^bizsync(fd)$/
+boolean	tip.h	/^#define boolean(v)	((((zzhack *)(&(v))))->zz_boole/
+character	tip.h	/^#define character(v)	((((zzhack *)(&(v))))->zz_cha/
+chdirectory	cmds.c	/^chdirectory()$/
+cleanup	tip.c	/^cleanup()$/
+cmd	aculib/biz22.c	/^cmd(s)$/
+connect	acu.c	/^connect()$/
+consh	cmds.c	/^consh(c)$/
+ctrl	tip.c	/^ctrl(c)$/
+cu_put	cmds.c	/^cu_put(cc)$/
+cu_take	cmds.c	/^cu_take(cc)$/
+cumain	cu.c	/^cumain(argc, argv)$/
+dead	hunt.c	/^dead()$/
+delock	uucplock.c	/^delock(s)$/
+detect	aculib/biz22.c	/^detect(s)$/
+df02_dialer	aculib/df.c	/^df02_dialer(num, acu)$/
+df03_dialer	aculib/df.c	/^df03_dialer(num, acu)$/
+df_abort	aculib/df.c	/^df_abort()$/
+df_dialer	aculib/df.c	/^df_dialer(num, acu, df03)$/
+df_disconnect	aculib/df.c	/^df_disconnect()$/
+dialit	aculib/v831.c	/^dialit(phonenum, acu)$/
+disconnect	acu.c	/^disconnect()$/
+dn_abort	aculib/dn11.c	/^dn_abort()$/
+dn_dialer	aculib/dn11.c	/^dn_dialer(num, acu)$/
+dn_disconnect	aculib/dn11.c	/^dn_disconnect()$/
+echo	aculib/biz31.c	/^echo(s)$/
+equal	tip.h	/^#define	equal(a, b)	(strcmp(a,b)==0)\/* A nice func/
+escape	tip.c	/^escape()$/
+execute	cmds.c	/^execute(s)$/
+expand	cmds.c	/^expand(name)$/
+expect	aculib/v3451.c	/^expect(cp)$/
+finish	cmds.c	/^finish()$/
+flush	aculib/biz31.c	/^flush(s)$/
+genbrk	cmds.c	/^genbrk()$/
+getent	remcap.c	/^getent(bp, name, cp)$/
+getfl	cmds.c	/^getfl(c)$/
+getremcap	remote.c	/^getremcap(host)$/
+getremote	remote.c	/^getremote(host)$/
+gobble	aculib/ventel.c	/^gobble(match)$/
+help	tip.c	/^help(c)$/
+hunt	hunt.c	/^hunt(name)$/
+intEMT	tipout.c	/^intEMT()$/
+intIOT	tipout.c	/^intIOT()$/
+intSYS	tipout.c	/^intSYS()$/
+intTERM	tipout.c	/^intTERM()$/
+intcopy	cmds.c	/^intcopy()$/
+interp	tip.c	/^interp(s)$/
+intprompt	tip.c	/^intprompt()$/
+isalock	uucplock.c	/^isalock(name)$/
+logent	log.c	/^logent(group, num, acu, message)$/
+loginit	log.c	/^loginit()$/
+min	aculib/ventel.c	/^#define min(a,b)	((a)>(b)?(b):(a))$/
+mlock	uucplock.c	/^mlock(sys)$/
+notin	aculib/v3451.c	/^notin(sh, lg)$/
+number	tip.h	/^#define number(v)	((((zzhack *)(&(v))))->zz_number/
+onelock	uucplock.c	/^onelock(pid, tempfile, name)$/
+pc	aculib/v831.c	/^#define pc(x)	(c = x, write(AC,&c,1))$/
+pipefile	cmds.c	/^pipefile()$/
+prefix	aculib/v3451.c	/^prefix(s1, s2)$/
+prompt	tip.c	/^prompt(s, p)$/
+prtime	cmds.c	/^prtime(s, a)$/
+pwrite	tip.c	/^pwrite(fd, buf, n)$/
+raw	tip.c	/^raw()$/
+rmlock	uucplock.c	/^rmlock(name)$/
+sanitize	aculib/v831.c	/^sanitize(s)$/
+send	cmds.c	/^send(c)$/
+sendfile	cmds.c	/^sendfile(cc)$/
+setparity	tip.c	/^setparity(defparity)$/
+setscript	cmds.c	/^setscript()$/
+shell	cmds.c	/^shell()$/
+sigALRM	aculib/biz22.c	/^sigALRM()$/
+size	tip.c	/^size(s)$/
+sname	tip.c	/^sname(s)$/
+speed	tip.c	/^speed(n)$/
+stlock	uucplock.c	/^stlock(name)$/
+stopsnd	cmds.c	/^stopsnd()$/
+suspend	cmds.c	/^suspend()$/
+tandem	cmds.c	/^tandem(option)$/
+tdecode	remcap.c	/^tdecode(str, area)$/
+tgetent	remcap.c	/^tgetent(bp, name)$/
+tgetflag	remcap.c	/^tgetflag(id)$/
+tgetnum	remcap.c	/^tgetnum(id)$/
+tgetstr	remcap.c	/^tgetstr(id, area)$/
+timeout	cmds.c	/^timeout()$/
+tipin	tip.c	/^tipin()$/
+tipout	tipout.c	/^tipout()$/
+tnamatch	remcap.c	/^tnamatch(np)$/
+tnchktc	remcap.c	/^tnchktc()$/
+transfer	cmds.c	/^transfer(buf, fd, eofchars)$/
+transmit	cmds.c	/^transmit(fd, eofchars, command)$/
+tskip	remcap.c	/^tskip(bp)$/
+ttysetup	tip.c	/^ttysetup(speed)$/
+ulockf	uucplock.c	/^ulockf(file, atime)$/
+unraw	tip.c	/^unraw()$/
+v3451_abort	aculib/v3451.c	/^v3451_abort()$/
+v3451_dialer	aculib/v3451.c	/^v3451_dialer(num, acu)$/
+v3451_disconnect	aculib/v3451.c	/^v3451_disconnect()$/
+v831_abort	aculib/v831.c	/^v831_abort()$/
+v831_dialer	aculib/v831.c	/^v831_dialer(num, acu)$/
+v831_disconnect	aculib/v831.c	/^v831_disconnect()$/
+vaccess	value.c	/^vaccess(mode, rw)$/
+value	tip.h	/^#define value(v)	vtable[v].v_value$/
+variable	cmds.c	/^variable()$/
+vassign	value.c	/^vassign(p, v)$/
+vawrite	aculib/v3451.c	/^vawrite(cp, delay)$/
+ven_abort	aculib/ventel.c	/^ven_abort()$/
+ven_dialer	aculib/ventel.c	/^ven_dialer(num, acu)$/
+ven_disconnect	aculib/ventel.c	/^ven_disconnect()$/
+vensync	aculib/ventel.c	/^vensync(fd)$/
+vinit	value.c	/^vinit()$/
+vinterp	value.c	/^vinterp(s, stop)$/
+vlex	value.c	/^vlex(s)$/
+vlookup	value.c	/^vlookup(s)$/
+vprint	value.c	/^vprint(p)$/
+vstring	value.c	/^vstring(s,v)$/
+vtoken	value.c	/^vtoken(s)$/

@@ -1,0 +1,21 @@
+***************
+*** 45,50 ****
+      else if ((shell = getenv("SHELL")) == Nullch || !*shell)
+  	shell = PREFSHELL;
+      if ((pid = vfork()) == 0) {
+  	if (*s)
+  	    execl(shell, shell, "-c", s, Nullch);
+  	else
+--- 45,56 ----
+      else if ((shell = getenv("SHELL")) == Nullch || !*shell)
+  	shell = PREFSHELL;
+      if ((pid = vfork()) == 0) {
++ #ifdef SERVER
++ 	int i;
++ 
++ 	for (i = 3; i < 10; ++i)
++ 		(void) close(i);
++ #endif
+  	if (*s)
+  	    execl(shell, shell, "-c", s, Nullch);
+  	else

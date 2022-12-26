@@ -1,0 +1,9 @@
+tunefs: tunefs.c /usr/include/sys/param.h /usr/include/machine/machparam.h
+tunefs: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/stat.h
+tunefs: /usr/include/stdio.h /usr/include/fstab.h
+tunefs: tunefs.c /usr/include/sys/param.h /usr/include/machine/machparam.h
+tunefs: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/stat.h
+tunefs: /usr/include/stdio.h /usr/include/fstab.h
+tunefs: tunefs.c /usr/include/sys/param.h /usr/include/machine/machparam.h
+tunefs: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/stat.h
+tunefs: /usr/include/stdio.h /usr/include/fstab.h

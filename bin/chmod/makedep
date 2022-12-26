@@ -1,0 +1,4 @@
+chmod: chmod.c /usr/include/stdio.h /usr/include/sys/types.h
+chmod: /usr/include/sys/stat.h /usr/include/sys/dir.h
+chmod: chmod.c /usr/include/stdio.h /usr/include/sys/types.h
+chmod: /usr/include/sys/stat.h /usr/include/sys/dir.h

@@ -1,0 +1,19 @@
+HOST = _HOSTNAME_
+GLOBDIR = /etc
+
+aliases.new : aliases.local $(GLOBDIR)/aliases.global
+	@cp $(GLOBDIR)/aliases.global aliases.new
+	@(echo '/###/,$$g/$(HOST)/d'; echo w; echo q) | ed - aliases.new
+	@cat aliases.local >> aliases.new
+
+aliases : aliases.new
+	@-mv -f aliases aliases.old
+	@cp aliases.new aliases
+
+install : aliases
+	@cp /dev/null aliases.new.dir ; cp /dev/null aliases.new.pag
+	@chmod 644 aliases.new.dir aliases.new.pag
+	@/etc/chown root.daemon aliases.new.dir aliases.new.pag
+	@/usr/ucb/newaliases -oA/usr/lib/aliases.new
+	@-rm -f aliases.new
+	@mv aliases.new.dir aliases.dir ; mv aliases.new.pag aliases.pag

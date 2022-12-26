@@ -1,0 +1,74 @@
+***************
+*** 42,47
+  #include "rcln.h"
+  #include "respond.h"
+  #include "ng.h"
+  #include "INTERN.h"
+  #include "init.h"
+  
+
+--- 39,45 -----
+  #include "rcln.h"
+  #include "respond.h"
+  #include "ng.h"
++ #include "server.h"
+  #include "INTERN.h"
+  #include "init.h"
+  
+***************
+*** 113,118
+  
+      /* make sure we are the right version */
+  
+      if (!checkflag)
+  	version_check();
+  
+
+--- 111,117 -----
+  
+      /* make sure we are the right version */
+  
++ #ifndef SERVER
+      if (!checkflag)
+  	version_check();
+  #endif
+***************
+*** 115,120
+  
+      if (!checkflag)
+  	version_check();
+  
+      /* make sure we are the sole possessors of .newsrc */
+  
+
+--- 114,120 -----
+  #ifndef SERVER
+      if (!checkflag)
+  	version_check();
++ #endif
+  
+      /* make sure we are the sole possessors of .newsrc */
+  
+***************
+*** 125,130
+  
+      if (!checkflag)
+  	newsnews_check();
+  
+      /* open active file, etc. */
+  
+
+--- 125,137 -----
+  
+      if (!checkflag)
+  	newsnews_check();
++ 
++     /* open connection to server if appropriate */
++ 
++ #ifdef SERVER
++     if (server_init(SERVER_HOST) < 0)
++ 	finalize(1);
++ #endif
+  
+      /* open active file, etc. */
+  

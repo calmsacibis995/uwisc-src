@@ -1,0 +1,3 @@
+The Programs mkhosts and mkpasswd will not compile with the current
+C library.  The C library is compiled to use the Domain Name Server and
+the Yellow Pages so there is no need for the hashed files.  

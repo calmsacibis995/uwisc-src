@@ -1,0 +1,39 @@
++	%+
+-	%-
+.	source
+1	%1
+10	%10
+2	%2
+3	%3
+4	%4
+5	%5
+6	%6
+7	%7
+8	%8
+9	%9
+a	alias
+c	/usr/ucb/clear
+d	dirs
+errs	egrep -v "nntpxmit|DIALUP|sendmail|vv|last message repeated" /usr/spool/mqueue/syslog.!*
+go	cd !* ; ls
+h	history
+im	source /usr/staff/im/!:1/.myrc
+j	jobs -l
+kdb	adb -k vmunix.!:1 vmcore.!:1
+l	echo !*{*}
+ll	ls -l
+lo	echo ^Gbye, paul;exit
+ls	ls -F
+lv	ls -il /*unix*
+m	more
+mm	more [mM]akefile
+on	rwho -a | egrep ".*"!*
+pd	pushd
+pg	ps axlw | egrep !:1 | egrep -v egrep
+pv	printenv
+pwd	echo $cwd
+s	suspend
+ss	tail -f /usr/spool/mqueue/syslog
+ta	vi -t
+term	set noglob; eval `tset -s -e -k^U !!:1`
+x	exit

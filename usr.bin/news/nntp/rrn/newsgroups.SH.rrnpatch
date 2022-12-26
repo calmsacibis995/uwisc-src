@@ -1,0 +1,55 @@
+***************
+*** 20,26
+  : You might want to change pager to a "make column" program if you have one.
+  : On the other hand, if your kernel does paging, cat would probably do.
+  pager="${pager-/usr/ucb/more}"
+! active="${active-/usr/lib/news/active}"
+  
+  : End of system dependencies, hopefully
+  
+
+--- 20,26 -----
+  : You might want to change pager to a "make column" program if you have one.
+  : On the other hand, if your kernel does paging, cat would probably do.
+  pager="${pager-/usr/ucb/more}"
+! active="/tmp/active.\$\$"
+  
+  : End of system dependencies, hopefully
+  
+***************
+*** 24,32
+  
+  : End of system dependencies, hopefully
+  
+! case \$active in
+! ~*) active=\`$filexp \$active\` ;;
+! esac
+  
+  if $test \$# -ge 2 ; then
+      pager=$cat
+
+--- 24,30 -----
+  
+  : End of system dependencies, hopefully
+  
+! $rnlib/getactive \$active
+  
+  if $test \$# -ge 2 ; then
+      pager=$cat
+***************
+*** 59,64
+  	-e "/\$1.*!/"'s/^\([^!]*\)!.*\$/\1/p' \\
+  	-e 'd' | \\
+  $sort | \$pager
+  !GROK!THIS!
+  $eunicefix newsgroups
+  chmod 755 newsgroups
+
+--- 57,63 -----
+  	-e "/\$1.*!/"'s/^\([^!]*\)!.*\$/\1/p' \\
+  	-e 'd' | \\
+  $sort | \$pager
++ rm \$active
+  !GROK!THIS!
+  $eunicefix newsgroups
+  chmod 755 newsgroups

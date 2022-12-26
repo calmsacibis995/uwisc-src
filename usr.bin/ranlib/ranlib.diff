@@ -1,0 +1,491 @@
+*** ranlib.c	Mon Sep 15 16:26:28 1986
+--- /usr/staff/tadl/nfs/usr.bin/ranlib.c	Sun May 18 18:48:42 1986
+***************
+*** 1,23 ****
+--- 1,11 ----
+-</*
+-< * Copyright (c) 1980 Regents of the University of California.
+-< * All rights reserved.  The Berkeley software License Agreement
+-< * specifies the terms and conditions for redistribution.
+-< */
+-<
+  #ifndef lint
+!<char copyright[] =
+!<"@(#) Copyright (c) 1980 Regents of the University of California.\n\
+!< All rights reserved.\n";
+!<#endif not lint
+!<
+!<#ifndef lint
+!<static char sccsid[] = "@(#)ranlib.c	5.3 (Berkeley) 1/22/86";
+!<#endif not lint
+!<
+  /*
+   * ranlib - create table of contents for archive; string table version
+   */
+  #include <sys/types.h>
+  #include <ar.h>
+  #include <ranlib.h>
+  #include <a.out.h>
+---------------
+  #ifndef lint
+!>static	char sccsid[] = "@(#)ranlib.c 1.1 85/05/31 SMI"; /* from UCB 4.6 05/22/83 */
+!>#endif
+  /*
+   * ranlib - create table of contents for archive; string table version
+   */
+  #include <sys/types.h>
++>#include <sys/stat.h>
+  #include <ar.h>
+  #include <ranlib.h>
+  #include <a.out.h>
+***************
+*** 30,38 ****
+--- 18,30 ----
+  FILE	*fi, *fo;
+  long	off, oldoff;
+  long	atol(), ftell();
+!<#define TABSZ	3000
+  int	tnum;
+!<#define	STRTABSZ	30000
+  int	tssiz;
+  char	*strtab;
+  int	ssiz;
+---------------
+  FILE	*fi, *fo;
+  long	off, oldoff;
+  long	atol(), ftell();
+!>#define TABSZ	6000
+!>int	tabsz = TABSZ;
+!>struct	ranlib *tab;
+  int	tnum;
+!>#define	STRTABSZ	75000
+!>int	strtabsz = STRTABSZ;
+!>char	*tstrtab;
+  int	tssiz;
+  char	*strtab;
+  int	ssiz;
+***************
+*** 39,63 ****
+--- 31,37 ----
+  int	new;
+  char	tempnm[] = "__.SYMDEF";
+  char	firstname[17];
+-<void	stash();
+-<char *malloc(), *calloc();
+  
+-</*
+-< * table segment definitions
+-< */
+-<char	*segalloc();
+-<void	segclean();
+-<struct	tabsegment {
+-<	struct tabsegment	*pnext;
+-<	unsigned		nelem;
+-<	struct ranlib		tab[TABSZ];
+-<} tabbase, *ptabseg;
+-<struct	strsegment {
+-<	struct strsegment	*pnext;
+-<	unsigned		nelem;
+-<	char			stab[STRTABSZ];
+-<} strbase, *pstrseg;
+-<
+  main(argc, argv)
+  char **argv;
+  {
+---------------
+  main(argc, argv)
+  char **argv;
+  {
+***************
+*** 65,82 ****
+--- 39,52 ----
+  	/* magbuf must be an int array so it is aligned on an int-ish
+  	   boundary, so that we may access its first word as an int! */
+  	int magbuf[(SARMAG+sizeof(int))/sizeof(int)];
+-<	register int just_touch = 0;
+-<	register struct tabsegment *ptab;
+-<	register struct strsegment *pstr;
+  
+-<	/* check for the "-t" flag" */
+-<	if (argc > 1 && strcmp(argv[1], "-t") == 0) {
+-<		just_touch++;
+-<		argc--;
+-<		argv++;
+-<	}
+-<
+  	--argc;
+  	while(argc--) {
+  		fi = fopen(*++argv,"r");
+  		if (fi == NULL) {
+---------------
+  	/* magbuf must be an int array so it is aligned on an int-ish
+  	   boundary, so that we may access its first word as an int! */
+  	int magbuf[(SARMAG+sizeof(int))/sizeof(int)];
+  
+  	--argc;
++>	/* allocate initial buffers */
++>	if ( (tab= (struct ranlib *)malloc( TABSZ*sizeof *tab )) == 0 
++>	||   (tstrtab = (char *)malloc( STRTABSZ*sizeof *tstrtab)) == 0 ) {
++>		fprintf(stderr, "ranlib: cannot allocate buffers\n");
++>		exit(1);
++>	} 
+  	while(argc--) {
+  		fi = fopen(*++argv,"r");
+  		if (fi == NULL) {
+***************
+*** 93,120 ****
+--- 63,70 ----
+  			fprintf(stderr, "archive: %s\n", *argv);
+  			continue;
+  		}
+-<		if (just_touch) {
+-<			register int	len;
+-<
+-<			fseek(fi, (long) SARMAG, 0);
+-<			if (fread(cmdbuf, sizeof archdr.ar_name, 1, fi) != 1) {
+-<				fprintf(stderr, "malformed archive: %s\n",
+-<					*argv);
+-<				continue;
+-<			}
+-<			len = strlen(tempnm);
+-<			if (bcmp(cmdbuf, tempnm, len) != 0 ||
+-<			    cmdbuf[len] != ' ') {
+-<				fprintf(stderr, "no symbol table: %s\n", *argv);
+-<				continue;
+-<			}
+-<			fclose(fi);
+-<			fixdate(*argv);
+-<			continue;
+-<		}
+  		fseek(fi, 0L, 0);
+!<		new = tssiz = tnum = 0;
+!<		segclean();
+  		if (nextel(fi) == 0) {
+  			fclose(fi);
+  			continue;
+---------------
+  			fprintf(stderr, "archive: %s\n", *argv);
+  			continue;
+  		}
+  		fseek(fi, 0L, 0);
+!>		new = tnum = 0;
+  		if (nextel(fi) == 0) {
+  			fclose(fi);
+  			continue;
+***************
+*** 127,134 ****
+--- 77,82 ----
+  			fread((char *)&exp, 1, sizeof(struct exec), fi);
+  			if (N_BADMAG(exp))
+  				continue;
+-<			if (!strncmp(tempnm, archdr.ar_name, sizeof(archdr.ar_name)))
+-<				continue;
+  			if (exp.a_syms == 0) {
+  				fprintf(stderr, "ranlib: warning: %s(%s): no symbol table\n", *argv, archdr.ar_name);
+  				continue;
+---------------
+  			if (exp.a_syms == 0) {
+  				fprintf(stderr, "ranlib: warning: %s(%s): no symbol table\n", *argv, archdr.ar_name);
+  				continue;
+***************
+*** 135,149 ****
+--- 83,97 ----
+  			}
+  			o = N_STROFF(exp) - sizeof (struct exec);
+  			if (ftell(fi)+o+sizeof(ssiz) >= off) {
+!<				fprintf(stderr, "ranlib: warning: %s(%s): old format .o file\n", *argv, archdr.ar_name);
+!<				continue;
+  			}
+  			fseek(fi, o, 1);
+  			fread((char *)&ssiz, 1, sizeof (ssiz), fi);
+  			if (ssiz < sizeof ssiz){
+  				/* sanity check */
+!<				fprintf(stderr, "ranlib: warning: %s(%s): mangled string table\n", *argv, archdr.ar_name);
+!<				continue;
+  			}
+  			strtab = (char *)calloc(1, ssiz);
+  			if (strtab == 0) {
+---------------
+  			}
+  			o = N_STROFF(exp) - sizeof (struct exec);
+  			if (ftell(fi)+o+sizeof(ssiz) >= off) {
+!>				fprintf(stderr, "ranlib: %s(%s): old format .o file\n", *argv, archdr.ar_name);
+!>				exit(1);
+  			}
+  			fseek(fi, o, 1);
+  			fread((char *)&ssiz, 1, sizeof (ssiz), fi);
+  			if (ssiz < sizeof ssiz){
+  				/* sanity check */
+!>				fprintf(stderr, "ranlib: %s(%s): mangled string table\n", *argv, archdr.ar_name);
+!>				exit(1);
+  			}
+  			strtab = (char *)calloc(1, ssiz);
+  			if (strtab == 0) {
+***************
+*** 172,178 ****
+--- 120,125 ----
+  					continue;
+  				}
+  			}
+-<			free(strtab);
+  		} while(nextel(fi));
+  		new = fixsize();
+  		fclose(fi);
+---------------
+  		} while(nextel(fi));
+  		new = fixsize();
+  		fclose(fi);
+***************
+*** 184,202 ****
+--- 131,139 ----
+  		tnum *= sizeof (struct ranlib);
+  		fwrite(&tnum, 1, sizeof (tnum), fo);
+  		tnum /= sizeof (struct ranlib);
+!<		ptab = &tabbase;
+!<		do {
+!<			fwrite((char *)ptab->tab, ptab->nelem,
+!<			    sizeof(struct ranlib), fo);
+!<		} while (ptab = ptab->pnext);
+  		fwrite(&tssiz, 1, sizeof (tssiz), fo);
+!<		pstr = &strbase;
+!<		do {
+!<			fwrite(pstr->stab, pstr->nelem, 1, fo);
+!<			tssiz -= pstr->nelem;
+!<		} while (pstr = pstr->pnext);
+!<		/* pad with nulls */
+!<		while (tssiz--) putc('\0', fo);
+  		fclose(fo);
+  		if(new)
+  			sprintf(cmdbuf, "ar rlb %s %s %s\n", firstname, *argv, tempnm);
+---------------
+  		tnum *= sizeof (struct ranlib);
+  		fwrite(&tnum, 1, sizeof (tnum), fo);
+  		tnum /= sizeof (struct ranlib);
+!>		fwrite((char *)tab, tnum, sizeof(struct ranlib), fo);
+  		fwrite(&tssiz, 1, sizeof (tssiz), fo);
+!>		fwrite(tstrtab, tssiz, 1, fo);
+  		fclose(fo);
+  		if(new)
+  			sprintf(cmdbuf, "ar rlb %s %s %s\n", firstname, *argv, tempnm);
+***************
+*** 232,345 ****
+--- 169,206 ----
+  	return(1);
+  }
+  
+-<void
+  stash(s)
+  	struct nlist *s;
+  {
+  	register char *cp;
+-<	register char *strtab;
+-<	register strsiz;
+-<	register struct ranlib *tab;
+-<	register tabsiz;
+  
+!<	if (ptabseg->nelem >= TABSZ) {
+!<		/* allocate a new symbol table segment */
+!<		ptabseg = ptabseg->pnext =
+!<		    (struct tabsegment *) segalloc(sizeof(struct tabsegment));
+!<		ptabseg->pnext = NULL;
+!<		ptabseg->nelem = 0;
+  	}
+-<	tabsiz = ptabseg->nelem;
+-<	tab = ptabseg->tab;
+-<
+-<	if (pstrseg->nelem >= STRTABSZ) {
+-<		/* allocate a new string table segment */
+-<		pstrseg = pstrseg->pnext =
+-<		    (struct strsegment *) segalloc(sizeof(struct strsegment));
+-<		pstrseg->pnext = NULL;
+-<		pstrseg->nelem = 0;
+  	}
+!<	strsiz = pstrseg->nelem;
+!<	strtab = pstrseg->stab;
+!<
+!<	tab[tabsiz].ran_un.ran_strx = tssiz;
+!<	tab[tabsiz].ran_off = oldoff;
+!<redo:
+!<	for (cp = s->n_un.n_name; strtab[strsiz++] = *cp++;)
+!<		if (strsiz >= STRTABSZ) {
+!<			/* allocate a new string table segment */
+!<			pstrseg = pstrseg->pnext =
+!<			    (struct strsegment *) segalloc(sizeof(struct strsegment));
+!<			pstrseg->pnext = NULL;
+!<			strsiz = pstrseg->nelem = 0;
+!<			strtab = pstrseg->stab;
+!<			goto redo;
+!<		}
+!<
+!<	tssiz += strsiz - pstrseg->nelem; /* length of the string */
+!<	pstrseg->nelem = strsiz;
+!<	tnum++;
+!<	ptabseg->nelem++;
+!<}
+!<
+!</* allocate a zero filled segment of size bytes */
+!<char *
+!<segalloc(size)
+!<unsigned size;
+!<{
+!<	char *pseg = NULL;
+!<
+!<	pseg = malloc(size);
+!<	if (pseg == NULL) {
+!<		fprintf(stderr, "ranlib: ran out of memeory\n");
+  		exit(1);
+  	}
+-<	return(pseg);
+  }
+!<
+!</* free segments */
+!<void
+!<segclean()
+!<{
+!<	register struct tabsegment *ptab;
+!<	register struct strsegment *pstr;
+!<
+!<	/*
+!<	 * symbol table
+!<	 *
+!<	 * The first entry is static.
+!<	 */
+!<	ptabseg = &tabbase;
+!<	ptab = ptabseg->pnext;
+!<	while (ptabseg = ptab) {
+!<		ptab = ptabseg->pnext;
+!<		free((char *)ptabseg);
+  	}
+-<	ptabseg = &tabbase;
+-<	ptabseg->pnext = NULL;
+-<	ptabseg->nelem = 0;
+  
+-<	/*
+-<	 * string table
+-<	 *
+-<	 * The first entry is static.
+-<	 */
+-<	pstrseg = &strbase;
+-<	pstr = pstrseg->pnext;
+-<	while (pstrseg = pstr) {
+-<		pstr = pstrseg->pnext;
+-<		free((char *)pstrseg);
+-<	}
+-<	pstrseg = &strbase;
+-<	pstrseg->pnext = NULL;
+-<	pstrseg->nelem = 0;
+-<}
+-<
+  fixsize()
+  {
+  	int i;
+  	off_t offdelta;
+-<	register struct tabsegment *ptab;
+  
+  	if (tssiz&1)
+  		tssiz++;
+---------------
+  	return(1);
+  }
+  
+  stash(s)
+  	struct nlist *s;
+  {
++>	int i;
+  	register char *cp;
+  
+!>	if (tnum >= tabsz) {
+!>		tabsz *= 2;
+!>		tab = (struct ranlib *)realloc( tab, tabsz*sizeof *tab );
+!>		if (tab == 0){
+!>			fprintf(stderr, "ranlib: symbol table overflow\n");
+!>			exit(1);
+  		}
+  	}
+!>	tab[tnum].ran_un.ran_strx = tssiz;
+!>	tab[tnum].ran_off = oldoff;
+!>	for (cp = s->n_un.n_name; tstrtab[tssiz++] = *cp++;)
+!>		if (tssiz > strtabsz) {
+!>			strtabsz *= 2;
+!>			tstrtab = (char *)realloc( tstrtab, strtabsz*sizeof *tstrtab);
+!>			if (tstrtab == 0) {
+!>				fprintf(stderr, "ranlib: string table overflow\n");
+  				exit(1);
+  			}
+  		}
+!>	tnum++;
+  }
+  
+  fixsize()
+  {
+  	int i;
+  	off_t offdelta;
+  
+  	if (tssiz&1)
+  		tssiz++;
+***************
+*** 354,364 ****
+--- 215,222 ----
+  		new = 1;
+  		strncpy(firstname, archdr.ar_name, sizeof(archdr.ar_name));
+  	}
+!<	ptab = &tabbase;
+!<	do {
+!<		for (i = 0; i < ptab->nelem; i++)
+!<			ptab->tab[i].ran_off += offdelta;
+!<	} while (ptab = ptab->pnext);
+  	return(new);
+  }
+  
+---------------
+  		new = 1;
+  		strncpy(firstname, archdr.ar_name, sizeof(archdr.ar_name));
+  	}
+!>	for(i=0; i<tnum; i++)
+!>		tab[i].ran_off += offdelta;
+  	return(new);
+  }
+  
+***************
+*** 368,374 ****
+--- 226,233 ----
+  {
+  	long time();
+  	char buf[24];
+!<	int fd;
+  
+  	fd = open(s, 1);
+  	if(fd < 0) {
+---------------
+  {
+  	long time();
+  	char buf[24];
+!>	int fd, tm;
+!>	struct stat stat;
+  
+  	fd = open(s, 1);
+  	if(fd < 0) {
+***************
+*** 375,381 ****
+--- 234,246 ----
+  		fprintf(stderr, "ranlib: can't reopen %s\n", s);
+  		return;
+  	}
+!<	sprintf(buf, "%-*ld", sizeof(archdr.ar_date), time((long *)NULL)+5);
+  	lseek(fd, (long)SARMAG + ((char *)archdr.ar_date-(char *)&archdr), 0);
+  	write(fd, buf, sizeof(archdr.ar_date));
+  	close(fd);
+---------------
+  		fprintf(stderr, "ranlib: can't reopen %s\n", s);
+  		return;
+  	}
+!>	if (fstat(fd, &stat) < 0) {
+!>		fprintf(stderr, "ranlib: can't stat %s\n", s);
+!>		return;
+!>	}
+!>	tm = time((long *)NULL);
+!>	tm = (tm > stat.st_mtime) ? tm : stat.st_mtime;
+!>        sprintf(buf, "%-*ld", sizeof(archdr.ar_date), tm + 5);
+  	lseek(fd, (long)SARMAG + ((char *)archdr.ar_date-(char *)&archdr), 0);
+  	write(fd, buf, sizeof(archdr.ar_date));
+  	close(fd);

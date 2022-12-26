@@ -1,0 +1,17 @@
+ps: ps.c /usr/include/stdio.h /usr/include/ctype.h /usr/include/a.out.h
+ps: /usr/include/sys/exec.h /usr/include/pwd.h /usr/include/sys/param.h
+ps: /usr/include/machine/machparam.h /usr/include/signal.h
+ps: /usr/include/sys/types.h /usr/include/sys/ioctl.h
+ps: /usr/include/sys/ttychars.h /usr/include/sys/ttydev.h
+ps: /usr/include/sys/tty.h /usr/include/sys/ttychars.h
+ps: /usr/include/sys/ttydev.h /usr/include/sys/dir.h /usr/include/sys/user.h
+ps: /usr/include/machine/pcb.h /usr/include/sys/dmap.h /usr/include/sys/time.h
+ps: /usr/include/time.h /usr/include/sys/resource.h /usr/include/errno.h
+ps: /usr/include/sys/proc.h /usr/include/machine/pte.h /usr/include/sys/vm.h
+ps: /usr/include/sys/vmparam.h /usr/include/machine/vmparam.h
+ps: /usr/include/sys/vmmac.h /usr/include/sys/vmmeter.h
+ps: /usr/include/sys/vmsystm.h /usr/include/sys/text.h /usr/include/sys/stat.h
+ps: /usr/include/sys/mbuf.h /usr/include/math.h /usr/include/errno.h
+ps: /usr/include/utmp.h
+
+

@@ -1,0 +1,52 @@
+HEAD	ar.c	/^#define	HEAD	8$/
+IFMT	ar.c	/^#define	IFMT	060000$/
+IODD	ar.c	/^#define	IODD	2$/
+ISARG	ar.c	/^#define	ISARG	01000$/
+LARGE	ar.c	/^#define	LARGE	010000$/
+Mar	ar.c	/^main(/
+OODD	ar.c	/^#define	OODD	4$/
+RGRP	ar.c	/^#define	RGRP	040$/
+ROTH	ar.c	/^#define	ROTH	04$/
+ROWN	ar.c	/^#define	ROWN	0400$/
+SGID	ar.c	/^#define	SGID	02000$/
+SKIP	ar.c	/^#define	SKIP	1$/
+STXT	ar.c	/^#define	STXT	01000$/
+SUID	ar.c	/^#define	SUID	04000$/
+WGRP	ar.c	/^#define	WGRP	020$/
+WOTH	ar.c	/^#define	WOTH	02$/
+WOWN	ar.c	/^#define	WOWN	0200$/
+XGRP	ar.c	/^#define	XGRP	010$/
+XOTH	ar.c	/^#define	XOTH	01$/
+XOWN	ar.c	/^#define	XOWN	0100$/
+bamatch	ar.c	/^bamatch(/
+cleanup	ar.c	/^cleanup(/
+copyfil	ar.c	/^copyfil(/
+dcmd	ar.c	/^dcmd(/
+done	ar.c	/^done(/
+getaf	ar.c	/^getaf(/
+getdir	ar.c	/^getdir(/
+getqf	ar.c	/^getqf(/
+init	ar.c	/^init(/
+install	ar.c	/^install(/
+longt	ar.c	/^longt(/
+match	ar.c	/^match(/
+mcmd	ar.c	/^mcmd(/
+mesg	ar.c	/^mesg(/
+morefil	ar.c	/^morefil(/
+movefil	ar.c	/^movefil(/
+noar	ar.c	/^noar(/
+notfound	ar.c	/^notfound(/
+pcmd	ar.c	/^pcmd(/
+phserr	ar.c	/^phserr(/
+pmode	ar.c	/^pmode(/
+qcmd	ar.c	/^qcmd(/
+rcmd	ar.c	/^rcmd(/
+select	ar.c	/^select(/
+setcom	ar.c	/^setcom(/
+sigdone	ar.c	/^sigdone(/
+stats	ar.c	/^stats(/
+tcmd	ar.c	/^tcmd(/
+trim	ar.c	/^trim(/
+usage	ar.c	/^usage(/
+wrerr	ar.c	/^wrerr(/
+xcmd	ar.c	/^xcmd(/

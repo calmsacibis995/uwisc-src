@@ -1,0 +1,3 @@
+/usr/local/restreq root system 0664
+/etc/motd root system 0664
+/etc/ root system 0755

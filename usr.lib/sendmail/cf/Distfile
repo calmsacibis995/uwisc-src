@@ -1,0 +1,233 @@
+##
+##  Wisconsin Sendmail Configuration file Distfile
+##
+
+american: ( /usr/lib/sendmail /usr/lib/send.local localcf/american ) -> american
+	install /usr/lib;
+	special localcf/american "mv /usr/lib/american /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+amul: ( /usr/lib/sendmail /usr/lib/send.local localcf/amul ) -> amul
+	install /usr/lib;
+	special localcf/amul "mv /usr/lib/amul /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+asiago: ( /usr/lib/sendmail /usr/lib/send.local localcf/asiago ) -> asiago
+	install /usr/lib;
+	special localcf/asiago "mv /usr/lib/asiago /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+balder: ( /usr/lib/sendmail /usr/lib/send.local localcf/balder ) -> balder
+	install /usr/lib;
+	special localcf/balder "mv /usr/lib/balder /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+bleu: ( /usr/lib/sendmail /usr/lib/send.local localcf/bleu ) -> bleu
+	install /usr/lib;
+	special localcf/bleu "mv /usr/lib/bleu /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+boursin: ( /usr/lib/sendmail /usr/lib/send.local localcf/boursin ) -> boursin
+	install /usr/lib;
+	special localcf/boursin "mv /usr/lib/boursin /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+brick: ( /usr/lib/sendmail /usr/lib/send.local localcf/brick ) -> brick
+	install /usr/lib;
+	special localcf/brick "mv /usr/lib/brick /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+brie: ( /usr/lib/sendmail /usr/lib/send.local localcf/brie ) -> brie
+	install /usr/lib;
+	special localcf/brie "mv /usr/lib/brie /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+cabrales: ( /usr/lib/sendmail /usr/lib/send.local localcf/cabrales ) -> cabrales
+	install /usr/lib;
+	special localcf/cabrales "mv /usr/lib/cabrales /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+camembert: ( /usr/lib/sendmail /usr/lib/send.local localcf/camembert ) -> camembert
+	install /usr/lib;
+	special localcf/camembert "mv /usr/lib/camembert /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+caseus: ( /usr/lib/sendmail /usr/lib/send.local localcf/caseus ) -> caseus
+	install /usr/lib;
+	special localcf/caseus "mv /usr/lib/caseus /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+cheddar: ( /usr/lib/sendmail /usr/lib/send.local localcf/cheddar ) -> cheddar
+	install /usr/lib;
+	special localcf/cheddar "mv /usr/lib/cheddar /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+cheshire: ( /usr/lib/sendmail /usr/lib/send.local localcf/cheshire ) -> cheshire
+	install /usr/lib;
+	special localcf/cheshire "mv /usr/lib/cheshire /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+chevre: ( /usr/lib/sendmail /usr/lib/send.local localcf/chevre ) -> chevre
+	install /usr/lib;
+	special localcf/chevre "mv /usr/lib/chevre /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+cojack: ( /usr/lib/sendmail /usr/lib/send.local localcf/cojack ) -> cojack
+	install /usr/lib;
+	special localcf/cojack "mv /usr/lib/cojack /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+colby: ( /usr/lib/sendmail /usr/lib/send.local localcf/colby ) -> colby
+	install /usr/lib;
+	special localcf/colby "mv /usr/lib/colby /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+cottage: ( /usr/lib/sendmail /usr/lib/send.local localcf/cottage ) -> cottage
+	install /usr/lib;
+	special localcf/cottage "mv /usr/lib/cottage /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+cream: ( /usr/lib/sendmail /usr/lib/send.local localcf/cream ) -> cream
+	install /usr/lib;
+	special localcf/cream "mv /usr/lib/cream /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+curds: ( /usr/lib/sendmail /usr/lib/send.local localcf/curds ) -> curds
+	install /usr/lib;
+	special localcf/curds "mv /usr/lib/curds /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+edam: ( /usr/lib/sendmail /usr/lib/send.local localcf/edam ) -> edam
+	install /usr/lib;
+	special localcf/edam "mv /usr/lib/edam /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+enmenthaler: ( /usr/lib/sendmail /usr/lib/send.local localcf/enmenthaler ) -> enmenthaler
+	install /usr/lib;
+	special localcf/enmenthaler "mv /usr/lib/enmenthaler /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+farmer: ( /usr/lib/sendmail /usr/lib/send.local localcf/farmer ) -> farmer
+	install /usr/lib;
+	special localcf/farmer "mv /usr/lib/farmer /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+feta: ( /usr/lib/sendmail /usr/lib/send.local localcf/feta ) -> feta
+	install /usr/lib;
+	special localcf/feta "mv /usr/lib/feta /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+fontina: ( /usr/lib/sendmail /usr/lib/send.local localcf/fontina ) -> fontina
+	install /usr/lib;
+	special localcf/fontina "mv /usr/lib/fontina /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+gjetost: ( /usr/lib/sendmail /usr/lib/send.local localcf/gjetost ) -> gjetost
+	install /usr/lib;
+	special localcf/gjetost "mv /usr/lib/gjetost /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+goat: ( /usr/lib/sendmail /usr/lib/send.local localcf/goat ) -> goat
+	install /usr/lib;
+	special localcf/goat "mv /usr/lib/goat /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+gorgonzola: ( /usr/lib/sendmail /usr/lib/send.local localcf/gorgonzola ) -> gorgonzola
+	install /usr/lib;
+	special localcf/gorgonzola "mv /usr/lib/gorgonzola /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+gouda: ( /usr/lib/sendmail /usr/lib/send.local localcf/gouda ) -> gouda
+	install /usr/lib;
+	special localcf/gouda "mv /usr/lib/gouda /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+gruyere: ( /usr/lib/sendmail /usr/lib/send.local localcf/gruyere ) -> gruyere
+	install /usr/lib;
+	special localcf/gruyere "mv /usr/lib/gruyere /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+havarti: ( /usr/lib/sendmail /usr/lib/send.local localcf/havarti ) -> havarti
+	install /usr/lib;
+	special localcf/havarti "mv /usr/lib/havarti /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+head: ( /usr/lib/sendmail /usr/lib/send.local localcf/head ) -> head
+	install /usr/lib;
+	special localcf/head "mv /usr/lib/head /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+jack: ( /usr/lib/sendmail /usr/lib/send.local localcf/jack ) -> jack
+	install /usr/lib;
+	special localcf/jack "mv /usr/lib/jack /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+jalapeno: ( /usr/lib/sendmail /usr/lib/send.local localcf/jalapeno ) -> jalapeno
+	install /usr/lib;
+	special localcf/jalapeno "mv /usr/lib/jalapeno /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+kaese: ( /usr/lib/sendmail /usr/lib/send.local localcf/kaese ) -> kaese
+	install /usr/lib;
+	special localcf/kaese "mv /usr/lib/kaese /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+kasseri: ( /usr/lib/sendmail /usr/lib/send.local localcf/kasseri ) -> kasseri
+	install /usr/lib;
+	special localcf/kasseri "mv /usr/lib/kasseri /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+kraft-slices: ( /usr/lib/sendmail /usr/lib/send.local localcf/kraft-slices ) -> kraft-slices
+	install /usr/lib;
+	special localcf/kraft-slices "mv /usr/lib/kraft-slices /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+lowfat: ( /usr/lib/sendmail /usr/lib/send.local localcf/lowfat ) -> lowfat
+	install /usr/lib;
+	special localcf/lowfat "mv /usr/lib/lowfat /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+manchego: ( /usr/lib/sendmail /usr/lib/send.local localcf/manchego ) -> manchego
+	install /usr/lib;
+	special localcf/manchego "mv /usr/lib/manchego /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+monterey: ( /usr/lib/sendmail /usr/lib/send.local localcf/monterey ) -> monterey
+	install /usr/lib;
+	special localcf/montery "mv /usr/lib/monterey /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+mozzarella: ( /usr/lib/sendmail /usr/lib/send.local localcf/mozzarella ) -> mozzarella
+	install /usr/lib;
+	special localcf/mozzarella "mv /usr/lib/mozzarella /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+muenster: ( /usr/lib/sendmail /usr/lib/send.local localcf/muenster ) -> muenster
+	install /usr/lib;
+	special localcf/muenster "mv /usr/lib/muenster /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+nacho: ( /usr/lib/sendmail /usr/lib/send.local localcf/nacho ) -> nacho
+	install /usr/lib;
+	special localcf/nacho "mv /usr/lib/nacho /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+obatzter: ( /usr/lib/sendmail /usr/lib/send.local localcf/obatzter ) -> obatzter
+	install /usr/lib;
+	special localcf/obatzter "mv /usr/lib/obatzter /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+oka: ( /usr/lib/sendmail /usr/lib/send.local localcf/oka ) -> oka
+	install /usr/lib;
+	special localcf/oka "mv /usr/lib/oka /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+parmesan: ( /usr/lib/sendmail /usr/lib/send.local localcf/parmesan ) -> parmesan
+	install /usr/lib;
+	special localcf/parmesan "mv /usr/lib/parmesan /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+provolone: ( /usr/lib/sendmail /usr/lib/send.local localcf/provolone ) -> provolone
+	install /usr/lib;
+	special localcf/provolone "mv /usr/lib/provolone /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+quark: ( /usr/lib/sendmail /usr/lib/send.local localcf/quark ) -> quark
+	install /usr/lib;
+	special localcf/quark "mv /usr/lib/quark /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+ricotta: ( /usr/lib/sendmail /usr/lib/send.local localcf/ricotta ) -> ricotta
+	install /usr/lib;
+	special localcf/ricotta "mv /usr/lib/ricotta /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+romano: ( /usr/lib/sendmail /usr/lib/send.local localcf/romano ) -> romano
+	install /usr/lib;
+	special localcf/romano "mv /usr/lib/romano /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+rondele: ( /usr/lib/sendmail /usr/lib/send.local localcf/rondele ) -> rondele
+	install /usr/lib;
+	special localcf/rondele "mv /usr/lib/rondele /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+roquefort: ( /usr/lib/sendmail /usr/lib/send.local localcf/roquefort ) -> roquefort
+	install /usr/lib;
+	special localcf/roquefort "mv /usr/lib/roquefort /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+saga: ( /usr/lib/sendmail /usr/lib/send.local localcf/saga ) -> saga
+	install /usr/lib;
+	special localcf/saga "mv /usr/lib/saga /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+stilton: ( /usr/lib/sendmail /usr/lib/send.local localcf/stilton ) -> stilton
+	install /usr/lib;
+	special localcf/stilton "mv /usr/lib/stilton /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+string: ( /usr/lib/sendmail /usr/lib/send.local localcf/string ) -> string
+	install /usr/lib;
+	special localcf/string "mv /usr/lib/string /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+swiss: ( /usr/lib/sendmail /usr/lib/send.local localcf/swiss ) -> swiss
+	install /usr/lib;
+	special localcf/swiss "mv /usr/lib/swiss /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+tomb: ( /usr/lib/sendmail /usr/lib/send.local localcf/tomb ) -> tomb
+	install /usr/lib;
+	special localcf/tomb "mv /usr/lib/tomb /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+velveeta: ( /usr/lib/sendmail /usr/lib/send.local localcf/velveeta ) -> velveeta
+	install /usr/lib;
+	special localcf/velveeta "mv /usr/lib/velveeta /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+whiz: ( /usr/lib/sendmail /usr/lib/send.local localcf/whiz ) -> whiz
+	install /usr/lib;
+	special localcf/whiz "mv /usr/lib/whiz /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+frigg: ( /usr/lib/sendmail /usr/lib/send.local localcf/frigg ) -> frigg
+	install /usr/lib;
+	special localcf/frigg "mv /usr/lib/frigg /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+odin: ( /usr/lib/sendmail /usr/lib/send.local localcf/odin ) -> odin
+	install /usr/lib;
+	special localcf/odin "mv /usr/lib/odin /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+limburger: ( /usr/lib/sendmail /usr/lib/send.local localcf/limburger ) -> limburger
+	install /usr/lib;
+	special localcf/limburger "mv /usr/lib/limburger /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+gumby: ( /usr/lib/sendmail /usr/lib/send.local localcf/gumby ) -> gumby
+	install /usr/lib;
+	special localcf/gumby "mv /usr/lib/gumby /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+pokey: ( /usr/lib/sendmail /usr/lib/send.local localcf/pokey ) -> pokey
+	install /usr/lib;
+	special localcf/pokey "mv /usr/lib/pokey /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+spool: ( /usr/lib/sendmail /usr/lib/send.local localcf/spool ) -> spool
+	install /usr/lib;
+	special localcf/spool "mv /usr/lib/spool /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+crys: ( /usr/lib/sendmail /usr/lib/send.local localcf/crys ) -> crys
+	install /usr/lib;
+	special localcf/crys "mv /usr/lib/crys /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+db: ( /usr/lib/sendmail /usr/lib/send.local localcf/db ) -> db
+	install /usr/lib;
+	special localcf/db "mv /usr/lib/db /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+rsch: ( /usr/lib/sendmail /usr/lib/send.local localcf/rsch ) -> rsch
+	install /usr/lib;
+	special localcf/rsch "mv /usr/lib/rsch /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+ai: ( /usr/lib/sendmail /usr/lib/send.local localcf/ai ) -> ai
+	install /usr/lib;
+	special localcf/ai "mv /usr/lib/ai /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+pipe: ( /usr/lib/sendmail /usr/lib/send.local localcf/pipe ) -> pipe
+	install /usr/lib;
+	special localcf/pipe "mv /usr/lib/pipe /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+dream: ( /usr/lib/sendmail /usr/lib/send.local localcf/dream ) -> dream
+	install /usr/lib;
+	special localcf/dream "mv /usr/lib/dream /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+wisc-gateway: ( /usr/lib/sendmail /usr/lib/send.local localcf/wisc-gateway ) -> wisc-gateway
+	install /usr/lib;
+	special localcf/wisc-gateway "mv /usr/lib/wisc-gateway /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+#stat: ( /usr/lib/sendmail /usr/lib/send.local localcf/stat ) -> stat
+#	install /usr/lib;
+#	special localcf/stat "mv /usr/lib/stat /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+#gosset: ( /usr/lib/sendmail /usr/lib/send.local localcf/gosset ) -> gosset
+#	install /usr/lib;
+#	special localcf/gosset "mv /usr/lib/gosset /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+puff: ( /usr/lib/send.local localcf/puff ) -> puff
+	install /usr/lib;
+	special localcf/puff "mv /usr/lib/puff /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+
+inst: ( /usr/lib/sendmail /usr/lib/send.local localcf/inst2 ) ->
+	( inst1 inst2 inst3 inst4 inst5 inst6 inst7 inst8 inst9 inst10
+	inst11 inst12 inst13 inst14 inst15 )
+	install /usr/lib;
+	special localcf/inst2 "mv /usr/lib/inst2 /usr/lib/sendmail.cf ; chown root.daemon /usr/lib/sendmail.cf ; /usr/lib/sendmail -bz";
+

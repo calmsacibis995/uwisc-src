@@ -1,0 +1,14 @@
+#! /bin/csh -f
+echo $1
+ex - $1 <<EOF
+/rcs_id
+d
+d
+i
+	.text
+_rcsid: .asciz "\$Header:\$"
+	.data
+.
+w
+q
+EOF

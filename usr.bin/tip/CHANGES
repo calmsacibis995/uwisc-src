@@ -1,0 +1,23 @@
+Added code to dial in and out on same modem. (Compatible with uucp).
+
+Updated locking code to use the same as uucp.
+
+Added a working Hayes dialer.
+
+A change has been included to allow comma
+separated entries in the "va" field of the remote file.  This is the field
+that specifies the dialer type.  With more dialers available it is more likely
+that they will be of different types.  If the number of "va" subfields is less
+than the number of "dv" (i.e. device name) fields the device type that of
+the last previously specified device.
+Example from our own /etc/remote:
+	:dv=/dev/ttyd2,/dev/ttyd1,/dev/ttyd0:at=hayes,vadic:
+The first modem /dev/ttyd2 is a hayes.  The second two modems /dev/ttyd1 and
+/dev/ttyd0 are vadics.
+
+It is assumed in tip that the dialin/dialout devices have names /dev/ttyd?.
+Other names will require modifications.
+
+Added variable "toscreen" which echos the data being ~< or ~> to the
+screen to make old "cu" users happier. Default is off (don't echo to the
+screen)

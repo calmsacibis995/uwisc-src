@@ -1,0 +1,72 @@
+***************
+*** 2,7
+  /* $Header: init.c,v 4.3.1.3 85/07/23 18:08:36 lwall Exp $
+   *
+   * $Log:	init.c,v $
+   * Revision 4.3.1.3  85/07/23  18:08:36  lwall
+   * Fixed up NOLINEBUF option to work.
+   * 
+
+--- 2,10 -----
+  /* $Header: init.c,v 4.3.1.4 86/09/05 14:24:02 lwall Exp $
+   *
+   * $Log:	init.c,v $
++  * Revision 4.3.1.4  86/09/05  14:24:02  lwall
++  * Removed net.announce dependency.
++  * 
+   * Revision 4.3.1.3  85/07/23  18:08:36  lwall
+   * Fixed up NOLINEBUF option to work.
+   * 
+***************
+*** 112,122
+  
+      free(tcbuf);			/* recover 1024 bytes */
+  
+-     /* make sure we are the right version */
+- 
+-     if (!checkflag)
+- 	version_check();
+- 
+      /* make sure we are the sole possessors of .newsrc */
+  
+      if (!checkflag)
+
+--- 115,120 -----
+  
+      free(tcbuf);			/* recover 1024 bytes */
+  
+      /* make sure we are the sole possessors of .newsrc */
+  
+      if (!checkflag)
+***************
+*** 309,331
+  	    putchar('\n') FLUSH;
+  	}
+  	fclose(tmpfp);
+-     }
+- }
+- 
+- void
+- version_check()
+- {
+-     set_ngname("net.announce");
+-     if (access(ngdir,0)) {
+- #ifdef VERBOSE
+- 	IF(verbose)
+- 	    fputs("Can't find net.announce.  Wrong news version?\n",stdout)
+- 	      FLUSH;
+- 	ELSE
+- #endif
+- #ifdef TERSE
+- 	    fputs("Wrong version?\n",stdout) FLUSH;
+- #endif
+- 	finalize(1);
+      }
+  }
+
+--- 307,311 -----
+  	    putchar('\n') FLUSH;
+  	}
+  	fclose(tmpfp);
+      }
+  }

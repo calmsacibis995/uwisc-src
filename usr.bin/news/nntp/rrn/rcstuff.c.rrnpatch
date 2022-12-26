@@ -1,0 +1,136 @@
+***************
+*** 25,30
+  #include "intrp.h"
+  #include "only.h"
+  #include "rcln.h"
+  #include "INTERN.h"
+  #include "rcstuff.h"
+  
+
+--- 25,31 -----
+  #include "intrp.h"
+  #include "only.h"
+  #include "rcln.h"
++ #include "server.h"
+  #include "INTERN.h"
+  #include "rcstuff.h"
+  
+***************
+*** 47,52
+      register bool foundany = FALSE;
+      char *some_buf;
+      long length;
+  
+  #ifdef HASHNG
+      for (i=0; i<HASHSIZ; i++)
+
+--- 48,56 -----
+      register bool foundany = FALSE;
+      char *some_buf;
+      long length;
++ #ifdef SERVER
++     char *cp;
++ #endif
+  
+  #ifdef HASHNG
+      for (i=0; i<HASHSIZ; i++)
+***************
+*** 55,60
+  
+      /* make filenames */
+  
+      rcname = savestr(filexp(RCNAME));
+      rctname = savestr(filexp(RCTNAME));
+      rcbname = savestr(filexp(RCBNAME));
+
+--- 59,68 -----
+  
+      /* make filenames */
+  
++ #ifdef SERVER
++     if (cp = getenv("NEWSRC"))
++     	rcname = savestr(filexp(cp));
++     else
+      	rcname = savestr(filexp(RCNAME));
+  #else	/* not SERVER */
+      rcname = savestr(filexp(RCNAME));
+***************
+*** 56,61
+      /* make filenames */
+  
+      rcname = savestr(filexp(RCNAME));
+      rctname = savestr(filexp(RCTNAME));
+      rcbname = savestr(filexp(RCBNAME));
+      softname = savestr(filexp(SOFTNAME));
+
+--- 64,72 -----
+      	rcname = savestr(filexp(cp));
+      else
+      	rcname = savestr(filexp(RCNAME));
++ #else	/* not SERVER */
++     rcname = savestr(filexp(RCNAME));
++ #endif
+      rctname = savestr(filexp(RCTNAME));
+      rcbname = savestr(filexp(RCBNAME));
+      softname = savestr(filexp(SOFTNAME));
+***************
+*** 225,230
+  {
+      char *ntoforget;
+      char promptbuf[128];
+  
+  #ifdef VERBOSE
+      IF(verbose)
+
+--- 236,244 -----
+  {
+      char *ntoforget;
+      char promptbuf[128];
++ #ifdef SERVER
++     char ser_line[256];
++ #endif
+  
+  #ifdef VERBOSE
+      IF(verbose)
+***************
+*** 242,247
+      set_ngname(what);
+      ng = find_ng(ngname);
+      if (ng == nextrcline) {		/* not in .newsrc? */
+  	if (eaccess(ngdir,0) ||
+  	    (softptr[ng] = findact(buf,ngname,strlen(ngname),0L)) < 0 ) {
+  	    dingaling();
+
+--- 256,262 -----
+      set_ngname(what);
+      ng = find_ng(ngname);
+      if (ng == nextrcline) {		/* not in .newsrc? */
++ #ifndef SERVER
+  	if (eaccess(ngdir,0) ||
+  	    (softptr[ng] = findact(buf,ngname,strlen(ngname),0L)) < 0 ) {
+  #else	/* SERVER */
+***************
+*** 244,249
+      if (ng == nextrcline) {		/* not in .newsrc? */
+  	if (eaccess(ngdir,0) ||
+  	    (softptr[ng] = findact(buf,ngname,strlen(ngname),0L)) < 0 ) {
+  	    dingaling();
+  #ifdef VERBOSE
+  	    IF(verbose)
+
+--- 259,273 -----
+  #ifndef SERVER
+  	if (eaccess(ngdir,0) ||
+  	    (softptr[ng] = findact(buf,ngname,strlen(ngname),0L)) < 0 ) {
++ #else	/* SERVER */
++ 	sprintf(ser_line, "GROUP %s", ngname);
++ 	put_server(ser_line);
++ 	if (get_server(ser_line, sizeof(ser_line)) < 0) {
++ 	    fprintf(stderr, "rrn: Unexpected close of server socket.\n");
++ 	    finalize(1);
++ 	}
++ 	if (*ser_line != CHAR_OK) {
++ #endif /* SERVER */
+  	    dingaling();
+  #ifdef VERBOSE
+  	    IF(verbose)

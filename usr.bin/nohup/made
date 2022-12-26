@@ -1,0 +1,2 @@
+install -c nohup.sh /usr/bin/nohup
+cp: /usr/bin/nohup: Permission denied

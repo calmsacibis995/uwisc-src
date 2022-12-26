@@ -1,0 +1,75 @@
+*** badsect.c	Mon Sep 15 14:56:22 1986
+--- /usr/staff/tadl/nfs/etc/badsect.c	Sun May 18 18:37:11 1986
+***************
+*** 1,19 ****
+--- 1,6 ----
+!</*
+!< * Copyright (c) 1983 Regents of the University of California.
+!< * All rights reserved.  The Berkeley software License Agreement
+!< * specifies the terms and conditions for redistribution.
+!< */
+  
+-<#ifndef lint
+-<char copyright[] =
+-<"@(#) Copyright (c) 1983 Regents of the University of California.\n\
+-< All rights reserved.\n";
+-<#endif not lint
+-<
+-<#ifndef lint
+-<static char sccsid[] = "@(#)badsect.c	5.2 (Berkeley) 6/24/85";
+-<#endif not lint
+-<
+  /*
+   * badsect
+   *
+---------------
+!>/* NFSSRC fix use of wrong h files @(#)badsect.c	1.2 86/04/17 */
+!>static	char *sccsid = "@(#)badsect.c	4.3 (Berkeley) 83/02/24";
+  
+  /*
+   * badsect
+   *
+***************
+*** 26,35 ****
+--- 13,24 ----
+   */
+  #include <stdio.h>
+  #include <sys/param.h>
+!<#include <sys/fs.h>
+  #include <sys/dir.h>
+  #include <sys/stat.h>
+-<#include <sys/inode.h>
+  
+  union {
+  	struct	fs fs;
+---------------
+   */
+  #include <stdio.h>
+  #include <sys/param.h>
+!>#include <sys/time.h>
+!>#include <sys/vnode.h>
+!>#include <ufs/inode.h>
+!>#include <ufs/fs.h>
+  #include <sys/dir.h>
+  #include <sys/stat.h>
+  
+  union {
+  	struct	fs fs;
+***************
+*** 138,144 ****
+--- 127,133 ----
+  	if (acg.cg_magic != CG_MAGIC) {
+  		fprintf(stderr, "cg %d: bad magic number\n", cg);
+  		errs++;
+!<		return (1);
+  	}
+  	bn = dtogd(fs, fsbn);
+  	if (isclr(acg.cg_free, bn))
+---------------
+  	if (acg.cg_magic != CG_MAGIC) {
+  		fprintf(stderr, "cg %d: bad magic number\n", cg);
+  		errs++;
+!>		return;
+  	}
+  	bn = dtogd(fs, fsbn);
+  	if (isclr(acg.cg_free, bn))

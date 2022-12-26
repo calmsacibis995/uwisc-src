@@ -1,0 +1,8 @@
+quot: quot.c /usr/include/stdio.h /usr/include/ctype.h /usr/include/sys/param.h
+quot: /usr/include/machine/machparam.h /usr/include/signal.h
+quot: /usr/include/sys/types.h /usr/include/sys/file.h /usr/include/fstab.h
+quot: /usr/include/pwd.h /usr/include/grp.h /usr/include/utmp.h
+quot: quot.c /usr/include/stdio.h /usr/include/ctype.h /usr/include/sys/param.h
+quot: /usr/include/machine/machparam.h /usr/include/signal.h
+quot: /usr/include/sys/types.h /usr/include/sys/file.h /usr/include/fstab.h
+quot: /usr/include/pwd.h /usr/include/grp.h /usr/include/utmp.h

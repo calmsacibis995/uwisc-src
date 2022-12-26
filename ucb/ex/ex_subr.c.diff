@@ -1,0 +1,57 @@
+diff ./ex_subr.c /usr/src/ucb/ex/ex_subr.c
+1,2c1,2
+< /* Copyright (c) 1980 Regents of the University of California */
+< static char *sccsid = "@(#)ex_subr.c	6.3 11/8/80";
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_subr.c	7.5	7/9/83";
+355c355
+< 	if (inopen && CE)
+---
+> 	if (inopen > 0 && CE)
+700d699
+< 	edited = 0;	/* for temp file errors, for example */
+877a877
+> 	alarm(0);	/* in case we were called from map */
+953a954
+> 	int omask;
+956,959c957
+< 	if(!value(FASTFG))
+< 		vnfl();
+< 	else
+< 		tostop();
+---
+> 	vnfl();
+962a961
+> 	(void) sigsetmask(0);
+977,980c976
+< 				if(value(FASTFG)) {
+< 					return;
+< 				} else
+< 					vclear();
+---
+> 				vclear();
+984d979
+< 		vcnt = 0;
+989,1007c984
+< #endif SIGTSTP
+< 
+< #ifdef USG3TTY
+< char *
+< rindex(s,c)
+< char *s,c;
+< {
+< 	char *strrchr();
+< 	return strrchr(s,c);
+< }
+< 
+< char *
+< index(s,c)
+< char *s,c;
+< {
+< 	char *strchr();
+< 	return strchr(s,c);
+< }
+< #endif USG3TTY
+---
+> #endif

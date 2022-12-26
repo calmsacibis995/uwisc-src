@@ -1,0 +1,171 @@
+cc -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DTIMEZONE=480 -DDST=1 -DMAXUSERS=8 ../vax/genassym.c
+./a.out >assym.s; rm -f a.out
+cc -M -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../net/af.c ../net/if.c ../net/if_loop.c ../net/raw_cb.c  ../net/raw_usrreq.c ../net/route.c ../netinet/if_ether.c  ../netinet/in.c ../netinet/in_pcb.c ../netinet/in_proto.c  ../netinet/ip_icmp.c ../netinet/ip_input.c  ../netinet/ip_output.c ../netinet/raw_ip.c  ../netinet/tcp_debug.c ../netinet/tcp_input.c  ../netinet/tcp_output.c ../netinet/tcp_subr.c  ../netinet/tcp_timer.c ../netinet/tcp_usrreq.c  ../netinet/udp_usrreq.c ../netns/idp_usrreq.c ../netns/ns.c  ../netns/ns_error.c ../netns/ns_ip.c ../netns/ns_input.c  ../netns/ns_output.c ../netns/ns_pcb.c ../netns/ns_proto.c  ../netns/spp_debug.c ../netns/spp_usrreq.c ../sys/heap_kmem.c  ../sys/init_main.c ../sys/init_sysent.c ../sys/kern_acct.c  ../sys/kern_clock.c ../sys/kern_descrip.c ../sys/kern_exec.c  ../sys/kern_exit.c ../sys/kern_fork.c ../sys/kern_mman.c  ../sys/kern_proc.c ../sys/kern_prot.c ../sys/kern_resource.c  ../sys/kern_sig.c ../sys/kern_subr.c ../sys/kern_synch.c  ../sys/kern_time.c ../sys/kern_xxx.c ../sys/subr_log.c  ../sys/subr_prf.c ../sys/subr_rmap.c ../sys/subr_xxx.c  ../sys/sys_generic.c ../sys/sys_process.c ../sys/sys_socket.c  ../sys/tty.c ../sys/tty_conf.c ../sys/tty_pty.c  ../sys/tty_subr.c ../sys/tty_tty.c ../sys/uipc_domain.c  ../sys/uipc_mbuf.c ../sys/uipc_proto.c ../sys/uipc_socket.c  ../sys/uipc_socket2.c ../sys/uipc_syscalls.c  ../sys/uipc_usrreq.c ../sys/vfs.c ../sys/vfs_bio.c  ../sys/vfs_conf.c ../sys/vfs_dev.c ../sys/vfs_dnlc.c  ../sys/vfs_io.c ../sys/vfs_lookup.c ../sys/vfs_pathname.c  ../sys/vfs_syscalls.c ../sys/vfs_vnode.c ../sys/vfs_xxx.c  ../sys/vm_drum.c ../sys/vm_mem.c ../sys/vm_mon.c  ../sys/vm_page.c ../sys/vm_proc.c ../sys/vm_pt.c  ../sys/vm_sched.c ../sys/vm_subr.c ../sys/vm_sw.c  ../sys/vm_swap.c ../sys/vm_swp.c ../sys/vm_text.c ../ufs/quota.c  ../ufs/quota_syscalls.c ../ufs/quota_ufs.c ../ufs/ufs_alloc.c  ../ufs/ufs_bmap.c ../ufs/ufs_dir.c ../ufs/ufs_dsort.c  ../ufs/ufs_inode.c ../ufs/ufs_subr.c ../ufs/ufs_tables.c  ../ufs/ufs_vfsops.c ../ufs/ufs_vnodeops.c ../vax/autoconf.c  ../vax/clock.c ../vax/conf.c ../vax/cons.c ../vax/cpudata.c  ../vax/crl.c ../vax/dkbad.c ../vax/flp.c ../vax/in_cksum.c  ../vax/ka630.c ../vax/ns_cksum.c ../vax/machdep.c ../vax/mem.c  ../vax/sys_machdep.c ../vax/trap.c ../vax/tu.c  ../vax/ufs_machdep.c ../vax/vm_machdep.c ../vaxif/if_de.c  ../vaxif/if_ec.c ../vaxif/if_en.c ../vaxif/if_ex.c  ../vaxif/if_il.c ../vaxif/if_uba.c ../vaxmba/hp.c ../vaxmba/ht.c  ../vaxmba/mba.c ../vaxmba/mt.c ../vaxuba/dh.c ../vaxuba/dhu.c  ../vaxuba/dmf.c ../vaxuba/dmz.c ../vaxuba/dz.c ../vaxuba/idc.c  ../vaxuba/lp.c ../vaxuba/rk.c ../vaxuba/rl.c ../vaxuba/tm.c  ../vaxuba/tmscp.c ../vaxuba/ts.c ../vaxuba/uba.c ../vaxuba/uda.c  ../vaxuba/up.c ../vaxuba/ut.c  |  sed -e ':loop'  -e 's/\.\.\/[^ /]*\/\.\./../'  -e 't loop' |  awk ' { if ($1 != prev) { print rec; rec = $0; prev = $1; }  else { if (length(rec $2) > 78) { print rec; rec = $0; }  else rec = rec " " $2 } }  END { print rec } ' > makedep
+echo '/^# DO NOT DELETE THIS LINE/+1,$d' >eddep
+echo '$r makedep' >>eddep
+echo 'w' >>eddep
+cp Makefile Makefile.bak
+ex - Makefile < eddep
+rm eddep makedep
+cc -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DTIMEZONE=480 -DDST=1 -DMAXUSERS=8 ../vax/genassym.c
+./a.out >assym.s; rm -f a.out
+cat assym.s ../vax/rpb.s ../vax/scb.s ubvec.s ../vax/locore.s  ubglue.s > locore.c
+cc -E -DLOCORE -I../vax -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL locore.c > locore.i
+as -o locore.o ${AHEADS} locore.i
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../net/af.c
+/lib/c2 af.s | ../vax/inline/inline  | as -o af.o
+rm -f af.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../sys/uipc_proto.c
+/lib/c2 uipc_proto.s | ../vax/inline/inline  | as -o uipc_proto.o
+rm -f uipc_proto.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/autoconf.c
+/lib/c2 -i autoconf.s | ../vax/inline/inline  | as -o autoconf.o
+rm -f autoconf.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/clock.c
+/lib/c2 clock.s | ../vax/inline/inline  | as -o clock.o
+rm -f clock.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/conf.c
+/lib/c2 conf.s | ../vax/inline/inline  | as -o conf.o
+rm -f conf.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/cons.c
+/lib/c2 cons.s | ../vax/inline/inline  | as -o cons.o
+rm -f cons.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/cpudata.c
+/lib/c2 cpudata.s | ../vax/inline/inline  | as -o cpudata.o
+rm -f cpudata.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/crl.c
+/lib/c2 crl.s | ../vax/inline/inline  | as -o crl.o
+rm -f crl.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/dkbad.c
+/lib/c2 dkbad.s | ../vax/inline/inline  | as -o dkbad.o
+rm -f dkbad.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/flp.c
+/lib/c2 flp.s | ../vax/inline/inline  | as -o flp.o
+rm -f flp.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/in_cksum.c
+/lib/c2 in_cksum.s | ../vax/inline/inline  | as -o in_cksum.o
+rm -f in_cksum.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/ka630.c
+/lib/c2 ka630.s | ../vax/inline/inline  | as -o ka630.o
+rm -f ka630.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/ns_cksum.c
+/lib/c2 ns_cksum.s | ../vax/inline/inline  | as -o ns_cksum.o
+rm -f ns_cksum.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL -DTIMEZONE=480 -DDST=1 -DMAXUSERS=8 ../vax/machdep.c
+/lib/c2 machdep.s | ../vax/inline/inline  | as -o machdep.o
+rm -f machdep.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/mem.c
+/lib/c2 mem.s | ../vax/inline/inline  | as -o mem.o
+rm -f mem.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/sys_machdep.c
+/lib/c2 sys_machdep.s | ../vax/inline/inline  | as -o sys_machdep.o
+rm -f sys_machdep.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/trap.c
+/lib/c2 trap.s | ../vax/inline/inline  | as -o trap.o
+rm -f trap.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/tu.c
+/lib/c2 tu.s | ../vax/inline/inline  | as -o tu.o
+rm -f tu.s
+ln -s ../vax/udiv.s udiv.c
+cc -E -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL udiv.c | as -o udiv.o
+rm -f udiv.c
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/ufs_machdep.c
+/lib/c2 ufs_machdep.s | ../vax/inline/inline  | as -o ufs_machdep.o
+rm -f ufs_machdep.s
+ln -s ../vax/urem.s urem.c
+cc -E -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL urem.c | as -o urem.o
+rm -f urem.c
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/vm_machdep.c
+/lib/c2 vm_machdep.s | ../vax/inline/inline  | as -o vm_machdep.o
+rm -f vm_machdep.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxif/if_de.c
+/lib/c2 -i if_de.s | ../vax/inline/inline  | as -o if_de.o
+rm -f if_de.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxif/if_ec.c
+/lib/c2 -i if_ec.s | ../vax/inline/inline  | as -o if_ec.o
+rm -f if_ec.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxif/if_en.c
+/lib/c2 -i if_en.s | ../vax/inline/inline  | as -o if_en.o
+rm -f if_en.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxif/if_ex.c
+/lib/c2 -i if_ex.s | ../vax/inline/inline  | as -o if_ex.o
+rm -f if_ex.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxif/if_il.c
+/lib/c2 -i if_il.s | ../vax/inline/inline  | as -o if_il.o
+rm -f if_il.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxif/if_uba.c
+/lib/c2 -i if_uba.s | ../vax/inline/inline  | as -o if_uba.o
+rm -f if_uba.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxmba/hp.c
+/lib/c2 -i hp.s | ../vax/inline/inline  | as -o hp.o
+rm -f hp.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxmba/ht.c
+/lib/c2 -i ht.s | ../vax/inline/inline  | as -o ht.o
+rm -f ht.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxmba/mba.c
+/lib/c2 -i mba.s | ../vax/inline/inline  | as -o mba.o
+rm -f mba.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxmba/mt.c
+/lib/c2 -i mt.s | ../vax/inline/inline  | as -o mt.o
+rm -f mt.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/dh.c
+/lib/c2 -i dh.s | ../vax/inline/inline  | as -o dh.o
+rm -f dh.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/dhu.c
+/lib/c2 -i dhu.s | ../vax/inline/inline  | as -o dhu.o
+rm -f dhu.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/dmf.c
+/lib/c2 -i dmf.s | ../vax/inline/inline  | as -o dmf.o
+rm -f dmf.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/dmz.c
+/lib/c2 -i dmz.s | ../vax/inline/inline  | as -o dmz.o
+rm -f dmz.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/dz.c
+/lib/c2 -i dz.s | ../vax/inline/inline  | as -o dz.o
+rm -f dz.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/idc.c
+/lib/c2 -i idc.s | ../vax/inline/inline  | as -o idc.o
+rm -f idc.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/lp.c
+/lib/c2 -i lp.s | ../vax/inline/inline  | as -o lp.o
+rm -f lp.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/rk.c
+/lib/c2 -i rk.s | ../vax/inline/inline  | as -o rk.o
+rm -f rk.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/rl.c
+/lib/c2 -i rl.s | ../vax/inline/inline  | as -o rl.o
+rm -f rl.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/tm.c
+/lib/c2 -i tm.s | ../vax/inline/inline  | as -o tm.o
+rm -f tm.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/tmscp.c
+/lib/c2 -i tmscp.s | ../vax/inline/inline  | as -o tmscp.o
+rm -f tmscp.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/ts.c
+/lib/c2 -i ts.s | ../vax/inline/inline  | as -o ts.o
+rm -f ts.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/uba.c
+/lib/c2 -i uba.s | ../vax/inline/inline  | as -o uba.o
+rm -f uba.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/uda.c
+/lib/c2 -i uda.s | ../vax/inline/inline  | as -o uda.o
+rm -f uda.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/up.c
+/lib/c2 -i up.s | ../vax/inline/inline  | as -o up.o
+rm -f up.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vaxuba/ut.c
+/lib/c2 -i ut.s | ../vax/inline/inline  | as -o ut.o
+rm -f ut.s
+rm -f param.c
+cp ../conf/param.c .
+cc -c -O -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL -DTIMEZONE=480 -DDST=1 -DMAXUSERS=8 param.c
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ioconf.c
+/lib/c2 ioconf.s | ../vax/inline/inline | as -o ioconf.o
+rm -f ioconf.s
+cc -c -S -I. -I../h -DGENERIC -DVAX730 -DVAX750 -DVAX780 -DVAX8600 -DTCP_COMPAT_42 -DNS -DINET -DUSESTAT -DVFS -DQUOTA -DKERNEL ../vax/swapgeneric.c
+/lib/c2 swapgeneric.s | ../vax/inline/inline  | as -o swapgeneric.o
+rm -f swapgeneric.s
+loading vmunix
+rearranging symbols
+text	data	bss	dec	hex
+290220	89604	102928	482752	75dc0

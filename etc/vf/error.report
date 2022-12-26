@@ -1,0 +1,30 @@
+The following error messages were generated when
+the program ./vf was run on the host spool
+on Thu Jul 31 08:36:23 CDT 1986.
+ 
+Its exit status (69) indicates "";
+Consult the manual for details.
+ 
+	/usr/lib/news/rshall: No such file or directory
+	/usr/lib/news/uumap: No such file or directory
+	/usr/lib/news/uwgeneral: No such file or directory
+	/usr/lib/uucp/uucp.sixhours: No such file or directory
+	/usr/lib/uucp/uusub: No such file or directory
+	/usr/local/lib/mh.6/spop: No such user: pop
+	/usr/local/lib/mh.6/spop: No such group: pop
+	/usr/local/lib/mh.6/spop: No such user: 9
+	/usr/local/lib/mh.6/spop: owner is "<unknown user>", expected "pop"
+	/usr/local/lib/mh.6/spop: group is "daemon", expected "pop"
+		CANNOT CORRECT /usr/local/lib/mh.6/spop
+	/usr/spool/mail/: No such file or directory
+	/usr/spool/msgs/: No such file or directory
+	/usr/spool/msgs/bounds: No such file or directory
+	/usr/spool/pop/: No such file or directory
+	/usr/spool/pop/POP: No such file or directory
+	/usr/spool/uucp/LOGFILE: No such file or directory
+	/usr/spool/uucp/SYSLOG: No such file or directory
+ 
+These errors are SERIOUS and may require immediate attention.
+ 
+			--the ./fixfiles script.
+ 

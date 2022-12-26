@@ -1,0 +1,72 @@
+*** dumpfs.c	Tue Nov  4 00:18:18 1986
+--- /usr/staff/tadl/nfs/usr.etc/dumpfs.c	Sun May 18 18:58:16 1986
+***************
+*** 1,22 ****
+--- 1,12 ----
+-</*
+-< * Copyright (c) 1983 Regents of the University of California.
+-< * All rights reserved.  The Berkeley software License Agreement
+-< * specifies the terms and conditions for redistribution.
+-< */
+-<
+  #ifndef lint
+!<char copyright[] =
+!<"@(#) Copyright (c) 1983 Regents of the University of California.\n\
+!< All rights reserved.\n";
+!<#endif not lint
+  
+-<#ifndef lint
+-<static char sccsid[] = "@(#)dumpfs.c	5.3 (Berkeley) 9/11/85";
+-<#endif not lint
+-<
+  #include <sys/param.h>
+!<#include <sys/inode.h>
+!<#include <sys/fs.h>
+  
+  #include <stdio.h>
+  #include <fstab.h>
+---------------
+  #ifndef lint
+!>static	char *sccsid = "@(#)dumpfs.c 1.1 85/05/31 SMI"; /* from UCB 2.6 09/25/83 */
+!>#endif
+  
+  #include <sys/param.h>
+!>#include <sys/time.h>
+!>#include <sys/vnode.h>
+!>#include <ufs/inode.h>
+!>#include <ufs/fs.h>
+  
+  #include <stdio.h>
+  #include <fstab.h>
+***************
+*** 54,59 ****
+--- 44,50 ----
+---------------
+  		else
+  			dumpfs(fs->fs_spec);
+  	}
++>	exit(0);
+  }
+  
+  dumpfs(name)
+***************
+*** 84,92 ****
+--- 75,82 ----
+  	    afs.fs_fsize, afs.fs_fshift, afs.fs_fmask);
+  	printf("frag\t%d\tshift\t%d\tfsbtodb\t%d\n",
+  	    afs.fs_frag, afs.fs_fragshift, afs.fs_fsbtodb);
+!<	printf("minfree\t%d%%\tmaxbpg\t%d\toptim\t%s\n",
+!<	    afs.fs_minfree, afs.fs_maxbpg,
+!<	    afs.fs_optim == FS_OPTSPACE ? "space" : "time");
+  	printf("maxcontig %d\trotdelay %dms\trps\t%d\n",
+  	    afs.fs_maxcontig, afs.fs_rotdelay, afs.fs_rps);
+  	printf("csaddr\t%d\tcssize\t%d\tshift\t%d\tmask\t0x%08x\n",
+---------------
+  	    afs.fs_fsize, afs.fs_fshift, afs.fs_fmask);
+  	printf("frag\t%d\tshift\t%d\tfsbtodb\t%d\n",
+  	    afs.fs_frag, afs.fs_fragshift, afs.fs_fsbtodb);
+!>	printf("minfree\t%d%%\tmaxbpg\t%d\n",
+!>	    afs.fs_minfree, afs.fs_maxbpg);
+  	printf("maxcontig %d\trotdelay %dms\trps\t%d\n",
+  	    afs.fs_maxcontig, afs.fs_rotdelay, afs.fs_rps);
+  	printf("csaddr\t%d\tcssize\t%d\tshift\t%d\tmask\t0x%08x\n",

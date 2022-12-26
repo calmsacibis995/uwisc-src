@@ -1,0 +1,41 @@
+Mnntpxmit	nntpxmit.c	/^main(ac,av)$/
+Mshlock	shlock.c	/^main(ac,av)$/
+align	llist.c	/^#define	align(x)	((x) + ((x) % sizeof(long)))$/
+arpadate	rfc822.c	/^arpadate(longtime)$/
+cgtdate	rfc822.c	/^cgtdate(datestr)$/
+cklock	shlock.c	/^cklock(file)$/
+click	nntpxmit.c	/^click(cpu, elapsed)$/
+converse	remote.c	/^converse(buf, size)$/
+crackfrom	rfc822.c	/^crackfrom(addr,name,field)$/
+errmsg	rfc822.c	/^errmsg(code)$/
+get_tcp_conn	get_tcp_conn.c	/^get_tcp_conn(host,serv)$/
+getfield	rfc822.c	/^getfield(src, dest, size)$/
+getfp	nntpxmit.c	/^getfp(fp, filename, fnlen)$/
+goodbye	remote.c	/^goodbye(wait)$/
+hello	remote.c	/^hello(host)$/
+hfgets	rfc822.c	/^hfgets(buf, len, fp)$/
+ihave	nntpxmit.c	/^ihave(fp, article)$/
+isblank	rfc822.c	/^#define isblank(c)	((c) == ' ' || (c) == '\\t')$/
+its	rfc822.c	/^#define its(type) (prefix(ptr, type))$/
+l_alloc	llist.c	/^l_alloc(lp, s, len)$/
+l_free	llist.c	/^l_free(lp)$/
+mkconn	get_tcp_conn.c	/^mkconn(host_address, port, protocol, proto_type)$/
+mklock	shlock.c	/^mklock(file, pid)$/
+msgid_ok	rfc822.c	/^msgid_ok(id)$/
+name_to_address	get_tcp_conn.c	/^name_to_address(host)$/
+nstrip	rfc822.c	/^nstrip(s)$/
+p_exists	shlock.c	/^p_exists(pid)$/
+prefix	rfc822.c	/^prefix(full, pref)$/
+readreply	remote.c	/^readreply(buf, size)$/
+rfc822read	rfc822.c	/^rfc822read(hp, fp, bfr)$/
+rfc822write	rfc822.c	/^rfc822write(hp, fp)$/
+rfgets	remote.c	/^rfgets(buf, size, fp)$/
+sendcmd	remote.c	/^sendcmd(cmd)$/
+sendfile	remote.c	/^sendfile(fp)$/
+sendnews	nntpxmit.c	/^sendnews(host, file)$/
+sfgets	remote.c	/^sfgets(buf, size, fp)$/
+sp_strip	rfc822.c	/^sp_strip(s)$/
+strpbrk	rfc822.c	/^strpbrk(str, chars)$/
+tmpfile	shlock.c	/^tmpfile(file)$/
+to_sfgets	remote.c	/^to_sfgets()$/
+type	rfc822.c	/^type(ptr)$/

@@ -1,0 +1,234 @@
+diff ./ex_cmdsub.c /usr/src/ucb/ex/ex_cmdsub.c
+1,2c1,2
+< /* Copyright (c) 1980 Regents of the University of California */
+< static char *sccsid = "@(#)ex_cmdsub.c	6.1 10/18/80";
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_cmdsub.c	7.2	10/31/81";
+8d7
+< #include <ctype.h>
+20d18
+< 
+262c260
+< 	adt = address(0);
+---
+> 	adt = address((char*)0);
+474,475c472
+< 	char was;
+< #ifdef VMUNIX
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+513,519d509
+< 	/* reparse the tag */
+< 	for(fn = lasttag; isalnum(*fn) || *fn == '_' ; fn++)
+< 		;
+< 	was = *fn;
+< 	*fn = '\0';
+< 
+< 
+533c523
+< #ifdef VMUNIX
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+560c550
+< #ifdef VMUNIX
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+565,568c555,556
+< 				if(fgets(linebuf, sizeof linebuf, iof)==NULL){
+< 					top = mid - 1;
+< 					continue;
+< 				}
+---
+> 				if(fgets(linebuf, sizeof linebuf, iof)==NULL)
+> 					goto goleft;
+570,573c558,559
+< 			if(fgets(linebuf, sizeof linebuf, iof)==NULL) {
+< 				top = mid - 1;
+< 				continue;
+< 			}
+---
+> 			if(fgets(linebuf, sizeof linebuf, iof)==NULL)
+> 				goto goleft;
+576,582c562,566
+< 			if(value(TAGPREFIX)) {	/* match on a prefix of tag name */
+< 				int val;
+< 				val = strncmp(cp,lp,strlen(lp));
+< 				if( val > 0 ) {
+< 					top = mid - 1;
+< 					continue;
+< 				} else if(val < 0 ) {
+---
+> 			while (*cp && *lp == *cp)
+> 				cp++, lp++;
+> 			if ((*lp || !iswhite(*cp)) && (value(TAGLENGTH)==0 || lp-lasttag < value(TAGLENGTH))) {
+> #ifdef STDIO		/* mjm: was VMUNIX */
+> 				if (*lp > *cp)
+584,594c568,570
+< 					continue;
+< 				}
+< 			} else {
+< 				while (*cp && *lp == *cp)
+< 					cp++, lp++;
+< 				if ((*lp || !iswhite(*cp)) && (value(TAGLENGTH)==0 || lp-lasttag < value(TAGLENGTH))) {
+< #ifdef VMUNIX
+< 					if (*lp > *cp)
+< 						bot = mid + 1;
+< 					else
+< 						top = mid - 1;
+---
+> 				else
+> goleft:
+> 					top = mid - 1;
+596,598c572,573
+< 					/* Not this tag.  Try the next */
+< 					continue;
+< 				}
+---
+> 				/* Not this tag.  Try the next */
+> 				continue;
+604c579
+< #ifdef VMUNIX
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+641d615
+< 			savetag(savedfile);
+681c655
+< 			return 0;
+---
+> 			return;
+687c661
+< #ifdef VMUNIX
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+693d666
+< 
+696,739c669,670
+< 	else {	/* ok, this could be a file. build the filename and try to stat */
+< 		char *index(), *rindex();
+< 
+< 		*index(lasttag,'\0') = was;	/* reset tag to orig value */
+< 
+< 		if(index(savedfile,'/')) {
+< 			strcpy(file,savedfile);
+< 			*(rindex(file,'/')+1) = '\0';
+< 		} else
+< 			file[0] = '\0';
+< 		strcat(file,lasttag);
+< 		accessfile();	/* do the path thing */
+< 		if(access(file,0) == 0) {	/* there is such a thing */
+< 			if (strcmp(file, savedfile) || !edited) {
+< 				char cmdbuf2[sizeof file + 10];
+< 				char *oglobp;
+< 
+< 				strcpy(cmdbuf2, "e! ");
+< 				strcat(cmdbuf2, file);
+< 				if(value(FILESTACK))
+< 					savetag(savedfile);
+< 
+< 				/* Different file.  Do autowrite & get it. */
+< 				if (!quick) {
+< 					ckaw();
+< 					if (chng && dol > zero)
+< 						error("No write@since last change (:tag! overrides)");
+< 				}
+< 
+< 				oglobp = globp;
+< 				globp = cmdbuf2;
+< 				d = peekc; ungetchar(0);
+< 				commands(1, 1);
+< 				peekc = d;
+< 				globp = oglobp;
+< 				value(MAGIC) = omagic;
+< 				samef = 0;
+< 			}
+< 			return 1;
+< 		} else {
+< 			serror("%s: No such tag@in tags file", lasttag);
+< 		}
+< 	}
+< 	return -1;
+---
+> 	else
+> 		serror("%s: No such tag@in tags file", lasttag);
+1141c1072
+< 	register char c;
+---
+> 	register int c;		/* mjm: char --> int */
+1333c1264
+< 	char pk;
+---
+> 	short pk;
+1353,1424d1283
+< 
+< #ifdef TAGSTACK
+< 
+< #define TSTACKSIZE 20
+< struct tagstack {
+< 	line *tag_line;
+< 	char *tag_file;
+< } tagstack[TSTACKSIZE];
+< static int tag_depth = 0;
+< 
+< static char tag_buf[ 1024 ];
+< static char *tag_end = tag_buf;
+< 
+< savetag( name )	/* saves location where we are */
+< char *name;
+< {
+< 	if( !value(TAGSTACK) )
+< 		return;
+< 	if(tag_depth >= TSTACKSIZE) {
+< 		error("Tag stack too deep.");
+< 	}
+< 	if( strlen( name ) + 1 + tag_end >= &tag_buf[1024]) {
+< 		error("Too many tags.");
+< 	}
+< 	tagstack[tag_depth].tag_line = dot;
+< 	tagstack[tag_depth++].tag_file = tag_end;
+< 	while(*tag_end++ = *name++)
+< 		;
+< }
+< 
+< poptag(quick)	/* puts us back where we came from */
+< bool quick;
+< {
+< 	char cmdbuf[100];
+< 	char *oglobp;
+< 	int d;
+< 
+< 	if( !value(TAGSTACK) ) {	/* reset the stack */
+< 		tag_end = tag_buf;
+< 		d = tag_depth;
+< 		tag_depth = 0;
+< 		if(d == 0)
+< 			error("Tagstack not enabled.");
+< 		else
+< 			return;
+< 	}
+< 	if( !tag_depth )
+< 		error("Tagstack empty.");
+< 	
+< 	/* change to old file */
+< 	if (strcmp(tagstack[tag_depth-1].tag_file, savedfile) ) {
+< 		if (!quick) {
+< 			ckaw();
+< 			if (chng && dol > zero)
+< 				error("No write@since last change (:pop! overrides)");
+< 		}
+< 		oglobp = globp;
+< 		strcpy(cmdbuf, "e ");
+< 		strcat(cmdbuf, tagstack[tag_depth-1].tag_file);
+< 		globp = cmdbuf;
+< 		d = peekc; ungetchar(0);
+< 		commands(1, 1);
+< 		peekc = d;
+< 		globp = oglobp;
+< 	}
+< 		markpr(dot);
+< 	/* set line number */
+< 	dot = tagstack[--tag_depth].tag_line;
+< 	tag_end = tagstack[tag_depth].tag_file;
+< 
+< }
+< #endif TAGSTACK

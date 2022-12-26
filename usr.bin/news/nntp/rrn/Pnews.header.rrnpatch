@@ -1,0 +1,18 @@
+***************
+*** 166,171
+  esac
+  
+  $cat > $tmpart <<EOHeader
+  Newsgroups: $ng
+  Subject: $title
+  Expires: 
+
+--- 166,173 -----
+  esac
+  
+  $cat > $tmpart <<EOHeader
++ From: $logname@$sitename ($fullname)
++ Path: $sitename!$logname
+  Newsgroups: $ng
+  Subject: $title
+  Expires: 

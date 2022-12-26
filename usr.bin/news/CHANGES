@@ -1,0 +1,166 @@
+This is an attempt to document the changes between 2.10.2 and 2.11.
+Only the user visible changes will be mentioned here.
+
+
+The history file is kept in GMT instead of local time.
+
+Distributions are handled differently. Make sure you have "world" as
+a distribution in each line in your sys file or you may see no
+news distributed to those sites
+
+Man pages are provided and are actually accurate.
+
+The batch program now does a better job of limiting the size of the file
+to that which was requested.
+
+checkgroups knows about moderated groups and tells you when
+a moderated group is not marked moderated.
+
+The newest version of compress is supplied. Its output can not be
+used with older versions of compress. It can decompress the
+files compressed by older versions.
+
+A batched ihave/sendme protocol is supported.
+
+encode/decode programs are provided for use with the new c7 compressed
+batching scheme for 7bit data links (e.g. x.25)
+
+lockf() or flock() calls are used for locking when available.
+
+"." is no longer considered a separator in the path line. I can now
+be used as part of the sitename. (e.g. seismo.css.gov)
+
+A rudimentary (but effective) hashing scheme for the history file is
+used on USG systems to speed up message-id searchs considerably.
+
+expire and rnews/inews now use an interlocking scheme so that
+there is no danger of them both running at the same time and
+corrupting the history file.
+
+expire and rnews/inews check their writes so that if the file system
+is full, you wont lose your history file, etc.
+
+A "FASCIST" options is provided to allow a site administrator to keep
+certain users from posting to certain groups.
+
+Posting to moderated groups now works reliably. Moderated groups
+do not have to have the word "mod" in the group name. It is now possible
+for a site whose mailer does not understand internet mail syntax to
+define INTERNET and use the From: line for mail replies instead of
+the unreliable Path: line.
+
+Message-Ids with "/" in them no longer give inews a coronary.
+
+A more generalize batching scheme is supported. Basically #! anything
+will cause rnews to feed the incoming batch into /usr/lib/news/anything
+instead of trying to handle it directly. This allows you to run
+compressed batching (or other batching) without having to add the
+new command name to your uuxqt's list of permissible programs.
+
+readnews "D" always does rot13
+
+In defs.h, if SORTACTIVE is defined, the newsgroups will be presented
+in the order of the .newsrc file instead of the order of the active file.
+
+In defs.h, if ZAPNOTES is defined, any notesfile headers that appear in the
+body of an article, will be moved into the header.
+
+In defs.h, BSD4_2 should be defined if you are running 4.2BSD or 4.3BSD.
+
+expire works properly with the -r option to rebuild the history file and the
+-h option to ignore the history file. The option "-a" has been expanded to
+take a newsgroup as the argument to allow you to only archive selected
+newsgroups during one run of expire. For example:
+	expire -a net.bugs,net.news
+would archive anything in net.bugs and net.news and cancel the rest
+of the articles according to the defaults.
+	expire -a net.bugs.4bsd -n net.bugs
+would archive net.bugs.4bsd and cancel the rest of net.bugs
+
+The Date fields are now stored in GMT without the day
+of the week. This is to prevent the "Time Warp" problem and simplify
+the time zone names. The Date is always displayed in local time.
+
+The layout of the logfile is slightly different to save space.
+
+Notices about unimplemented control messages are mailed to the
+local usenet person instead of the person originating the message.
+
+The HIDDENET code from fluke is provided.
+
+New compile time options for inews are:
+	HISTEXP
+	NONEWGROUPS
+	NICENESS
+	SPOOLNEWS
+	DOXREFS
+	MULTICAST
+	MMDF
+	FASCIST
+	ORGDISTRIB
+(See the installation manual for details)
+
+All occurences of "sigtrap" have been replaced with SigTrap to get
+around brain damage in certain versions of unix.
+
+expire takes keeps articles in the history file for two weeks (default)
+after they have expired. This virtually does away with the very
+old articles that used to be endlessly looping around the network.
+
+If a cancel message comes in for a non-existent article, the message-id
+of the article to be cancelled is put in the history file. This will
+have the effect of cancelling the article if it comes in after the cancellation
+message.
+
+expire keeps the date-received of articles in the history file, avoiding
+opening a file if it is not yet due to be expired.
+
+The lines in /usr/lib/news/sys may be broken into several physical
+lines by ending the line with a \. A line beginning with # is a comment
+
+code to handle A news is not included unless OLD is defined.
+
+The Posting-Version, Relay-Version, Date-Received were removed saving
+a significant amount of disk space and transfer time.
+
+Summary and Keywords are now handled and prompted for by postnews.
+
+Xrefs is supported for rn users.
+
+Almost everything is now malloced removing many static table sizes.
+
+inews now takes a -o flag to specify organization and a -d flag
+to specify distribution
+
+the .signature file is not included if it is over 4 lines long.
+
+inews will reject any article that has more than 50% of the article
+as included text (hopefully pushing people to edit their articles)
+
+postnews now does lots of checking and (probably too much) handholding
+when posting articles. The intelligent users can remove these checks if they
+want.  The inexperienced users can benefit from them.
+
+everything checks for failures on writes to prevent trashing .newsrc or
+other files.
+
+On follow-ups, the References line is truncated to the most recent
+few references to prevent overflowing some buffers.
+
+recmail now handles Bcc: and includes .signature files.
+
+If the maximum article read in a newsgroup in the .newsrc is > the
+maximum article number in the active file, it is reset to the
+number in the active file.
+
+The sendbatch shell script now takes lots of options (compression, file size,
+etc). See the man page for details.
+
+If UUNAME is defined in defs.h, the software will get the system
+name from /etc/uucpname or /local/uucpname.
+
+vnews has been greatly sped up and now mallocs its buffers, so
+it can be used on terminals with screens > 24 x 80
+
+cunbatch and csendbatch are gone. csendbatch is replaced by "sendbatch -c"
+cunbatch is recognized directly by rnews

@@ -1,0 +1,17 @@
+host = ( nohost )
+
+source: ( . ) -> ( puff )
+	except_pat ( \\.o\$ ) ;
+	install -w /usr/src/src/usr.bin/news ;
+
+server: ( usr/bin/{readnews,checknews,postnews,vnews,rnews}	
+	usr/bin/{Pnews,Rnmail,newsetup,newsgroups,rn,rrn}
+	usr/lib/news/{batch,caesar,checkgroups,compress,decode,encode}
+	usr/lib/news/{expire,help,inews,mkgrdates,nntpxmit,recmail,recnews}
+	usr/lib/news/{rmgroup,rn,sendbatch,sendnews,shlock,unbatch,uurec}
+	usr/lib/news/vnews.help ) -> ( ${host} )
+	install -w / ;
+
+client: ( usr/bin/{Pnews,Rnmail,newsetup,newsgroups,rn,rrn}
+	usr/lib/news/{inews,rn} ) -> ( ${host} )
+	install -w / ;

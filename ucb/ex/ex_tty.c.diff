@@ -1,0 +1,108 @@
+diff ./ex_tty.c /usr/src/ucb/ex/ex_tty.c
+1,2c1,2
+< /* Copyright (c) 1980 Regents of the University of California */
+< static char *sccsid = "@(#)ex_tty.c	6.2 10/30/80";
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_tty.c	7.6	6/10/83";
+5,7d4
+< #ifdef MASSCOMP
+< #include <windefs.h>
+< #endif MASSCOMP
+14c11
+< short	ospeed = -1;
+---
+> /* short	ospeed = -1;	mjm: def also in tputs.c of termcap.a  */
+32c29
+< 	if (ospeed != tty.c_cflag & CBAUD)
+---
+> 	if (ospeed != (tty.c_cflag & CBAUD))	/* mjm */
+38c35
+< 	NONL = (tty.c_oflag & OCRNL) == 0;
+---
+> 	NONL = (tty.c_oflag & ONLCR) == 0;
+44,47c41,45
+< 	&AL, &BC, &BT, &CD, &CE, &CL, &CM, &xCR, &DC, &DL, &DM, &DO, &ED, &EI,
+< 	&F0, &F1, &F2, &F3, &F4, &F5, &F6, &F7, &F8, &F9,
+< 	&HO, &IC, &IM, &IP, &KD, &KE, &KH, &KL, &KR, &KS, &KU, &LL,
+< 	&ND, &xNL, &xPC, &SE, &SF, &SO, &SR, &TA, &TE, &TI, &UP, &VB, &VS, &VE
+---
+> 	&AL, &BC, &BT, &CD, &CE, &CL, &CM, &xCR, &CS, &DC, &DL, &DM, &DO,
+> 	&ED, &EI, &F0, &F1, &F2, &F3, &F4, &F5, &F6, &F7, &F8, &F9,
+> 	&HO, &IC, &IM, &IP, &KD, &KE, &KH, &KL, &KR, &KS, &KU, &LL, &ND, &xNL,
+> 	&xPC, &RC, &SC, &SE, &SF, &SO, &SR, &TA, &TE, &TI, &UP, &VB, &VS, &VE,
+> 	&AL_PARM, &DL_PARM, &UP_PARM, &DOWN_PARM, &LEFT_PARM, &RIGHT_PARM
+72,88d69
+< #ifdef MASSCOMP
+< 	{
+< 		WINDOWDATA w;
+< 
+< 		if( ioctl(1, WIOCGETD, &w) >= 0) {
+< 			if( LINES == 0 ) {
+< 				LINES = w.wd_rows;
+< 				COLUMNS = w.wd_cols;
+< 			}
+< 		}
+< 	}
+< #endif MASSCOMP
+< #ifdef SFLAG
+< 	if( LINES != 0 )
+< 		i = LINES;
+< 	else
+< #endif SFLAG
+111a93,102
+> 	/*
+> 	 * Handle funny termcap capabilities
+> 	 */
+> 	if (CS && SC && RC) AL=DL="";
+> 	if (AL_PARM && AL==NULL) AL="";
+> 	if (DL_PARM && DL==NULL) DL="";
+> 	if (IC && IM==NULL) IM="";
+> 	if (IC && EI==NULL) EI="";
+> 	if (!GT) BT=NULL;	/* If we can't tab, we can't backtab either */
+> 
+127c118,119
+< 					if (arrows[i].cap[0] == CTRL(z))
+---
+> 					if (arrows[i].cap &&
+> 					    arrows[i].cap[0] == CTRL(z))
+134,140d125
+< #ifdef MASSCOMP
+< 	/*
+< 	** same as above
+< 	*/
+< 	{
+< 	    static char sc[2];
+< 	    int i;
+142,152d126
+< 	    sc[0] = tty.c_cc[VSUSP];
+< 	    sc[1] = 0;
+< 	    if (tty.c_cc[VSUSP] == CTRL(z)) {
+< 		for (i=0; i<=4; i++)
+< 		    if (arrows[i].cap[0] == CTRL(z))
+< 			addmac(sc, NULL, NULL, arrows);
+< 	    } else
+< 			addmac(sc, "\32", "susp", arrows);
+< 	}
+< #endif
+< 
+156,158d129
+< #ifdef SFLAG
+< 	if( COLUMNS == 0 )
+< #endif SFLAG
+167a139,141
+> 	costDP = cost(tgoto(DOWN_PARM, 10, 10));
+> 	costLP = cost(tgoto(LEFT_PARM, 10, 10));
+> 	costRP = cost(tgoto(RIGHT_PARM, 10, 10));
+190c164
+<  	namp = "ambsdadbeohchzinmincnsosulxbxnxtxx";
+---
+> 	namp = "ambsdadbeohchzinmincnsosulxbxnxtxx";
+196c170
+< 	namp = "albcbtcdceclcmcrdcdldmdoedeik0k1k2k3k4k5k6k7k8k9hoicimipkdkekhklkrkskullndnlpcsesfsosrtatetiupvbvsve";
+---
+> 	namp = "albcbtcdceclcmcrcsdcdldmdoedeik0k1k2k3k4k5k6k7k8k9hoicimipkdkekhklkrkskullndnlpcrcscsesfsosrtatetiupvbvsveALDLUPDOLERI";
+250c224
+< 	if (str == NULL)
+---
+> 	if (str == NULL || *str=='O')	/* OOPS */

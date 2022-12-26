@@ -1,0 +1,11 @@
+generating Version.c from version.c
+cc -S -O  -I../include -DVMUNIX -DMXDOMAIN -DOLDJEEVES -DUW Version.c
+sed -f ../include/asm.sed Version.s | as -o Version.o
+rm -f Version.s
+cc  -o sendmail Version.o conf.o main.o collect.o parseaddr.o alias.o deliver.o  savemail.o err.o readcf.o stab.o headers.o recipient.o  stats.o daemon.o usersmtp.o srvrsmtp.o queue.o  macro.o util.o clock.o trace.o envelope.o domain.o sysexits.o arpadate.o convtime.o -ldbm
+chmod 755 sendmail
+size sendmail; ls -l sendmail; what < Version.o
+text	data	bss	dec	hex
+94208	20480	19088	133776	20a90
+-rwxr-xr-x  1 root       134144 Dec 13 09:37 sendmail
+	version.c	5.52 (Berkeley) 5/6/86

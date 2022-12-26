@@ -1,0 +1,116 @@
+***************
+*** 14,19
+  #include "intrp.h"
+  #include "final.h"
+  #include "rcln.h"
+  #include "INTERN.h"
+  #include "ngdata.h"
+  
+
+--- 15,21 -----
+  #include "intrp.h"
+  #include "final.h"
+  #include "rcln.h"
++ #include "server.h"
+  #include "INTERN.h"
+  #include "ngdata.h"
+  
+***************
+*** 17,22
+  #include "INTERN.h"
+  #include "ngdata.h"
+  
+  void
+  ngdata_init()
+  {
+
+--- 19,28 -----
+  #include "INTERN.h"
+  #include "ngdata.h"
+  
++ #ifdef SERVER
++ char	active_name[256];
++ #endif
++ 
+  void
+  ngdata_init()
+  {
+***************
+*** 20,25
+  void
+  ngdata_init()
+  {
+  /* The following is only for systems that do not zero globals properly */
+  #ifdef ZEROGLOB
+  # ifdef CACHEFIRST
+
+--- 26,35 -----
+  void
+  ngdata_init()
+  {
++ #ifdef SERVER
++     char ser_line[256];
++     char *cp;
++ #endif
+  /* The following is only for systems that do not zero globals properly */
+  #ifdef ZEROGLOB
+  # ifdef CACHEFIRST
+***************
+*** 30,35
+  
+      /* open the active file */
+  
+      actfp = fopen(filexp(ACTIVE),"r");
+      if (actfp == Nullfp) {
+  	printf(cantopen,filexp(ACTIVE)) FLUSH;
+
+--- 40,46 -----
+  
+      /* open the active file */
+  
++ #ifndef SERVER
+      actfp = fopen(filexp(ACTIVE),"r");
+  #else /* SERVER */
+      put_server("LIST");		/* tell server we want the active file */
+***************
+*** 31,36
+      /* open the active file */
+  
+      actfp = fopen(filexp(ACTIVE),"r");
+      if (actfp == Nullfp) {
+  	printf(cantopen,filexp(ACTIVE)) FLUSH;
+  	finalize(1);
+
+--- 42,73 -----
+  
+  #ifndef SERVER
+      actfp = fopen(filexp(ACTIVE),"r");
++ #else /* SERVER */
++     put_server("LIST");		/* tell server we want the active file */
++     (void) get_server(ser_line, sizeof(ser_line));
++     if (*ser_line != CHAR_OK) {		/* and then see if that's ok */
++ 	fputs("Can't get active file from server.\n",stdout);
++ 	finalize(1);
++     }
++ 
++     cp = filexp("/tmp/rrnact.%$");	/* make a temporary name */
++     strcpy(active_name, cp);
++     actfp = fopen(active_name, "w+");	/* and get ready */
++     if (actfp == Nullfp) {
++ 	printf(cantopen,filexp(ACTIVE)) FLUSH;
++ 	finalize(1);
++     }
++ 
++     while (get_server(ser_line, sizeof(ser_line)) >= 0) {  /* while */
++ 	if (ser_line[0] == '.')		/* there's another line */
++ 		break;			/* get it and write it to */
++ 	fputs(ser_line, actfp);
++ 	putc('\n', actfp);
++     }
++ 
++     fseek(actfp,0L,0);		/* just get to the beginning */
++ #endif
++ 
+      if (actfp == Nullfp) {
+  	printf(cantopen,filexp(ACTIVE)) FLUSH;
+  	finalize(1);

@@ -1,0 +1,49 @@
+diff ./ex.c /usr/src/ucb/ex/ex.c
+1,2c1,2
+< /* Copyright (c) 1980 Regents of the University of California */
+< static char *sccsid = "@(#)ex.c	6.4 11/8/80";
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex.c	7.1	7/8/81";
+161d160
+< #ifdef SFLAG
+163,168d161
+< 	 * Set LINES to 0 so that the s flag stuff works
+< 	 */
+< 	LINES = 0;
+< #endif SFLAG
+< 
+< 	/*
+196a190
+> #define tracbuf NULL
+199c193,194
+< 			setbuf(trace, tracbuf);
+---
+> 			else
+> 				setbuf(trace, tracbuf);
+215,228d209
+< #ifdef SFLAG
+< 		case 's':
+< 			if (ac > 1 && av[1][0] != '-') {
+< 				char *s = *++av;
+< 				char *index();
+< 				ac--;
+< 				if( (LINES = atoi(s)) && (s = index(s,',')) )
+< 					COLUMNS = atoi(++s);
+< 				else
+< 					LINES = 0;
+< 			}
+< 			break;
+< 
+< #endif SFLAG
+332,333c313,319
+< 		if(value(EXINIT))
+< 			source( ".exinit", 1);
+---
+> 		/*
+> 		 * Allow local .exrc too.  This loses if . is $HOME,
+> 		 * but nobody should notice unless they do stupid things
+> 		 * like putting a version command in .exrc.  Besides,
+> 		 * they should be using EXINIT, not .exrc, right?
+> 		 */
+> 		source(".exrc", 1);

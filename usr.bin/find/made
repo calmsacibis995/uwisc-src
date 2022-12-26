@@ -1,0 +1,3 @@
+cc -O -DUW -DVFS -DYP -o find find.c
+cc -O -DUW -DVFS -DYP -o bigram bigram.c
+cc -O -DUW -DVFS -DYP -o code code.c

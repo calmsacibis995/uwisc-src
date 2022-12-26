@@ -1,0 +1,5 @@
+This is the Sun version of restore.  The Berkeley version used
+the c-library opendir to open its fake directory, the sun version of 
+opendir checked to make sure the file opened was a directory so 
+restore would fail.  If you would like to try to fix the berkeley version
+it is in ../restore.bsd

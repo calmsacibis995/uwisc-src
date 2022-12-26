@@ -1,0 +1,26 @@
+#
+# MICROVAXII + NFS
+#
+machine		vax
+cpu		"VAX630"
+makeoptions	INLINEOPTS="-s"
+timezone	6 dst
+maxusers	8
+options		INET
+options		NFS
+options		RPC
+
+config		vmunix		root on ra swap on ra0
+
+controller	uba0	at nexus ?
+controller	tmscp0	at uba0 csr 0174500		vector tmscpintr
+tape		tms0	at tmscp0 drive 0
+controller	uda0	at uba0 csr 0172150		vector udintr
+disk		ra0	at uda0 drive 0
+disk		ra1	at uda0 drive 1
+disk		ra2	at uda0 drive 2
+device		qe0	at uba0 csr 0174440	vector qeintr
+device		qv0	at uba0 csr 0177200	vector qvkint qvvint
+pseudo-device	pty
+pseudo-device	loop
+pseudo-device	ether

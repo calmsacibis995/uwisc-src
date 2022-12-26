@@ -1,0 +1,952 @@
+*** cmds.c	Sat Aug 30 21:51:48 1986
+--- /usr/staff/david/lpr/cmds.c	Tue Sep 16 01:10:27 1986
+***************
+*** 1,24 ****
+--- 1,18 ----
+-</*
+-< * Copyright (c) 1983 Regents of the University of California.
+-< * All rights reserved.  The Berkeley software License Agreement
+-< * specifies the terms and conditions for redistribution.
+-< */
+-<
+  #ifndef lint
+!<static char sccsid[] = "@(#)cmds.c	5.2 (Berkeley) 3/30/86";
+!<#endif not lint
+!<
+  /*
+!< * lpc -- line printer control program -- commands:
+   */
+  
+  #include "lp.h"
+!<#include <sys/time.h>
+  
+  /*
+   * kill an existing daemon and disable printing.
+   */
+!<abort(argc, argv)
+  	char *argv[];
+  {
+  	register int c, status;
+---------------
+  #ifndef	lint
+!>static char id_str[] =
+!>	"Updated LPR, Patrick Powell, U. Waterloo, April 10, 1984";
+!>#endif
+  /*
+!> * lpc -- line printer control program
+   */
+  
+  #include "lp.h"
+!>extern long	lseek();
+  
+  /*
+   * kill an existing daemon and disable printing.
+   */
+!>abortcmd(argc, argv)
+  	char *argv[];
+  {
+  	register int c, status;
+***************
+*** 37,43 ****
+--- 31,37 ----
+  			while ((c = *cp2++) && c != '|' && c != ':')
+  				*cp1++ = c;
+  			*cp1 = '\0';
+!<			abortpr(1);
+  		}
+  		return;
+  	}
+---------------
+  			while ((c = *cp2++) && c != '|' && c != ':')
+  				*cp1++ = c;
+  			*cp1 = '\0';
+!>			abortpr();
+  		}
+  		return;
+  	}
+***************
+*** 50,60 ****
+--- 44,54 ----
+  			printf("unknown printer %s\n", printer);
+  			continue;
+  		}
+!<		abortpr(1);
+  	}
+  }
+  
+!<abortpr(dis)
+  {
+  	register FILE *fp;
+  	struct stat stbuf;
+---------------
+  			printf("unknown printer %s\n", printer);
+  			continue;
+  		}
+!>		abortpr();
+  	}
+  }
+  
+!>abortpr()
+  {
+  	register FILE *fp;
+  	struct stat stbuf;
+***************
+*** 71,79 ****
+--- 65,72 ----
+  	/*
+  	 * Turn on the owner execute bit of the lock file to disable printing.
+  	 */
+-<	if (dis) {
+  		if (stat(line, &stbuf) >= 0) {
+!<			if (chmod(line, (stbuf.st_mode & 0777) | 0100) < 0)
+  				printf("\tcannot disable printing\n");
+  			else
+  				printf("\tprinting disabled\n");
+---------------
+  	/*
+  	 * Turn on the owner execute bit of the lock file to disable printing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!>		if (chmod(line, (int)(stbuf.st_mode & 0777) | 0100) < 0)
+  			printf("\tcannot disable printing\n");
+  		else
+  			printf("\tprinting disabled\n");
+***************
+*** 90,96 ****
+--- 83,88 ----
+  			printf("\tcannot stat lock file\n");
+  			return;
+  		}
+-<	}
+  	/*
+  	 * Kill the current daemon to stop printing now.
+  	 */
+---------------
+  	/*
+  	 * Kill the current daemon to stop printing now.
+  	 */
+***************
+*** 104,110 ****
+--- 96,102 ----
+  		return;
+  	}
+  	(void) fclose(fp);
+!<	if (kill(pid = atoi(line), SIGTERM) < 0)
+  		printf("\tWarning: daemon (pid %d) not killed\n", pid);
+  	else
+  		printf("\tdaemon (pid %d) killed\n", pid);
+---------------
+  		return;
+  	}
+  	(void) fclose(fp);
+!>	if (kill(pid = atoi(line), SIGINT) < 0)
+  		printf("\tWarning: daemon (pid %d) not killed\n", pid);
+  	else
+  		printf("\tdaemon (pid %d) killed\n", pid);
+***************
+*** 149,249 ****
+--- 141,177 ----
+  	}
+  }
+  
+-<select(d)
+-<struct direct *d;
+-<{
+-<	int c = d->d_name[0];
+-<
+-<	if ((c == 't' || c == 'c' || c == 'd') && d->d_name[1] == 'f')
+-<		return(1);
+-<	return(0);
+-<}
+-<
+-</*
+-< * Comparison routine for scandir. Sort by job number and machine, then
+-< * by `cf', `tf', or `df', then by the sequence letter A-Z, a-z.
+-< */
+-<sortq(d1, d2)
+-<struct direct **d1, **d2;
+-<{
+-<	int c1, c2;
+-<
+-<	if (c1 = strcmp((*d1)->d_name + 3, (*d2)->d_name + 3))
+-<		return(c1);
+-<	c1 = (*d1)->d_name[0];
+-<	c2 = (*d2)->d_name[0];
+-<	if (c1 == c2)
+-<		return((*d1)->d_name[2] - (*d2)->d_name[2]);
+-<	if (c1 == 'c')
+-<		return(-1);
+-<	if (c1 == 'd' || c2 == 'c')
+-<		return(1);
+-<	return(-1);
+-<}
+-<
+-</*
+-< * Remove incomplete jobs from spooling area.
+-< */
+  cleanpr()
+  {
+!<	register int i, n;
+!<	register char *cp, *cp1, *lp;
+!<	struct direct **queue;
+!<	int nitems;
+  
+  	bp = pbuf;
+  	if ((SD = pgetstr("sd", &bp)) == NULL)
+  		SD = DEFSPOOL;
+  	printf("%s:\n", printer);
+  
+!<	for (lp = line, cp = SD; *lp++ = *cp++; )
+!<		;
+!<	lp[-1] = '/';
+!<
+!<	nitems = scandir(SD, &queue, select, sortq);
+!<	if (nitems < 0) {
+  		printf("\tcannot examine spool directory\n");
+  		return;
+  	}
+!<	if (nitems == 0)
+!<		return;
+!<	i = 0;
+!<	do {
+!<		cp = queue[i]->d_name;
+!<		if (*cp == 'c') {
+!<			n = 0;
+!<			while (i + 1 < nitems) {
+!<				cp1 = queue[i + 1]->d_name;
+!<				if (*cp1 != 'd' || strcmp(cp + 3, cp1 + 3))
+!<					break;
+!<				i++;
+!<				n++;
+  			}
+-<			if (n == 0) {
+-<				strcpy(lp, cp);
+-<				unlinkf(line);
+  			}
+!<		} else {
+!<			/*
+!<			 * Must be a df with no cf (otherwise, it would have
+!<			 * been skipped above) or a tf file (which can always
+!<			 * be removed).
+!<			 */
+!<			strcpy(lp, cp);
+!<			unlinkf(line);
+  		}
+-<     	} while (++i < nitems);
+-<}
+   
+-<unlinkf(name)
+-<	char	*name;
+-<{
+-<	if (unlink(name) < 0)
+-<		printf("\tcannot remove %s\n", name);
+-<	else
+-<		printf("\tremoved %s\n", name);
+-<}
+-<
+  /*
+   * Enable queuing to the printer (allow lpr's).
+   */
+---------------
+  	}
+  }
+  
+  cleanpr()
+  {
+!>	register int c;
+!>	register DIR *dirp;
+!>	register struct direct *dp;
+!>	char *cp, *cp1;
+  
+  	bp = pbuf;
+  	if ((SD = pgetstr("sd", &bp)) == NULL)
+  		SD = DEFSPOOL;
++>	for (cp = line, cp1 = SD; *cp++ = *cp1++; );
++>	cp[-1] = '/';
+  	printf("%s:\n", printer);
+  
+!>	if ((dirp = opendir(SD)) == NULL) {
+  		printf("\tcannot examine spool directory\n");
+  		return;
+  	}
+!>	while ((dp = readdir(dirp)) != NULL) {
+!>		c = dp->d_name[0];
+!>		if ((c == 'c' || c == 't' || c == 'd') && dp->d_name[1]=='f') {
+!>			(void)strcpy(cp, dp->d_name);
+!>			if (unlink(line) < 0)
+!>				printf("\tcannot remove %s\n", line);
+!>			else
+!>				printf("\tremoved %s\n", line);
+  		}
+  	}
+!>	closedir(dirp);
+  }
+  
+  /*
+   * Enable queuing to the printer (allow lpr's).
+   */
+***************
+*** 299,305 ****
+--- 227,233 ----
+  	 * Turn off the group execute bit of the lock file to enable queuing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!<		if (chmod(line, stbuf.st_mode & 0767) < 0)
+  			printf("\tcannot enable queuing\n");
+  		else
+  			printf("\tqueuing enabled\n");
+---------------
+  	 * Turn off the group execute bit of the lock file to enable queuing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!>		if (chmod(line, (int)(stbuf.st_mode & 0767)) < 0)
+  			printf("\tcannot enable queuing\n");
+  		else
+  			printf("\tqueuing enabled\n");
+***************
+*** 361,367 ****
+--- 289,295 ----
+  	 * Turn on the group execute bit of the lock file to disable queuing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!<		if (chmod(line, (stbuf.st_mode & 0777) | 010) < 0)
+  			printf("\tcannot disable queuing\n");
+  		else
+  			printf("\tqueuing disabled\n");
+---------------
+  	 * Turn on the group execute bit of the lock file to disable queuing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!>		if (chmod(line, (int)(stbuf.st_mode & 0777) | 010) < 0)
+  			printf("\tcannot disable queuing\n");
+  		else
+  			printf("\tqueuing disabled\n");
+***************
+*** 378,495 ****
+--- 306,320 ----
+  }
+  
+  /*
+-< * Disable queuing and printing and put a message into the status file
+-< * (reason for being down).
+-< */
+-<down(argc, argv)
+-<	char *argv[];
+-<{
+-<	register int c, status;
+-<	register char *cp1, *cp2;
+-<	char prbuf[100];
+-<
+-<	if (argc == 1) {
+-<		printf("Usage: down {all | printer} [message ...]\n");
+-<		return;
+-<	}
+-<	if (!strcmp(argv[1], "all")) {
+-<		printer = prbuf;
+-<		while (getprent(line) > 0) {
+-<			cp1 = prbuf;
+-<			cp2 = line;
+-<			while ((c = *cp2++) && c != '|' && c != ':')
+-<				*cp1++ = c;
+-<			*cp1 = '\0';
+-<			putmsg(argc - 2, argv + 2);
+-<		}
+-<		return;
+-<	}
+-<	printer = argv[1];
+-<	if ((status = pgetent(line, printer)) < 0) {
+-<		printf("cannot open printer description file\n");
+-<		return;
+-<	} else if (status == 0) {
+-<		printf("unknown printer %s\n", printer);
+-<		return;
+-<	}
+-<	putmsg(argc - 2, argv + 2);
+-<}
+-<
+-<putmsg(argc, argv)
+-<	char **argv;
+-<{
+-<	register int fd;
+-<	register char *cp1, *cp2;
+-<	char buf[1024];
+-<	struct stat stbuf;
+-<
+-<	bp = pbuf;
+-<	if ((SD = pgetstr("sd", &bp)) == NULL)
+-<		SD = DEFSPOOL;
+-<	if ((LO = pgetstr("lo", &bp)) == NULL)
+-<		LO = DEFLOCK;
+-<	if ((ST = pgetstr("st", &bp)) == NULL)
+-<		ST = DEFSTAT;
+-<	printf("%s:\n", printer);
+-<	/*
+-<	 * Turn on the group execute bit of the lock file to disable queuing and
+-<	 * turn on the owner execute bit of the lock file to disable printing.
+-<	 */
+-<	(void) sprintf(line, "%s/%s", SD, LO);
+-<	if (stat(line, &stbuf) >= 0) {
+-<		if (chmod(line, (stbuf.st_mode & 0777) | 0110) < 0)
+-<			printf("\tcannot disable queuing\n");
+-<		else
+-<			printf("\tprinter and queuing disabled\n");
+-<	} else if (errno == ENOENT) {
+-<		if ((fd = open(line, O_WRONLY|O_CREAT, 0770)) < 0)
+-<			printf("\tcannot create lock file\n");
+-<		else {
+-<			(void) close(fd);
+-<			printf("\tprinter and queuing disabled\n");
+-<		}
+-<		return;
+-<	} else
+-<		printf("\tcannot stat lock file\n");
+-<	/*
+-<	 * Write the message into the status file.
+-<	 */
+-<	(void) sprintf(line, "%s/%s", SD, ST);
+-<	fd = open(line, O_WRONLY|O_CREAT, 0664);
+-<	if (fd < 0 || flock(fd, LOCK_EX) < 0) {
+-<		printf("\tcannot create status file\n");
+-<		return;
+-<	}
+-<	(void) ftruncate(fd, 0);
+-<	if (argc <= 0) {
+-<		(void) write(fd, "\n", 1);
+-<		(void) close(fd);
+-<		return;
+-<	}
+-<	cp1 = buf;
+-<	while (--argc >= 0) {
+-<		cp2 = *argv++;
+-<		while (*cp1++ = *cp2++)
+-<			;
+-<		cp1[-1] = ' ';
+-<	}
+-<	cp1[-1] = '\n';
+-<	*cp1 = '\0';
+-<	(void) write(fd, buf, strlen(buf));
+-<	(void) close(fd);
+-<}
+-<
+-</*
+   * Exit lpc
+   */
+!<quit(argc, argv)
+!<	char *argv[];
+  {
+  	exit(0);
+  }
+  
+  /*
+!< * Kill and restart the daemon.
+   */
+  restart(argc, argv)
+  	char *argv[];
+---------------
+  }
+  
+  /*
+   * Exit lpc
+   */
+!>quit()
+  {
+  	exit(0);
+  }
+  
+  /*
+!> * Startup the daemon.
+   */
+  restart(argc, argv)
+  	char *argv[];
+***************
+*** 502,507 ****
+--- 327,333 ----
+---------------
+  		printf("Usage: restart {all | printer ...}\n");
+  		return;
+  	}
++>	(void)gethostname(host, sizeof(host));
+  	if (argc == 2 && !strcmp(argv[1], "all")) {
+  		printer = prbuf;
+  		while (getprent(line) > 0) {
+***************
+*** 510,516 ****
+--- 336,341 ----
+  			while ((c = *cp2++) && c != '|' && c != ':')
+  				*cp1++ = c;
+  			*cp1 = '\0';
+-<			abortpr(0);
+  			startpr(0);
+  		}
+  		return;
+---------------
+  			startpr(0);
+  		}
+  		return;
+***************
+*** 524,530 ****
+--- 349,354 ----
+  			printf("unknown printer %s\n", printer);
+  			continue;
+  		}
+-<		abortpr(0);
+  		startpr(0);
+  	}
+  }
+---------------
+  		startpr(0);
+  	}
+  }
+***************
+*** 543,548 ****
+--- 367,373 ----
+---------------
+  		printf("Usage: start {all | printer ...}\n");
+  		return;
+  	}
++>	(void)gethostname(host, sizeof(host));
+  	if (argc == 2 && !strcmp(argv[1], "all")) {
+  		printer = prbuf;
+  		while (getprent(line) > 0) {
+***************
+*** 584,590 ****
+--- 409,415 ----
+  	 * Turn off the owner execute bit of the lock file to enable printing.
+  	 */
+  	if (enable && stat(line, &stbuf) >= 0) {
+!<		if (chmod(line, stbuf.st_mode & (enable==2 ? 0666 : 0677)) < 0)
+  			printf("\tcannot enable printing\n");
+  		else
+  			printf("\tprinting enabled\n");
+---------------
+  	 * Turn off the owner execute bit of the lock file to enable printing.
+  	 */
+  	if (enable && stat(line, &stbuf) >= 0) {
+!>		if (chmod(line, (int)(stbuf.st_mode & 0677)) < 0)
+  			printf("\tcannot enable printing\n");
+  		else
+  			printf("\tprinting enabled\n");
+***************
+*** 650,665 ****
+--- 475,490 ----
+  	printf("%s:\n", printer);
+  	(void) sprintf(line, "%s/%s", SD, LO);
+  	if (stat(line, &stbuf) >= 0) {
+!<		printf("\tqueuing is %s\n",
+  			(stbuf.st_mode & 010) ? "disabled" : "enabled");
+!<		printf("\tprinting is %s\n",
+  			(stbuf.st_mode & 0100) ? "disabled" : "enabled");
+  	} else {
+!<		printf("\tqueuing is enabled\n");
+!<		printf("\tprinting is enabled\n");
+  	}
+  	if ((dirp = opendir(SD)) == NULL) {
+!<		printf("\tcannot examine spool directory\n");
+  		return;
+  	}
+  	i = 0;
+---------------
+  	printf("%s:\n", printer);
+  	(void) sprintf(line, "%s/%s", SD, LO);
+  	if (stat(line, &stbuf) >= 0) {
+!>		printf("\tqueuing is %s",
+  			(stbuf.st_mode & 010) ? "disabled" : "enabled");
+!>		printf(", printing is %s",
+  			(stbuf.st_mode & 0100) ? "disabled" : "enabled");
+  	} else {
+!>		printf("\tqueuing is enabled");
+!>		printf(", printing is enabled");
+  	}
+  	if ((dirp = opendir(SD)) == NULL) {
+!>		printf(", cannot examine spool directory\n");
+  		return;
+  	}
+  	i = 0;
+***************
+*** 669,694 ****
+--- 494,521 ----
+  	}
+  	closedir(dirp);
+  	if (i == 0)
+!<		printf("\tno entries\n");
+  	else if (i == 1)
+!<		printf("\t1 entry in spool area\n");
+  	else
+!<		printf("\t%d entries in spool area\n", i);
+  	fd = open(line, O_RDONLY);
+  	if (fd < 0 || flock(fd, LOCK_SH|LOCK_NB) == 0) {
+  		(void) close(fd);	/* unlocks as well */
+!<		printf("\tno daemon present\n");
+  		return;
+  	}
+  	(void) close(fd);
+-<	putchar('\t');
+  	(void) sprintf(line, "%s/%s", SD, ST);
+  	fd = open(line, O_RDONLY);
+  	if (fd >= 0) {
+  		(void) flock(fd, LOCK_SH);
+  		while ((i = read(fd, line, sizeof(line))) > 0)
+  			(void) fwrite(line, 1, i, stdout);
+  		(void) close(fd);	/* unlocks as well */
+  	}
+  }
+  
+---------------
+  	}
+  	closedir(dirp);
+  	if (i == 0)
+!>		printf(", no entries");
+  	else if (i == 1)
+!>		printf(", 1 entry in spool area");
+  	else
+!>		printf(", %d entries in spool area", i);
+  	fd = open(line, O_RDONLY);
+  	if (fd < 0 || flock(fd, LOCK_SH|LOCK_NB) == 0) {
+  		(void) close(fd);	/* unlocks as well */
+!>		printf(", no daemon present\n");
+  		return;
+  	}
+  	(void) close(fd);
+  	(void) sprintf(line, "%s/%s", SD, ST);
+  	fd = open(line, O_RDONLY);
+  	if (fd >= 0) {
++>		printf( "\n\t" );
+  		(void) flock(fd, LOCK_SH);
+  		while ((i = read(fd, line, sizeof(line))) > 0)
+  			(void) fwrite(line, 1, i, stdout);
+  		(void) close(fd);	/* unlocks as well */
++>	} else {
++>		putchar( '\n' );
+  	}
+  }
+  
+***************
+*** 749,755 ****
+--- 576,582 ----
+  	 * Turn on the owner execute bit of the lock file to disable printing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!<		if (chmod(line, (stbuf.st_mode & 0777) | 0100) < 0)
+  			printf("\tcannot disable printing\n");
+  		else
+  			printf("\tprinting disabled\n");
+---------------
+  	 * Turn on the owner execute bit of the lock file to disable printing.
+  	 */
+  	if (stat(line, &stbuf) >= 0) {
+!>		if (chmod(line, (int)(stbuf.st_mode & 0777) | 0100) < 0)
+  			printf("\tcannot disable printing\n");
+  		else
+  			printf("\tprinting disabled\n");
+***************
+*** 764,773 ****
+--- 591,596 ----
+  		printf("\tcannot stat lock file\n");
+  }
+  
+-<struct	queue **queue;
+-<int	nitems;
+-<time_t	mtime;
+-<
+  /*
+   * Put the specified jobs at the top of printer queue.
+   */
+---------------
+  /*
+   * Put the specified jobs at the top of printer queue.
+   */
+***************
+*** 774,785 ****
+--- 597,609 ----
+  topq(argc, argv)
+  	char *argv[];
+  {
+!<	register int n, i;
+  	struct stat stbuf;
+  	register char *cfname;
+!<	int status, changed;
+  
+!<	if (argc < 3) {
+  		printf("Usage: topq printer [jobnum ...] [user ...]\n");
+  		return;
+  	}
+---------------
+  topq(argc, argv)
+  	char *argv[];
+  {
+!>	register int status, nitems, n;
+  	struct stat stbuf;
+  	register char *cfname;
+!>	struct queue **queue;
+!>	int changed = 0;
+  
+!>	if (argc == 1) {
+  		printf("Usage: topq printer [jobnum ...] [user ...]\n");
+  		return;
+  	}
+***************
+*** 806,955 ****
+--- 630,741 ----
+  		return;
+  	}
+  	nitems = getq(&queue);
+!<	if (nitems == 0)
+!<		return;
+!<	changed = 0;
+!<	mtime = queue[0]->q_time;
+!<	for (i = argc; --i; ) {
+!<		if (doarg(argv[i]) == 0) {
+!<			printf("\tjob %s is not in the queue\n", argv[i]);
+  			continue;
+!<		} else
+  			changed++;
+  	}
+-<	for (i = 0; i < nitems; i++)
+-<		free(queue[i]);
+-<	free(queue);
+-<	if (!changed) {
+-<		printf("\tqueue order unchanged\n");
+-<		return;
+  	}
+  	/*
+  	 * Turn on the public execute bit of the lock file to
+  	 * get lpd to rebuild the queue after the current job.
+  	 */
+  	if (changed && stat(LO, &stbuf) >= 0)
+!<		(void) chmod(LO, (stbuf.st_mode & 0777) | 01);
+  } 
+  
+  /*
+!< * Reposition the job by changing the modification time of
+!< * the control file.
+   */
+!<touch(q)
+!<	struct queue *q;
+  {
+!<	struct timeval tvp[2];
+  
+!<	tvp[0].tv_sec = tvp[1].tv_sec = --mtime;
+!<	tvp[0].tv_usec = tvp[1].tv_usec = 0;
+!<	return(utimes(q->q_name, tvp));
+  }
+  
+  /*
+   * Checks if specified job name is in the printer's queue.
+   * Returns:  negative (-1) if argument name is not in the queue.
+   */
+!<doarg(job)
+  	char *job;
+  {
+!<	register struct queue **qq;
+!<	register int jobnum, n;
+!<	register char *cp, *machine;
+!<	int cnt = 0;
+  	FILE *fp;
+  
+!<	/*
+!<	 * Look for a job item consisting of system name, colon, number 
+!<	 * (example: ucbarpa:114)  
+!<	 */
+!<	if ((cp = index(job, ':')) != NULL) {
+!<		machine = job;
+!<		*cp++ = '\0';
+!<		job = cp;
+!<	} else
+!<		machine = NULL;
+!<
+!<	/*
+!<	 * Check for job specified by number (example: 112 or 235ucbarpa).
+!<	 */
+  	if (isdigit(*job)) {
+  		jobnum = 0;
+  		do
+  			jobnum = jobnum * 10 + (*job++ - '0');
+  		while (isdigit(*job));
+!<		for (qq = queue + nitems; --qq >= queue; ) {
+  			n = 0;
+!<			for (cp = (*qq)->q_name+3; isdigit(*cp); )
+  				n = n * 10 + (*cp++ - '0');
+!<			if (jobnum != n)
+  				continue;
+-<			if (*job && strcmp(job, cp) != 0)
+-<				continue;
+-<			if (machine != NULL && strcmp(machine, cp) != 0)
+-<				continue;
+-<			if (touch(*qq) == 0) {
+-<				printf("\tmoved %s\n", (*qq)->q_name);
+-<				cnt++;
+  			}
+-<		}
+-<		return(cnt);
+-<	}
+  	/*
+!<	 * Process item consisting of owner's name (example: henry).
+  	 */
+!<	for (qq = queue + nitems; --qq >= queue; ) {
+!<		if ((fp = fopen((*qq)->q_name, "r")) == NULL)
+  			continue;
+!<		while (getline(fp) > 0)
+!<			if (line[0] == 'P')
+!<				break;
+  		(void) fclose(fp);
+!<		if (line[0] != 'P' || strcmp(job, line+1) != 0)
+!<			continue;
+!<		if (touch(*qq) == 0) {
+!<			printf("\tmoved %s\n", (*qq)->q_name);
+!<			cnt++;
+  		}
+  	}
+!<	return(cnt);
+  }
+!<
+!</*
+!< * Enable everything and start printer (undo `down').
+!< */
+!<up(argc, argv)
+!<	char *argv[];
+!<{
+!<	register int c, status;
+!<	register char *cp1, *cp2;
+!<	char prbuf[100];
+!<
+!<	if (argc == 1) {
+!<		printf("Usage: up {all | printer ...}\n");
+!<		return;
+!<	}
+!<	if (argc == 2 && !strcmp(argv[1], "all")) {
+!<		printer = prbuf;
+!<		while (getprent(line) > 0) {
+!<			cp1 = prbuf;
+!<			cp2 = line;
+!<			while ((c = *cp2++) && c != '|' && c != ':')
+!<				*cp1++ = c;
+!<			*cp1 = '\0';
+!<			startpr(2);
+!<		}
+!<		return;
+!<	}
+!<	while (--argc) {
+!<		printer = *++argv;
+!<		if ((status = pgetent(line, printer)) < 0) {
+!<			printf("cannot open printer description file\n");
+!<			continue;
+!<		} else if (status == 0) {
+!<			printf("unknown printer %s\n", printer);
+!<			continue;
+!<		}
+!<		startpr(2);
+!<	}
+  }
+---------------
+  		return;
+  	}
+  	nitems = getq(&queue);
+!>	while (--argc) {
+!>		if ((n = inqueue(*++argv, queue, nitems)) < 0) {
+!>			printf("\tjob %s is not in the queue\n", *argv);
+  			continue;
+!>		}
+!>		/*
+!>		 * Reposition the job by changing the modification time of
+!>		 * the control file.
+!>		 */
+!>		if (touch(queue[n]->q_name)) {
+!>			free((char *)queue[n]);
+!>			queue[n] = NULL;
+  			changed++;
+  		}
+  	}
+  	/*
++>	 * Put the remaining jobs at the end of the queue.
++>	 */
++>	for (n = 0; n < nitems; n++) {
++>		if (queue[n] == NULL)
++>			continue;
++>		cfname = queue[n]->q_name;
++>		if (changed)
++>			(void)touch(cfname);
++>		free((char *)cfname);
++>	}
++>	free((char *)queue);
++>	printf("\tqueue order %s\n", changed ? "changed" : "unchanged");
++>	/*
+  	 * Turn on the public execute bit of the lock file to
+  	 * get lpd to rebuild the queue after the current job.
+  	 */
+  	if (changed && stat(LO, &stbuf) >= 0)
+!>		(void) chmod(LO, (int)(stbuf.st_mode & 0777) | 01);
+  } 
+  
+  /* 
+!> * Change the modification time of the file.
+!> *	Returns boolean if successful.  
+   */
+!>touch(cfname)
+!>	char *cfname;
+  {
+!>	register int fd;
+  
+!>	fd = open(cfname, O_RDWR);
+!>	if (fd < 0) {
+!>		printf("\tcannot open %s\n", cfname);
+!>		return(0); 
+  	}
++>	(void) read(fd, line, 1);
++>	(void) lseek(fd, 0L, 0); 	/* set pointer back to top of file */
++>	(void) write(fd, line, 1);
++>	(void) close(fd);
++>	sleep(1);			/* so times will be different */
++>	return(1);
++>}
+  
+  /*
+   * Checks if specified job name is in the printer's queue.
+   * Returns:  negative (-1) if argument name is not in the queue.
++> *     0 to n:  array index of pointer to argument name.
+   */
+!>inqueue(job, queue, nitems)
+  	char *job;
++>	struct queue *queue[];
++>	int nitems;
+  {
+!>	register struct queue *q;
+!>	register int n, jobnum;
+!>	register char *cp;
+  	FILE *fp;
+  
+!>	jobnum = -1;
+  	if (isdigit(*job)) {
+  		jobnum = 0;
+  		do
+  			jobnum = jobnum * 10 + (*job++ - '0');
+  		while (isdigit(*job));
+!>	}
+!>
+!>	while (--nitems >= 0) {
+!>		if ((q = queue[nitems]) == NULL)
+!>			continue;
+!>		/* this needs to be fixed since the same number can be used
+!>		   by different machines (i.e. jobnum & machine) */
+!>		if (jobnum >= 0) {
+  			n = 0;
+!>			for (cp = q->q_name+3; isdigit(*cp); )
+  				n = n * 10 + (*cp++ - '0');
+!>			if (jobnum == n)
+!>				return(nitems);
+  			continue;
+  		}
+  		/*
+!>		 * Read cf file for owner's name
+  		 */
+!>		if ((fp = fopen(q->q_name, "r")) == NULL)
+  			continue;
+!>		while (getline(fp) > 0) {
+!>			if (line[0] == 'P' && !strcmp(job, line+1)) {
+  				(void) fclose(fp);
+!>				return(nitems);
+  			}
+  		}
+!>		(void) fclose(fp);
+  	}
+!>	return(-1);
+  }

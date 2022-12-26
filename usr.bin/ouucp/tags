@@ -1,0 +1,551 @@
+ABORT	conn.c	/^#define ABORT -2$/
+ALIASFILE	uucp.h	/^#define	ALIASFILE	"\/usr\/lib\/uucp\/L.aliases"$/
+ANYREAD	uucp.h	/^#define ANYREAD		0004$/
+ANYWRITE	uucp.h	/^#define ANYWRITE	02$/
+APPCMD	uux.c	/^#define APPCMD(/
+ASSERT	uucp.h	/^#define ASSERT(/
+Acuopn	condevs.c	/^Acuopn(/
+BADCHARS	uuxqt.c	/^#define BADCHARS	"&^|(/
+BADFRAME	pk.h	/^#define	BADFRAME 020000$/
+BASEMODE	uucp.h	/^#define	BASEMODE	0666$/
+BSD4_2	uucp.h	/^#define BSD4_2 	\/**\/$/
+BSD4_3	uucp.h	/^#define BSD4_3 	\/**\/$/
+BSDINETD	uucp.h	/^#define BSDINETD	\/**\/$/
+BSDTCP	uucp.h	/^#define BSDTCP		\/* 4.2bsd or 2.9bsd TCP\/IP *\/$/
+BSPEED	condevs.c	/^#define BSPEED B150$/
+BUFLEN	subdir.c	/^#define	BUFLEN	50$/
+B_COPY	pk.h	/^#define	B_COPY	020$/
+B_MARK	pk.h	/^#define	B_MARK	040$/
+B_NULL	pk.h	/^#define	B_NULL	0$/
+B_READ	pk.h	/^#define B_READ	1$/
+B_READY	pk.h	/^#define	B_READY	1$/
+B_RESID	pk.h	/^#define	B_RESID	010$/
+B_SENT	pk.h	/^#define	B_SENT	2$/
+B_SHORT	pk.h	/^#define	B_SHORT	0100$/
+B_WRITE	pk.h	/^#define B_WRITE	0$/
+CALLBACK	uucp.h	/^#define CALLBACK	1$/
+CDEVSW	acucntrl.c	/^#define CDEVSW	0$/
+CF_DIAL	uucp.h	/^#define CF_DIAL		-5$/
+CF_LOCK	uucp.h	/^#define CF_LOCK		-3$/
+CF_LOGIN	uucp.h	/^#define CF_LOGIN	-6$/
+CF_NODEV	uucp.h	/^#define	CF_NODEV	-4$/
+CF_SYSTEM	uucp.h	/^#define CF_SYSTEM	-1$/
+CF_TIME	uucp.h	/^#define CF_TIME		-2$/
+CHECK	pk.h	/^#define	CHECK	0125252$/
+CLOSE	pk.h	/^#define	CLOSE	1$/
+CMDFILE	uucp.h	/^#define	CMDFILE		"\/usr\/lib\/uucp\/L.cmds"$/
+CMDPRE	uucp.h	/^#define CMDPRE		'C'$/
+CMDSDIR	uucp.h	/^#define CMDSDIR		"\/usr\/spool\/uucp\/C."$/
+CMDSLEN	uusnap.c	/^#define	CMDSLEN	5				\/* Length of trailer *\/$/
+CMDTYPE	uusnap.c	/^#define	CMDTYPE	0				\/* Index into scnt.cntr *\/$/
+CNULL	uucp.h	/^#define CNULL		(/
+COMMENT	cfgets.c	/^#define COMMENT		'#'$/
+CONNODATA	pk1.c	/^#define CONNODATA 10$/
+CONTINUE	cfgets.c	/^#define CONTINUE	'\\\\'$/
+CORRUPT	uucp.h	/^#define CORRUPT		"CORRUPT"$/
+CPUSPEED	condevs.c	/^#define CPUSPEED 1000000	\/* VAX 780 is 1MIPS *\/$/
+DATADIR	uucp.h	/^#define DATADIR		"\/usr\/spool\/uucp\/D."$/
+DATALEN	uusnap.c	/^#define	DATALEN	5				\/* Length of trailer *\/$/
+DATAPRE	uucp.h	/^#define DATAPRE		'D'$/
+DATTYPE	uusnap.c	/^#define	DATTYPE	1				\/* Index into scnt.cntr *\/$/
+DBG_CLEAN	cico.c	/^#define DBG_CLEAN 2		\/*   Cleanup, discard temp fi/
+DBG_PERM	cico.c	/^#define DBG_PERM  1		\/*   Create a permanent audit/
+DBG_TEMP	cico.c	/^#define DBG_TEMP  0		\/*   Create a temporary audit/
+DEAD	pk.h	/^#define	DEAD	0$/
+DEBUG	uucp.h	/^#define DEBUG(/
+DEC	uudecode.c	/^#define DEC(/
+DELAY	condevs.c	/^#define	DELAY(/
+DEVFILE	uucp.h	/^#define DEVFILE		"\/usr\/lib\/uucp\/L-devices"$/
+DH11	acucntrl.c	/^#define DH11	2$/
+DHINFO	acucntrl.c	/^#define DHINFO	6$/
+DHOPEN	acucntrl.c	/^#define DHOPEN	5$/
+DHSCAR	acucntrl.c	/^#define DHSCAR	8$/
+DIALFILE	uucp.h	/^#define DIALFILE	"\/usr\/lib\/uucp\/L-dialcodes"$/
+DIALINOUT	uucp.h	/^#define DIALINOUT	"\/usr\/lib\/uucp\/acucntrl" \/**\/$/
+DISABLE	acucntrl.c	/^#define DISABLE	0$/
+DMF	acucntrl.c	/^#define DMF	3$/
+DMFINFO	acucntrl.c	/^#define DMFINFO	10$/
+DMFOPEN	acucntrl.c	/^#define DMFOPEN	9$/
+DMFSCAR	acucntrl.c	/^#define DMFSCAR	12$/
+DONTCOPY	uucp.h	/^#define DONTCOPY	\/**\/$/
+DOWN	pk.h	/^#define	DOWN	02000$/
+DRAINO	pk.h	/^#define	DRAINO	0400$/
+DZ11	acucntrl.c	/^#define DZ11	1$/
+DZINFO	acucntrl.c	/^#define DZINFO	2$/
+DZOPEN	acucntrl.c	/^#define DZOPEN	1$/
+DZSCAR	acucntrl.c	/^#define DZSCAR	4$/
+D_CHAT	uucp.h	/^#define	D_CHAT		5$/
+D_brand	uucp.h	/^#define	D_brand		D_arg[4]$/
+D_calldev	uucp.h	/^#define	D_calldev	D_arg[2]$/
+D_class	uucp.h	/^#define	D_class		D_arg[3]$/
+D_line	uucp.h	/^#define	D_line		D_arg[1]$/
+D_type	uucp.h	/^#define	D_type		D_arg[0]$/
+EM_BADUUCP	cntrl.c	/^#define EM_BADUUCP	"N3"	\/* a bad uucp command was /
+EM_LOCACC	cntrl.c	/^#define EM_LOCACC	"N1"	\/* local access to file den/
+EM_LOCCP	cntrl.c	/^#define EM_LOCCP	"N6"	\/* can't copy on local syste/
+EM_MAX	cntrl.c	/^#define EM_MAX		6$/
+EM_NOTMP	cntrl.c	/^#define EM_NOTMP	"N4"	\/* remote error - can't crea/
+EM_RMTACC	cntrl.c	/^#define EM_RMTACC	"N2"	\/* remote access to file\/pa/
+EM_RMTCP	cntrl.c	/^#define EM_RMTCP	"N5"	\/* can't copy to remote dire/
+ENABLE	acucntrl.c	/^#define ENABLE	1$/
+ENC	uuencode.c	/^#define ENC(/
+EOLN	cfgets.c	/^#define EOLN		'\\n'$/
+EOS	cfgets.c	/^#define EOS		'\\0'$/
+EOTMSG	uucp.h	/^#define EOTMSG		"\\04\\n\\04\\n"$/
+ERRLOG	uucp.h	/^#define ERRLOG		"\/usr\/spool\/uucp\/ERRLOG"$/
+FAIL	uucp.h	/^#define FAIL		-1$/
+FIBUFSIZ	fio.c	/^#define FIBUFSIZ	256	\/* for X.25 interfaces: set e/
+FOBUFSIZ	fio.c	/^#define FOBUFSIZ	256	\/* for X.25 interfaces: set e/
+FTABSIZE	uux.c	/^#define FTABSIZE 30$/
+F_CLASS	uucp.h	/^#define F_CLASS		3	\/* an optional prefix and the s/
+F_LINE	uucp.h	/^#define F_LINE		2$/
+F_LOGIN	uucp.h	/^#define F_LOGIN		5$/
+F_NAME	uucp.h	/^#define F_NAME		0$/
+F_PHONE	uucp.h	/^#define F_PHONE		4$/
+F_TIME	uucp.h	/^#define F_TIME		1$/
+GENRCV	uux.c	/^#define GENRCV(/
+GENSEND	uux.c	/^#define GENSEND(/
+GETRIES	pk1.c	/^#define GETRIES 10$/
+HASSYSPART	uux.c	/^#define HASSYSPART 1$/
+HAYES	uucp.h	/^#define HAYES		\/* Hayes' Smartmodem *\/$/
+HDRFILE	uucpname.c	/^#define	HDRFILE "\/usr\/include\/whoami.h"$/
+HDRSIZ	pk.h	/^#define	HDRSIZ		6	\/* Packet header size *\/$/
+HUP	cntrl.c	/^#define HUP     'H'	\/* ready to hangup (/
+INITA	pk.h	/^#define	INITA	7$/
+INITB	pk.h	/^#define	INITB	6$/
+INITC	pk.h	/^#define	INITC	5$/
+INITa	pk.h	/^#define	INITa	1$/
+INITab	pk.h	/^#define	INITab	3$/
+INITb	pk.h	/^#define	INITb	2$/
+INTERVALTIMER	uucp.h	/^#define	INTERVALTIMER$/
+IO	condevs.h	/^#define IO$_SETMODE	0x00000023$/
+ISCNTL	pk.h	/^#define	ISCNTL(/
+LCKMODE	ulockf.c	/^#define	LCKMODE	0444	\/* File mode for lock files */
+LINSIZ	acucntrl.c	/^#define	LINSIZ	sizeof(/
+LIVE	pk.h	/^#define	LIVE	010$/
+LLEN	uucp.h	/^#define LLEN	50$/
+LOCKDIR	uucp.h	/^#define	LOCKDIR	"LCK"	\/**\/$/
+LOGFILE	uucp.h	/^#define LOGFILE		"\/usr\/spool\/uucp\/LOGFILE"$/
+LOGMASK	uucp.h	/^#define	LOGMASK		0133$/
+LQUOTE	getprm.c	/^#define LQUOTE	'(/
+LSIZE	gnsys.c	/^#define LSIZE 128	\/* number of systems to store *\//
+MAIL	uucp.h	/^#define MAIL		"\/usr\/lib\/sendmail"$/
+MASTER	uucp.h	/^#define MASTER		1$/
+MAXBASENAME	uucp.h	/^#define MAXBASENAME	14$/
+MAXBYTES	uucp.c	/^#define MAXBYTES 50000	\/* maximun number of bytes /
+MAXC	conn.c	/^#define MAXC 1000$/
+MAXCOUNT	uucp.c	/^#define MAXCOUNT 15	\/* maximun number of files per/
+MAXFULLNAME	uucp.h	/^#define MAXFULLNAME	255$/
+MAXLOCKS	ulockf.c	/^#define MAXLOCKS 16	\/* Maximum number of lock file/
+MAXMSGLEN	fio.c	/^#define MAXMSGLEN	BUFSIZ$/
+MAXMSGTIME	uucp.h	/^#define MAXMSGTIME	120$/
+MAXPH	uucp.h	/^#define MAXPH		60	\/* maximum length of a phone num/
+MAXPKTIME	pk1.c	/^#define	MAXPKTIME 16$/
+MAXPRE	uuclean.c	/^#define MAXPRE 10$/
+MAXRECALLS	uucp.h	/^#define MAXRECALLS	25$/
+MAXRETRIES	fio.c	/^#define MAXRETRIES	(/
+MAXRQST	uucp.h	/^#define MAXRQST	250$/
+MAXTIMEOUT	pk1.c	/^#define MAXTIMEOUT 32$/
+MIN	pk.h	/^#define	MIN(/
+MOD8	pk.h	/^#define	MOD8	7$/
+MR	conn.c	/^#define MR 100$/
+MYNAME	uucp.h	/^#define	MYNAME	"uwvax"$/
+M_CLOSE	pk.h	/^#define	M_CLOSE	002$/
+M_INITA	pk.h	/^#define	M_INITA	0200$/
+M_INITB	pk.h	/^#define	M_INITB	0100$/
+M_INITC	pk.h	/^#define	M_INITC	040$/
+M_RJ	pk.h	/^#define	M_RJ	004$/
+M_RR	pk.h	/^#define	M_RR	020$/
+M_SRJ	pk.h	/^#define	M_SRJ	010$/
+Macucntrl	acucntrl.c	/^main(/
+Mcfgets	cfgets.c	/^main(/
+Mcico	cico.c	/^main(/
+Muuclean	uuclean.c	/^main(/
+Muucp	uucp.c	/^main(/
+Muucpd	uucpd.c	/^main(/
+Muudecode	uudecode.c	/^main(/
+Muuencode	uuencode.c	/^main(/
+Muulog	uulog.c	/^main(/
+Muuname	uuname.c	/^main(/
+Muupoll	uupoll.c	/^main(/
+Muuq	uuq.c	/^main(/
+Muusend	uusend.c	/^main(/
+Muusnap	uusnap.c	/^main(/
+Muuxqt	uuxqt.c	/^main(/
+NAMESIZE	uucp.h	/^#define NAMESIZE	255$/
+NAMSIZ	acucntrl.c	/^#define NAMSIZ	sizeof(/
+NCMDS	uuxqt.c	/^#define	NCMDS	50$/
+NDH11	acucntrl.c	/^#define NDH11	7$/
+NDHLINE	acucntrl.c	/^#define NDHLINE	16	\/* lines\/dh *\/$/
+NDMF	acucntrl.c	/^#define NDMF	11$/
+NDMFLINE	acucntrl.c	/^#define NDMFLINE 8	\/* lines\/dmf *\/$/
+NDZ11	acucntrl.c	/^#define NDZ11	3$/
+NDZLINE	acucntrl.c	/^#define NDZLINE	8	\/* lines\/dz *\/$/
+NGROUPS	acucntrl.c	/^#define NGROUPS 16$/
+NITEMS	anlwrk.c	/^#define NITEMS(/
+NLVALUE	acucntrl.c	/^#define NLVALUE(/
+NOGETPEER	cico.c	/^#define NOGETPEER$/
+NOMTIME	uuclean.c	/^#define NOMTIME 72	\/* hours to age files before de/
+NOSTRANGERS	uucp.h	/^#define NOSTRANGERS	\/**\/$/
+NOSYS	uuq.c	/^#define	NOSYS		(/
+NOSYSPART	uux.c	/^#define NOSYSPART 0$/
+NPCFIELDS	conn.c	/^#define NPCFIELDS	15$/
+NPLINES	pk.h	/^#define	NPLINES	20$/
+NSYSTEM	uusnap.c	/^#define	NSYSTEM	100				\/* max # of systems queued /
+NT_ERR	uuxqt.c	/^#define	NT_ERR	1	\/* if should notify if non-zero e/
+NT_NO	uuxqt.c	/^#define	NT_NO	2	\/* if should not notify ever (/
+NT_YES	uuxqt.c	/^#define	NT_YES	0	\/* if should notify on execution /
+NULL	uudecode.c	/^#define	NULL	0$/
+NUMCTRS	uusnap.c	/^#define	NUMCTRS	3				\/* # file types to count *\/$/
+ONEDAY	uucp.h	/^#define ONEDAY		86400L$/
+O_APPEND	uucpd.c	/^#define O_APPEND	0 \/* kludge *\/$/
+PACKSIZE	pk.h	/^#define	PACKSIZE	64	\/* Standard packet size *\/$/
+PCP_BAUD	conn.c	/^#define PCP_BAUD	3$/
+PCP_CALLBACK	conn.c	/^#define PCP_CALLBACK	8$/
+PCP_CITY	conn.c	/^#define PCP_CITY	10$/
+PCP_PHONE	conn.c	/^#define PCP_PHONE	4$/
+PCP_RPHONE	conn.c	/^#define PCP_RPHONE	12$/
+PDEBUG	pk.h	/^#define PDEBUG	0200$/
+PKMAXBUF	pk1.c	/^#define PKMAXBUF 128$/
+PKMAXSTMSG	pk1.c	/^#define PKMAXSTMSG 40$/
+PKTIME	pk0.c	/^#define PKTIME 4$/
+PUBDIR	uucp.h	/^#define PUBDIR		"\/usr\/spool\/uucppublic"$/
+P_EVEN	conn.c	/^#define	P_EVEN	2$/
+P_ODD	conn.c	/^#define	P_ODD	3$/
+P_ONE	conn.c	/^#define	P_ONE	1$/
+P_ZERO	conn.c	/^#define	P_ZERO	0$/
+RAMESG	cntrl.c	/^#define RAMESG(/
+RCLOSE	pk.h	/^#define	RCLOSE	04000$/
+RCVFILE	cntrl.c	/^#define RCVFILE 'R'	\/* receive file (/
+RDR	mailst.c	/^#define	RDR	0$/
+RECHECKTIME	uuxqt.c	/^#define RECHECKTIME	60*10	\/* 10 minutes *\/$/
+RECOVER	uusend.c	/^#define	RECOVER$/
+RESET	cntrl.c	/^#define RESET	'X'	\/* reset line modes *\/$/
+RETRYTIME	uucp.h	/^#define RETRYTIME	600$/
+RJ	pk.h	/^#define	RJ	2$/
+RMESG	cntrl.c	/^#define RMESG(/
+RMTDEBUG	uucp.h	/^#define RMTDEBUG	"AUDIT"$/
+RQSTCMPT	cntrl.c	/^#define RQSTCMPT 'C'	\/* request complete (/
+RQUOTE	getprm.c	/^#define RQUOTE ')'$/
+RR	pk.h	/^#define	RR	4$/
+RREJ	pk.h	/^#define	RREJ	040$/
+RXMIT	pk.h	/^#define	RXMIT	020$/
+SAME	uucp.h	/^#define SAME		0$/
+SCPYN	uucpd.c	/^#define	SCPYN(/
+SEQFILE	uucp.h	/^#define SEQFILE		"\/usr\/lib\/uucp\/SEQF"$/
+SEQLEN	gename.c	/^#define SEQLEN 4$/
+SEQLOCK	uucp.h	/^#define SEQLOCK		"SEQL"$/
+SHELL	uucp.h	/^#define SHELL		"\/bin\/sh"$/
+SIG_IGN	uucp.h	/^#define SIG_IGN	main$/
+SLAVE	uucp.h	/^#define SLAVE		0$/
+SLCKTIME	uucp.h	/^#define SLCKTIME	5400	\/* system\/device timeout (/
+SLOCKTIME	gename.c	/^#define SLOCKTIME 10L$/
+SLOCKTRIES	gename.c	/^#define SLOCKTRIES 5$/
+SLTPTCL	cntrl.c	/^#define SLTPTCL 'P'	\/* select protocol  (/
+SNDFILE	cntrl.c	/^#define SNDFILE 'S'	\/* send file (/
+SPOOL	uucp.h	/^#define SPOOL		"\/usr\/spool\/uucp"$/
+SQFILE	uucp.h	/^#define SQFILE		"\/usr\/lib\/uucp\/SQFILE"$/
+SQLOCK	uucp.h	/^#define SQLOCK		"SQ"$/
+SQTIME	uucp.h	/^#define SQTIME		60$/
+SQTMP	uucp.h	/^#define SQTMP		"\/usr\/lib\/uucp\/SQTMP"$/
+SRJ	pk.h	/^#define	SRJ	3$/
+SS	condevs.h	/^#define SS$_NORMAL	0x00000001$/
+SS_BADSEQ	uucp.h	/^#define SS_BADSEQ	5$/
+SS_CALLBACK	uucp.h	/^#define SS_CALLBACK	2$/
+SS_FAIL	uucp.h	/^#define SS_FAIL		4$/
+SS_INPROGRESS	uucp.h	/^#define SS_INPROGRESS	3$/
+SS_NODEVICE	uucp.h	/^#define SS_NODEVICE	1$/
+SS_OK	uucp.h	/^#define SS_OK		0$/
+SS_WRONGTIME	uucp.h	/^#define SS_WRONGTIME	6$/
+STATNAME	systat.c	/^#define STATNAME(/
+STBNULL	uucp.h	/^#define STBNULL		(/
+SUCCESS	uucp.h	/^#define SUCCESS		0$/
+SYN	pk.h	/^#define	SYN	020$/
+SYSFILE	uucp.h	/^#define SYSFILE		"\/usr\/lib\/uucp\/L.sys"$/
+SYSLOG	uucp.h	/^#define SYSLOG		"\/usr\/spool\/uucp\/SYSLOG"$/
+SYSNSIZE	uucp.h	/^#define SYSNSIZE	(/
+SYTEK	uucp.h	/^#define SYTEK	\/* Sytek Local Area Net *\/$/
+S_SIZE	systat.c	/^#define S_SIZE 100$/
+TAILSIZE	pk.h	/^#define TAILSIZE	2	\/* Number of trailing nulls aft/
+TBUFSIZE	tio.c	/^#define TBUFSIZE	1024$/
+TC	fio.c	/^#define TC	20$/
+TCGETA	fio.c	/^#define TCGETA	TIOCGETP$/
+TCPIP	uucp.h	/^#define TCPIP$/
+TCSETA	fio.c	/^#define TCSETA	TIOCSETP$/
+TLIMIT	anlwrk.c	/^#define TLIMIT	(/
+TO_ACTIVE	condevs.h	/^#define TO_ACTIVE	0$/
+TPACKSIZE	tio.c	/^#define TPACKSIZE	512$/
+TRYCALLS	uucp.h	/^#define TRYCALLS	2	\/* number of tries to dial call/
+TT	condevs.h	/^#define TT$M_MODEM	0x00200000 \/* These should be i/
+UB_SST	uusub.h	/^#define UB_SST(/
+USEPTCL	cntrl.c	/^#define USEPTCL 'U'	\/* use protocol (/
+USERFILE	uucp.h	/^#define USERFILE	"\/usr\/lib\/uucp\/USERFILE"$/
+USR2400	uucp.h	/^#define USR2400		\/* Hayes' Smartmodem USR2400 styl/
+USRF	uust.h	/^#define	USRF(/
+US_CRS	uust.h	/^#define US_CRS(/
+US_RRS	uust.h	/^#define US_RRS(/
+US_SST	uust.h	/^#define US_SST(/
+UUCICO	uucp.h	/^#define UUCICO		"\/usr\/lib\/uucp\/uucico"$/
+UUCP	uucp.h	/^#define UUCP		"uucp"$/
+UUNAME	uucp.h	/^#define UUNAME	\/**\/$/
+UUXQT	uucp.h	/^#define UUXQT		"\/usr\/lib\/uucp\/uuxqt"$/
+WAITO	pk.h	/^#define	WAITO	01000$/
+WFMASK	uucp.h	/^#define WFMASK 0137$/
+WINDOWS	pk.h	/^#define WINDOWS		3$/
+WKDSIZE	uucp.h	/^#define WKDSIZE		100	\/*  size of work dir name  *\//
+WMESG	cntrl.c	/^#define WMESG(/
+WSUFSIZE	gnsys.c	/^#define WSUFSIZE 6	\/* work file name suffix size */
+WTR	mailst.c	/^#define	WTR	1$/
+W_DFILE	cntrl.c	/^#define W_DFILE		wrkvec[5]$/
+W_FILE1	cntrl.c	/^#define W_FILE1		wrkvec[1]$/
+W_FILE2	cntrl.c	/^#define W_FILE2		wrkvec[2]$/
+W_MODE	cntrl.c	/^#define W_MODE		wrkvec[6]$/
+W_NUSER	cntrl.c	/^#define W_NUSER		wrkvec[7]$/
+W_OPTNS	cntrl.c	/^#define W_OPTNS		wrkvec[4]$/
+W_TYPE	cntrl.c	/^#define W_TYPE		wrkvec[0]$/
+W_USER	cntrl.c	/^#define W_USER		wrkvec[3]$/
+XEQTDIR	uucp.h	/^#define XEQTDIR		"\/usr\/spool\/uucp\/X."$/
+XEQTLEN	uusnap.c	/^#define	XEQTLEN	5				\/* Length of trailer *\/$/
+XEQTYPE	uusnap.c	/^#define	XEQTYPE	2				\/* Index into scnt.cntr *\/$/
+XFRRATE	cntrl.c	/^#define	XFRRATE	35000L$/
+XQTDIR	uucp.h	/^#define XQTDIR		"\/usr\/spool\/uucp\/XTMP"$/
+XQTPRE	uucp.h	/^#define XQTPRE		'X'$/
+XUUCP	cntrl.c	/^#define XUUCP 'X'	\/* execute uucp (/
+X_CMD	uucp.h	/^#define X_CMD		'C'$/
+X_LOCK	uucp.h	/^#define X_LOCK		"XQT"$/
+X_LOCKTIME	uucp.h	/^#define X_LOCKTIME	3600L$/
+X_NONOTI	uucp.h	/^#define	X_NONOTI	'N'$/
+X_NONZERO	uucp.h	/^#define	X_NONZERO	'Z'$/
+X_RETURNTO	uucp.h	/^#define X_RETURNTO	'R'$/
+X_RQDFILE	uucp.h	/^#define X_RQDFILE	'F'$/
+X_SENDFILE	uucp.h	/^#define X_SENDFILE	'S'$/
+X_STDIN	uucp.h	/^#define X_STDIN		'I'$/
+X_STDOUT	uucp.h	/^#define X_STDOUT	'O'$/
+X_USER	uucp.h	/^#define X_USER		'U'$/
+alarmtr	conn.c	/^alarmtr(/
+analjob	uuq.c	/^analjob(/
+anlwrk	anlwrk.c	/^anlwrk(/
+anyread	anyread.c	/^anyread(/
+arg_fix	uux.c	/^arg_fix(/
+argok	uuxqt.c	/^argok(/
+arrived	cntrl.c	/^arrived(/
+assert	assert.c	/^assert(/
+bld_partab	conn.c	/^bld_partab(/
+bldflst	anlwrk.c	/^bldflst (/
+blptcl	cntrl.c	/^blptcl(/
+busyloop	condevs.c	/^busyloop(/
+bzero	pk0.c	/^bzero(/
+callback	chkpth.c	/^callback(/
+callok	systat.c	/^callok(/
+cfgets	cfgets.c	/^cfgets(/
+cgalarm	pk1.c	/^cgalarm(/
+chkdebug	chkpth.c	/^chkdebug(/
+chknotify	uuxqt.c	/^chknotify(/
+chkperm	chkpth.c	/^chkperm(/
+chkpre	uuclean.c	/^chkpre(/
+chkpth	chkpth.c	/^chkpth(/
+chksum	chksum.c	/^chksum (/
+chsys	uucp.c	/^chsys(/
+ckexpf	expfile.c	/^ckexpf(/
+cleanup	cico.c	/^cleanup(/
+clsacu	conn.c	/^clsacu(/
+clscfile	uucp.c	/^clscfile(/
+cmtseq	gnxseq.c	/^cmtseq(/
+cntrl	cntrl.c	/^cntrl(/
+conn	conn.c	/^conn(/
+copy	uucp.c	/^copy(/
+dbg_signal	cico.c	/^dbg_signal(/
+decode	uudecode.c	/^decode(/
+delock	uucp.h	/^#define delock(/
+dircls	condevs.c	/^dircls(/
+diropn	condevs.c	/^diropn(/
+disable	condevs.c	/^disable(/
+dochat	conn.c	/^dochat(/
+doit	uucpd.c	/^doit(/
+dologin	uucpd.c	/^dologin(/
+dologout	uucpd.c	/^dologout(/
+enbcall	condevs.c	/^enbcall(/
+encode	uuencode.c	/^encode(/
+entflst	anlwrk.c	/^entflst(/
+expect	conn.c	/^expect(/
+expfile	expfile.c	/^expfile(/
+exphone	conn.c	/^exphone(/
+fakegethostname	uucpname.c	/^fakegethostname(/
+falarm	fio.c	/^falarm(/
+fdig	conn.c	/^fdig(/
+feof	uux.c	/^		while (/
+finds	conn.c	/^finds(/
+fioclex	logent.c	/^fioclex(/
+fixline	conn.c	/^fixline(/
+fixmode	cico.c	/^fixmode(/
+for	uux.c	/^char *p; for (/
+fork	xqt.c	/^#define	fork	vfork$/
+fptcl	cntrl.c	/^fptcl(/
+fr	uudecode.c	/^fr(/
+frdblk	fio.c	/^frdblk(/
+frdbuf	fio.c	/^frdbuf(/
+frddata	fio.c	/^frddata(/
+frdmsg	fio.c	/^frdmsg(/
+ftimedelay	condevs.c	/^ftimedelay(/
+fturnoff	fio.c	/^fturnoff(/
+fturnon	fio.c	/^fturnon(/
+fwrblk	fio.c	/^fwrblk(/
+fwrdata	fio.c	/^fwrdata(/
+fwrmsg	fio.c	/^fwrmsg(/
+gather	uuq.c	/^gather(/
+gename	gename.c	/^gename(/
+genbrk	condevs.c	/^genbrk(/
+getargs	getargs.c	/^getargs(/
+getc	uusend.c	/^	while (/
+getfname	uusend.c	/^getfname(/
+getnextfd	conn.c	/^getnextfd(/
+getprm	getprm.c	/^getprm(/
+getstst	uusnap.c	/^getstst(/
+getsys	uuq.c	/^getsys(/
+getto	conn.c	/^getto(/
+getwd	getwd.c	/^getwd(/
+gnamef	gnamef.c	/^gnamef(/
+gninfo	getpwinfo.c	/^gninfo(/
+gnsys	gnsys.c	/^gnsys(/
+gnxseq	gnxseq.c	/^gnxseq(/
+gotfiles	uuxqt.c	/^gotfiles(/
+grdblk	gio.c	/^grdblk(/
+grddata	gio.c	/^grddata(/
+grdmsg	gio.c	/^grdmsg(/
+gtcfile	uucp.c	/^gtcfile(/
+gturnoff	gio.c	/^gturnoff(/
+gturnon	gio.c	/^gturnon(/
+gtwrkf	anlwrk.c	/^gtwrkf(/
+gtwvec	anlwrk.c	/^gtwvec(/
+gtxfile	uuxqt.c	/^gtxfile(/
+guinfo	getpwinfo.c	/^guinfo(/
+gwrblk	gio.c	/^gwrblk(/
+gwrdata	gio.c	/^gwrdata(/
+gwrmsg	gio.c	/^gwrmsg(/
+if	uux.c	/^		if (/
+ifadate	conn.c	/^ifadate(/
+ifdate	conn.c	/^ifdate(/
+imsg	imsg.c	/^imsg(/
+index	uucp.h	/^#define index strchr$/
+intervaldelay	condevs.c	/^intervaldelay(/
+intrEXIT	uuname.c	/^intrEXIT(/
+ioctl	ioctl.c	/^ioctl(/
+isXfile	uuq.c	/^#define	isXfile(/
+isdir	expfile.c	/^isdir(/
+isoctal	conn.c	/^#define isoctal(/
+iswrk	anlwrk.c	/^iswrk(/
+jcompare	uuq.c	/^jcompare(/
+lastpart	lastpart.c	/^lastpart(/
+lnotify	cntrl.c	/^lnotify(/
+logcls	logent.c	/^logcls(/
+logent	logent.c	/^logent(/
+login	conn.c	/^login(/
+mailst	mailst.c	/^mailst(/
+makedir	uusend.c	/^makedir(/
+min	tio.c	/^#define min(/
+mkdir	mkdir.c	/^mkdir(/
+mkdirs	expfile.c	/^mkdirs(/
+mlock	uucp.h	/^#define mlock(/
+mlogent	logent.c	/^mlogent(/
+mvxfiles	uuxqt.c	/^mvxfiles(/
+nap	condevs.c	/^nap (/
+newspool	anlwrk.c	/^newspool(/
+nodev	condevs.c	/^nodev(/
+notfyuser	uuclean.c	/^notfyuser(/
+notify	cntrl.c	/^notify(/
+notin	conn.c	/^notin(/
+nulldev	condevs.c	/^nulldev(/
+nullf	cntrl.c	/^nullf(/
+omsg	imsg.c	/^omsg(/
+onelock	ulockf.c	/^onelock(/
+onintr	cico.c	/^onintr(/
+opnttys	acucntrl.c	/^opnttys(/
+outdec	uudecode.c	/^outdec(/
+p_chwrite	conn.c	/^p_chwrite(/
+pcompar	anlwrk.c	/^pcompar(/
+pkaccept	pk0.c	/^pkaccept(/
+pkcget	pk1.c	/^pkcget(/
+pkclose	pk0.c	/^pkclose(/
+pkcntl	pk0.c	/^pkcntl(/
+pkdata	pk1.c	/^pkdata(/
+pkfail	gio.c	/^pkfail(/
+pkgetpack	pk1.c	/^pkgetpack(/
+pkmove	pk1.c	/^pkmove(/
+pkopen	pk1.c	/^pkopen(/
+pkoutput	pk0.c	/^pkoutput(/
+pkread	pk0.c	/^pkread(/
+pkreset	pk0.c	/^pkreset(/
+pksack	pk0.c	/^pksack(/
+pksize	pk0.c	/^pksize(/
+pkwrite	pk0.c	/^pkwrite(/
+pkxstart	pk1.c	/^pkxstart(/
+pokeinit	acucntrl.c	/^pokeinit(/
+post	acucntrl.c	/^post(/
+prefix	acucntrl.c	/^prefix(/
+pskip	cico.c	/^pskip(/
+putinpub	cntrl.c	/^putinpub(/
+rddev	conn.c	/^rddev(/
+rdpth	chkpth.c	/^rdpth(/
+readline	uucpd.c	/^readline(/
+reenable	condevs.c	/^reenable(/
+retosndr	uuxqt.c	/^retosndr(/
+rindex	uucp.h	/^#define rindex strrchr$/
+rmesg	cntrl.c	/^rmesg(/
+rmlock	ulockf.c	/^rmlock(/
+rmstat	systat.c	/^rmstat(/
+rmxfiles	uuxqt.c	/^rmxfiles(/
+rpclose	mailst.c	/^rpclose(/
+rpopen	mailst.c	/^rpopen(/
+scandir	uusnap.c	/^scandir(/
+sdmail	uuclean.c	/^sdmail(/
+sendthem	conn.c	/^sendthem(/
+setdebug	cico.c	/^setdebug(/
+setmodem	acucntrl.c	/^setmodem(/
+settys	acucntrl.c	/^settys(/
+setupline	setline.c	/^setupline(/
+shio	uuxqt.c	/^shio(/
+slowrite	condevs.c	/^slowrite(/
+snccmp	conn.c	/^snccmp(/
+sncncmp	conn.c	/^sncncmp(/
+split	uux.c	/^split(/
+srchst	gnsys.c	/^srchst(/
+startup	cntrl.c	/^startup(/
+stpre	uuclean.c	/^stpre(/
+stptcl	cntrl.c	/^stptcl(/
+strcmp	uux.c	/^		 && strcmp(/
+strpbrk	strpbrk.c	/^strpbrk(/
+subchdir	subdir.c	/^subchdir(/
+subdir	subdir.c	/^subdir(/
+subfile	subdir.c	/^subfile(/
+switch	uux.c	/^		switch(/
+sysacct	sysacct.c	/^sysacct(/
+syslog	logent.c	/^syslog(/
+systat	systat.c	/^systat(/
+termio	fio.c	/^#define termio	sgttyb$/
+timeout	cico.c	/^timeout(/
+trdblk	tio.c	/^trdblk(/
+trddata	tio.c	/^trddata(/
+trdmsg	tio.c	/^trdmsg(/
+tst	mailst.c	/^#define	tst(/
+twrblk	tio.c	/^twrblk(/
+twrdata	tio.c	/^twrdata(/
+twrmsg	tio.c	/^twrmsg(/
+ufopen	uux.c	/^FILE *ufopen(/
+ulkseq	gnxseq.c	/^ulkseq(/
+ulockf	ulockf.c	/^ulockf(/
+ultouch	ulockf.c	/^ultouch(/
+unlinkdf	cntrl.c	/^unlinkdf(/
+upcase	acucntrl.c	/^upcase(/
+uualias	versys.c	/^uualias(/
+uucpdelay	condevs.c	/^#define uucpdelay(/
+uucpname	uucpname.c	/^uucpname(/
+versys	versys.c	/^versys(/
+wait3	uucpd.c	/^#define wait3(/
+wmesg	cntrl.c	/^wmesg(/
+wprefix	prefix.c	/^wprefix(/
+xcp	cpmv.c	/^xcp(/
+xmv	cpmv.c	/^xmv(/
+xuucico	xqt.c	/^xuucico(/
+xuucp	xqt.c	/^xuucp(/
+xuux	uucp.c	/^xuux(/
+xuuxqt	xqt.c	/^xuuxqt(/

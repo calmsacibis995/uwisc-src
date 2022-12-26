@@ -1,0 +1,1 @@
+cc -O  -DUW -DVFS dumpitime.o dumpmain.o dumpoptr.o  dumptape.o dumptraverse.o unctime.o -o dump

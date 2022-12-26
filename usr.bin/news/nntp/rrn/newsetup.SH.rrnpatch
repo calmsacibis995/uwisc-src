@@ -1,0 +1,57 @@
+***************
+*** 26,32
+  state="$statepref"
+  cntry="$cntrypref"
+  cont="$contpref"
+! active="${active-/usr/lib/news/active}"
+  
+  dotdir="\${DOTDIR-\${HOME-\$LOGDIR}}"
+  $rm -f \$dotdir/.oldnewsrc
+
+--- 26,32 -----
+  state="$statepref"
+  cntry="$cntrypref"
+  cont="$contpref"
+! active="/tmp/active.\$\$"
+  
+  dotdir="\${DOTDIR-\${HOME-\$LOGDIR}}"
+  $rm -f \$dotdir/.oldnewsrc
+***************
+*** 32,40
+  $rm -f \$dotdir/.oldnewsrc
+  $echo "Creating .newsrc in \$dotdir to be used by news programs."
+  
+! case \$active in
+! ~*) active=\`$filexp \$active\` ;;
+! esac
+  
+  : NOTE: SED WILL NOT TAKE MORE THAN 10 WFILES, SO BEWARE
+  
+
+--- 32,38 -----
+  $rm -f \$dotdir/.oldnewsrc
+  $echo "Creating .newsrc in \$dotdir to be used by news programs."
+  
+! $rnlib/getactive \$active
+  
+  : NOTE: SED WILL NOT TAKE MORE THAN 10 WFILES, SO BEWARE
+  
+***************
+*** 134,140
+  	/tmp/n.net\$\$ \\
+  	/tmp/n.fa\$\$ \\
+  	/tmp/n.misc\$\$ \\
+! 	/tmp/n.test\$\$
+  
+  $cat <<'EOH'
+  Done.
+
+--- 132,139 -----
+  	/tmp/n.net\$\$ \\
+  	/tmp/n.fa\$\$ \\
+  	/tmp/n.misc\$\$ \\
+! 	/tmp/n.test\$\$ \\
+! 	/tmp/active.\$\$
+  
+  $cat <<'EOH'
+  Done.

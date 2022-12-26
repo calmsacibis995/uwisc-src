@@ -1,0 +1,116 @@
+***************
+*** 21,26
+  #include "intrp.h"
+  #include "only.h"
+  #include "rcstuff.h"
+  #include "INTERN.h"
+  #include "addng.h"
+  
+
+--- 21,27 -----
+  #include "intrp.h"
+  #include "only.h"
+  #include "rcstuff.h"
++ #include "server.h"
+  #include "INTERN.h"
+  #include "addng.h"
+  #include <sys/time.h>
+***************
+*** 23,28
+  #include "rcstuff.h"
+  #include "INTERN.h"
+  #include "addng.h"
+  
+  void
+  addng_init()
+
+--- 24,30 -----
+  #include "server.h"
+  #include "INTERN.h"
+  #include "addng.h"
++ #include <sys/time.h>
+  
+  void
+  addng_init()
+***************
+*** 41,46
+      char *tmpname;
+      register char *s;
+      long birthof();
+  
+      tmpname = savestr(filexp("/tmp/rnew.%$"));
+      tmpfp = fopen(tmpname,"w");
+
+--- 43,52 -----
+      char *tmpname;
+      register char *s;
+      long birthof();
++ #ifdef SERVER
++     char ser_line[256];
++     struct tm *tmptr;
++ #endif
+  
+      tmpname = savestr(filexp("/tmp/rnew.%$"));
+      tmpfp = fopen(tmpname,"w");
+***************
+*** 48,53
+  	printf(cantcreate,tmpname) FLUSH;
+  	return FALSE;
+      }
+      while (fgets(buf,LBUFLEN,actfp) != Nullch) {
+  	if (s = index(buf,' ')) {
+  	    *s++ = '\0';
+
+--- 54,88 -----
+  	printf(cantcreate,tmpname) FLUSH;
+  	return FALSE;
+      }
++ #ifdef SERVER
++     tmptr = localtime(&lasttime);
++     sprintf(ser_line, "NEWGROUPS %02d%02d%02d %02d%02d%02d", tmptr->tm_year,
++ 	tmptr->tm_mon+1, tmptr->tm_mday, tmptr->tm_hour,
++ 	tmptr->tm_min, tmptr->tm_sec);
++     put_server(ser_line);
++     if (get_server(ser_line, sizeof(ser_line)) < 0) {
++ 	fprintf(stderr, "rrn: Unexpected close of server socket.\n");
++ 	finalize(1);
++     }
++     if (*ser_line != CHAR_OK) {
++ 	fclose(tmpfp);
++ 	UNLINK(tmpname);
++ 	free(tmpname);
++ 	return TRUE;
++     }
++ 
++     while (get_server(ser_line, sizeof(ser_line)) >= 0) {
++ 	if (ser_line[0] == '.')
++ 		break;
++         if (strnEQ(ser_line, "to.", 3))
++ 	    continue;
++         if (find_ng(ser_line) == nextrcline &&
++ 	    (checkinlist ? (inlist(ser_line)) : (1))) { /* if not in .newsrc */
++ 		fprintf(tmpfp,"%s\n", ser_line); 	/* and younger than  */
++ 						/* the last time we checked */
++ 					/* then remember said newsgroup */
++         }
++ #else	/* not SERVER */
+      while (fgets(buf,LBUFLEN,actfp) != Nullch) {
+  	if (s = index(buf,' ')) {
+  	    *s++ = '\0';
+***************
+*** 79,84
+  	else
+  	    printf("Bad active record: %s\n",buf) FLUSH;
+  #endif
+      }
+  
+      /* we have successfully generated the list */
+
+--- 114,120 -----
+  	else
+  	    printf("Bad active record: %s\n",buf) FLUSH;
+  #endif
++ #endif	/* SERVER */
+      }
+  
+      /* we have successfully generated the list */

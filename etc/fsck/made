@@ -1,0 +1,2 @@
+cc -O -DVFS -DUW -c setup.c
+cc  -o fsck dir.o inode.o main.o pass1.o pass1b.o pass2.o  pass3.o pass4.o pass5.o setup.o utilities.o ufs_subr.o ufs_tables.o

@@ -1,0 +1,60 @@
+#if defined(LIBC_RCS) && !defined(lint)
+static char rcs_id[] = 
+	"$Header: ypprot_err.c,v 1.2 86/09/08 14:52:23 tadl Exp $";
+#endif
+/*
+ * RCS info
+ *	$Locker:  $
+ */
+#if defined(LIBC_SCCS) && !defined(lint)
+/* @(#)ypprot_err.c	2.1 86/04/14 NFSSRC */
+static  char sccsid[] = "@(#)ypprot_err.c 1.1 86/02/03 Copyr 1985 Sun Micro";
+#endif
+
+#include <rpc/rpc.h>
+#include "yp_prot.h"
+#include "ypclnt.h"
+
+/*
+ * Maps a yp protocol error code (as defined in
+ * yp_prot.h) to a yp client interface error code (as defined in
+ * ypclnt.h).
+ */
+int
+ypprot_err(yp_protocol_error)
+	unsigned int yp_protocol_error;
+{
+	int reason;
+
+	switch (yp_protocol_error) {
+	case YP_TRUE: 
+		reason = 0;
+		break;
+ 	case YP_NOMORE: 
+		reason = YPERR_NOMORE;
+		break;
+ 	case YP_NOMAP: 
+		reason = YPERR_MAP;
+		break;
+ 	case YP_NODOM: 
+		reason = YPERR_DOMAIN;
+		break;
+ 	case YP_NOKEY: 
+		reason = YPERR_KEY;
+		break;
+ 	case YP_BADARGS:
+		reason = YPERR_BADARGS;
+		break;
+ 	case YP_BADDB:
+		reason = YPERR_BADDB;
+		break;
+ 	case YP_VERS:
+		reason = YPERR_VERS;
+		break;
+	default:
+		reason = YPERR_YPERR;
+		break;
+	}
+	
+  	return(reason);
+}

@@ -1,0 +1,30 @@
+diff ./ex_data.c /usr/src/ucb/ex/ex_data.c
+15c15
+< 	{ '/', 't', 'm', 'p' };
+---
+> 	{'/', 't', 'm', 'p'}; 
+19c19
+<  	'p', 'p', 'l', 'p', 'i', 'p',			/* -me macros */
+---
+> 	'p', 'p', 'l', 'p', 'i', 'p',			/* -me macros */
+25c25
+<  	'n', 'h', 's', 'h'				/* -me macros */
+---
+> 	'n', 'h', 's', 'h'				/* -me macros */
+29c29
+< char	tags[LBSIZE] = {
+---
+> char	tags[ONMSZ] = {
+33,34d32
+< char	path[LBSIZE] = "";
+< 
+49,51d46
+< 	"exinit",		"ei",	ONOFF,		0,	0,	0,
+< 	"fastfg",		"ff",	ONOFF,		0,	0,	0,
+< 	"filestack",	"fs",	ONOFF,		0,	0,	0,
+62d56
+< 	"path",		"path",	STRING,		0,	0,	path,
+76d69
+< 	"tagprefix","tgpfx",	ONOFF,		0,	0,	0,
+78d70
+< 	"tagstack",	"tgstk",	ONOFF,		0,	0,	0,

@@ -1,0 +1,3 @@
+(echo /restreq/;echo s/6.4/775/p;echo w;echo q)|ed /etc/files.perms
+/etc/fixfiles
+/bin/rm /tmp/script

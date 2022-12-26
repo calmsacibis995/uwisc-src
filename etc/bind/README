@@ -1,0 +1,35 @@
+---------------------
+This directory contains all the info and sources that
+exist for the Berkeley Internet Name Domain server.
+
+doc	  - manual pages & documentation
+bog	  - copy of Bind Operations Guide 
+include	  - include files to go in /usr/include
+named	  - name server sources
+res	  - source to make /usr/lib/libresolv.a
+master    - Sample data files
+tools     - some test programs
+sendmail  - modifications for 4.3BSD sendmail to support MX records
+
+Here is how to install the name server:
+
+1) cp include/arpa/* /usr/include/arpa  
+2) cp include/* /usr/include 
+3) cp doc/* /usr/man/manl
+4) cd res ; make install (or cp res/*.c to /usr/src/lib/libc/net and
+	rebuild /lib/libc.a. See res/README for details)
+5) edit named/Makefile and change DEST to be the directory to contain
+	the nameserver and related files (default is /etc/named).
+6) cd named ; make install   <-- Make sure you build the resolver first
+7) create the master file (samples in master/*)
+8) edit /etc/rc.local to include:
+
+if [ -f /etc/named ]; then
+	/etc/named & echo -n ' named' >/dev/console
+fi
+
+
+If you have any problems or fixes send them to 
+		kjd@monet.berkeley.edu
+	     or kjd@ucbmonet.arpa
+

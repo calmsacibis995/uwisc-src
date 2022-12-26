@@ -1,0 +1,565 @@
+A	uurec.c	/^#define A	01$/
+ADMSUB	defs.h	/^#define	ADMSUB	"general,all.announce"	\/* Mandatory/
+AFSIZ	ifuncs.c	/^#define AFSIZ	4000	\/* size of text in the active f/
+AL	virtterm.c	/^#define AL _tstr[10]		\/* insert line *\/$/
+AM	virtterm.c	/^#define AM _tflg[1]		\/* has auto margins *\/$/
+ANY	rparams.h	/^#define ANY	0007$/
+APPEND	postnews.c	/^#define APPEND 1$/
+APPROVED	header.c	/^#define APPROVED	21$/
+ARGVAL	compress.c	/^#define ARGVAL(/
+ARTICLEID	header.c	/^#define ARTICLEID	7$/
+ARTWIN	visual.c	/^#define ARTWIN	2	\/* first line of article window */
+ARTWLEN	visual.c	/^#define ARTWLEN	(/
+AllocCpy	pathinit.c	/^AllocCpy(/
+B	uurec.c	/^#define B	02$/
+BACKWARD	rparams.h	/^#define BACKWARD 1$/
+BATCH	defs.h	/^#define BATCH "unbatch"		\/* name of unbatcher 		*\//
+BFSZ	recnews.c	/^#define BFSZ 250$/
+BITS	compress.c	/^# define BITS 	12	\/* max bits\/code for 16-bit mach/
+BIT_MASK	compress.c	/^#define BIT_MASK	0x1f$/
+BKGRND	visual.c	/^#define BKGRND	0002	\/* run process in the backgrou/
+BLANK	recnews.c	/^#define BLANK	004		\/* blank line *\/$/
+BLOCK_MASK	compress.c	/^#define BLOCK_MASK	0x80$/
+BOTLINE	virtterm.c	/^#define BOTLINE (/
+BS	virtterm.c	/^#define BS _tflg[0]		\/* can backspace *\/$/
+BSD4_2	defs.h	/^#define BSD4_2		\/* If you are running 4.2  or 4.3 /
+BT	virtterm.c	/^#define BT _tstr[8]		\/* backtab *\/$/
+BUFLEN	defs.h	/^# define BUFLEN	128	\/* standard buffer size				*\/$/
+BUFSIZ	logdir.c	/^#define	BUFSIZ	160$/
+CD	virtterm.c	/^#define CD _tstr[2]		\/* clear to end of screen *\/$/
+CE	virtterm.c	/^#define CE _tstr[3]		\/* clear to end of line *\/$/
+CH	virtterm.c	/^#define CH _tstr[13]		\/* cursor horizontal move *\//
+CHECK_GAP	compress.c	/^#define CHECK_GAP 10000	\/* ratio check interval *\//
+CL	virtterm.c	/^#define CL _tstr[1]		\/* clear screen *\/$/
+CLEAR	compress.c	/^#define	CLEAR	256	\/* table clear output code *\/$/
+CM	virtterm.c	/^#define CM _tstr[12]		\/* cursor move *\/$/
+CONTROL	header.c	/^#define CONTROL		11$/
+CR	virtterm.c	/^#define CR _tstr[21]		\/* carriage return (/
+CREATENG	inews.c	/^#define	CREATENG 0020	\/* Create a new newsgroup *\//
+CS	virtterm.c	/^#define CS _tstr[15]		\/* scrolling region *\/$/
+CURHOME	visual.c	/^#define CURHOME	3	\/* cursor at home position *\/$/
+CURP1	visual.c	/^#define CURP1	1	\/* cursor after prompt *\/$/
+CURP2	visual.c	/^#define CURP2	2	\/* cursor after secondary prompt */
+CV	virtterm.c	/^#define CV _tstr[14]		\/* cursor vertical move *\/$/
+CWAIT	visual.c	/^#define CWAIT	0001	\/* type "continue?" and wait fo/
+DATELEN	defs.h	/^#define	DATELEN	64	\/* length of longest allowed da/
+DAYS	defs.h	/^#define DAYS	(/
+DEADTIME	defs.h	/^#define DEADTIME 45	\/* no. of seconds to wait on d/
+DEV_BSIZE	ndir.h	/^#define	DEV_BSIZE	512$/
+DFLTEXP	defs.h	/^#define DFLTEXP	2*WEEKS	\/* default no. of seconds /
+DFLTSUB	defs.h	/^#define DFLTSUB "all"	\/* default subscription list/
+DFTEDITOR	defs.h	/^#define DFTEDITOR "vi"		\/* Default editor, see als/
+DFTXMIT	defs.h	/^#define DFTXMIT	"uux - -r -z -gd %s!rnews < %s" \/*/
+DIGPAGE	defs.h	/^#define DIGPAGE			\/* allow digestifying in vnews */
+DIRBLKSIZ	ndir.h	/^#define DIRBLKSIZ	DEV_BSIZE$/
+DIRSIZ	ndir.h	/^#define DIRSIZ(/
+DIRTY	virtterm.c	/^#define DIRTY 01$/
+DISTRIBUTION	header.c	/^#define DISTRIBUTION	17$/
+DL	virtterm.c	/^#define DL _tstr[11]		\/* delete line *\/$/
+DO	virtterm.c	/^#define DO _tstr[5]		\/* down one line *\/$/
+DONE	uname.c	/^# define DONE$/
+DOXREFS	defs.h	/^#define DOXREFS		\/* Generate xref line for rn to u/
+ENDMARK1	decode.c	/^#define	ENDMARK1	(/
+ENDMARK2	decode.c	/^#define	ENDMARK2	(/
+EOL	readr.c	/^#define EOL(/
+EOM	recnews.c	/^#define EOM	005		\/* End of message (/
+EOT	recnews.c	/^#define EOT	'\\004'$/
+EXPIRE	header.c	/^#define EXPIRE		6$/
+FALSE	defs.h	/^#define	FALSE	0	\/* boolean false				*\/$/
+FCLOSE	rparams.h	/^#define FCLOSE(/
+FIRST	compress.c	/^#define FIRST	257	\/* first free entry *\/$/
+FMETA	defs.h	/^#define FMETA	'%'	\/* file meta-character for c opt/
+FOLLOWID	header.c	/^#define FOLLOWID	10$/
+FOLLOWTO	header.c	/^#define FOLLOWTO	13$/
+FORWARD	rparams.h	/^#define	FORWARD	0$/
+FROM	header.c	/^#define FROM 		1$/
+GHNAME	defs.h	/^#define GHNAME		\/* If gethostname call is availabl/
+HDRFILE	uname.c	/^#define	HDRFILE "\/usr\/include\/whoami.h"$/
+HDRONLY	visual.c	/^#define HDRONLY	0001	\/* print header only *\/$/
+HEADER	recnews.c	/^#define HEADER	006		\/* any unrecognized header *\/$/
+HELPMSG	visual.c	/^#define HELPMSG	0010	\/* display currently contains/
+HISTEXP	defs.h	/^#define HISTEXP	4*WEEKS	\/* default no. of seconds /
+HO	virtterm.c	/^#define HO _tstr[0]		\/* home *\/$/
+HSIZE	compress.c	/^# define HSIZE	69001		\/* 95% occupancy *\/$/
+INBUFSIZ	visual.c	/^#define INBUFSIZ 8$/
+INCLUSIVE	recnews.c	/^#define INCLUSIVE 010		\/* newsgroup is already in /
+INIT_BITS	compress.c	/^#define INIT_BITS 9			\/* initial number of bits\/co/
+INTERNET	defs.h	/^#define INTERNET		\/* Internet mail works locally		/
+KEYWORDS	header.c	/^#define KEYWORDS	20$/
+Kflag	rparams.h	/^#define Kflag	options[14].flag$/
+LBUFLEN	defs.h	/^#define LBUFLEN 1024	\/* big buffer size				*\/$/
+LINES	defs.h	/^#define LINES	768	\/* maximum no. of lines in .news/
+LINK	params.h	/^#define LINK(/
+LNCNT	defs.h	/^#define LNCNT	14	\/* Articles with > LNCNT lines go/
+LOCKSIZE	ifuncs.c	/^#define LOCKSIZE	128$/
+MAIL	rparams.h	/^#define MAIL	0004$/
+MAILER	recmail.c	/^#define MAILER "\/bin\/mail"$/
+MANUALLY	defs.h	/^#define MANUALLY		\/* Don't execute rmgroups, just /
+MAXARGS	unbatch.c	/^#define	MAXARGS		20$/
+MAXART	digest.c	/^#define	MAXART		128$/
+MAXCODE	compress.c	/^# define MAXCODE(/
+MAXDISTR	postnews.c	/^#define MAXDISTR	16$/
+MAXLLEN	virtterm.c	/^#define MAXLLEN 160$/
+MAXMCAST	ifuncs.c	/^#define	MAXMCAST	20$/
+MAXMCS	ifuncs.c	/^#define	MAXMCS		10$/
+MAXNAMLEN	ndir.h	/^#define	MAXNAMLEN	255$/
+MAXPLEN	virtterm.c	/^#define MAXPLEN 90$/
+MAXRECIPS	recmail.c	/^#define MAXRECIPS 100$/
+MESSAGEID	header.c	/^#define MESSAGEID	8$/
+META	visual.c	/^#define META	0200	\/* meta character bit (/
+MYDOMAIN	defs.h	/^#define MYDOMAIN ".WISC.EDU"	\/* Local domain				*\//
+MYORG	defs.h	/^#define MYORG "\/usr\/lib\/news\/organization"	\/* My o/
+Mail	rfuncs.c	/^Mail(/
+Mbatch	batch.c	/^main(/
+Mberknews	berknews.c	/^main(/
+Mcaesar	caesar.c	/^main(/
+Mchecknews	checknews.c	/^main(/
+Mcompress	compress.c	/^main(/
+Mdecode	decode.c	/^main(/
+Mencode	encode.c	/^main(/
+Mexpire	expire.c	/^main(/
+Mflag	rparams.h	/^#define Mflag	options[10].flag$/
+Minews	inews.c	/^main(/
+Mpostnews	postnews.c	/^main(/
+Mreadnews	readnews.c	/^main(/
+Mrecmail	recmail.c	/^main(/
+Mrecnews	recnews.c	/^main(/
+Msendnews	sendnews.c	/^main(/
+Munbatch	unbatch.c	/^main(/
+Muurec	uurec.c	/^main(/
+NAMELEN	defs.h	/^#define	NAMELEN	128	\/* length of longest possible /
+NEGCHAR	defs.h	/^#define NEGCHAR	'!'	\/* newsgroup negation characte/
+NETCHRS	defs.h	/^#define NETCHRS	"!:@^%,"\/* Punct. chars used for v/
+NEWART	visual.c	/^#define NEWART	0004	\/* force article display to be/
+NEWSGROUP	header.c	/^#define NEWSGROUP 	2$/
+NEWSRC	defs.h	/^#define NEWSRC  ".newsrc"	\/* name of .newsrc file /
+NEWS_VERSION	defs.h	/^#define NEWS_VERSION   "B 2.11 10\/30\/86"$/
+NEXT	rparams.h	/^#define	NEXT	0$/
+NFFROM	header.c	/^#define NFFROM		23$/
+NFID	header.c	/^#define NFID		22$/
+NGDELIM	defs.h	/^#define	NGDELIM	','	\/* delimit character in news g/
+NLIN	uurec.c	/^#define NLIN	02$/
+NLINES	readr.c	/^#define NLINES(/
+NOPRT	visual.c	/^#define NOPRT	0002	\/* don't print at all *\/$/
+NOTIFY	defs.h	/^#define NOTIFY	"usenet"	\/* Tell him about certain /
+NO_UCHAR	compress.c	/^# define NO_UCHAR	\/* also if "unsigned char" funct/
+NS	virtterm.c	/^#define NS _tflg[4]		\/* has SF (/
+NULL	ndir.h	/^#define NULL 0$/
+NUMLINES	header.c	/^#define NUMLINES	19$/
+NUNREC	header.h	/^#define NUNREC 50$/
+N_UMASK	defs.h	/^#define	N_UMASK 022	\/* mask for umask call, 022 fo/
+ODIRSIZ	ndir.c	/^#define ODIRSIZ 248$/
+OPTION	inews.c	/^#define OPTION	0	\/* pick up an option string *\/$/
+ORGANIZATION	header.c	/^#define ORGANIZATION	18$/
+OTHER	header.c	/^#define OTHER		99$/
+OVWRITE	visual.c	/^#define OVWRITE	02	\/* overwrite the file if it alr/
+PAGE	defs.h	/^#define PAGE	"\/usr\/ucb\/more"	\/* Default pager			*\//
+PATH	header.c	/^#define PATH		14$/
+PATHLEN	defs.h	/^#define PATHLEN 512	\/* length of longest source st/
+PBITS	compress.c	/^#  define PBITS	16$/
+PERHAPS	defs.h	/^#define	PERHAPS	2	\/* indeterminate boolean value		/
+PIPECHAR	rfuncs2.c	/^#define PIPECHAR '|'$/
+POSTVERSION	header.c	/^#define POSTVERSION	15$/
+PRLINE	visual.c	/^#define PRLINE	0	\/* prompter line *\/$/
+PROC	ifuncs.c	/^#define PROC 0004$/
+PROTO	defs.h	/^#define	PROTO	'A'	\/* old protocol name				*\/$/
+PT	virtterm.c	/^#define PT _tflg[5]		\/* has tabs *\/$/
+RDR	control.c	/^#define	RDR	0$/
+READING	recnews.c	/^#define READING		0200	\/* In body of message *\/$/
+RECEIVE	header.c	/^#define RECEIVE		5$/
+RELAYVERSION	header.c	/^#define RELAYVERSION	16$/
+REPLACE	postnews.c	/^#define REPLACE 2$/
+REPLYTO	header.c	/^#define REPLYTO		9$/
+RET	virtterm.c	/^#define RET !_tflg[3]		\/* has carriage return *\/$/
+RNEWS	uurec.c	/^# define RNEWS "cat"$/
+ROOTID	defs.h	/^#define	ROOTID	6	\/* uid of person allowed to cance/
+SACREDMEM	compress.c	/^#define SACREDMEM	0$/
+SBUFLEN	defs.h	/^#define	SBUFLEN 32	\/* small buffer size (/
+SECPRLEN	visual.c	/^#define SECPRLEN 81	\/* length of secondary prompte/
+SENDER	header.c	/^#define SENDER		12$/
+SENDMAIL	defs.h	/^#define SENDMAIL "\/usr\/lib\/sendmail" \/* command li/
+SF	virtterm.c	/^#define SF _tstr[16]		\/* scroll forwards *\/$/
+SIGNED_COMPARE_SLOW	compress.c	/^#define SIGNED_COMPARE_SLOW	\/* signed compare is s/
+SIG_IGN	params.h	/^#define SIG_IGN	main$/
+SKIPPING	recnews.c	/^#define SKIPPING	0100	\/* In header of message *\/$/
+SNLN	defs.h	/^#define	SNLN	8	\/* max significant characters in sy/
+SORTACTIVE	defs.h	/^#define SORTACTIVE		\/* if you want news presented /
+SPACE_INCREMENT	expire.c	/^#define SPACE_INCREMENT	1000$/
+SPEC	rparams.h	/^#define SPEC	1$/
+SPLINE	visual.c	/^#define SPLINE	1	\/* secondary prompt line *\/$/
+SR	virtterm.c	/^#define SR _tstr[17]		\/* scroll backwards *\/$/
+STACK_SIZE	compress.c	/^#define STACK_SIZE	15000$/
+STRING	inews.c	/^#define STRING	1	\/* pick up a string of arguments /
+SUBJ	recnews.c	/^#define SUBJ	002		\/* Subject *\/$/
+SUBLOCK	ifuncs.c	/^#define	SUBLOCK	"\/tmp\/netnews.lck.1"$/
+SUBMIT	header.c	/^#define SUBMIT		4$/
+SUMMARY	header.c	/^#define SUMMARY		25$/
+SVHEAD	visual.c	/^#define SVHEAD	01	\/* write out article header *\/$/
+Sprintf	pathinit.c	/^#define Sprintf(/
+TA	virtterm.c	/^#define TA _tstr[20]		\/* tab char (/
+TE	virtterm.c	/^#define TE _tstr[19]		\/* end cursor mode *\/$/
+TEXT	recnews.c	/^#define TEXT	007		\/* anything unrecognized *\/$/
+TI	virtterm.c	/^#define TI _tstr[18]		\/* start cursor mode *\/$/
+TITLE	header.c	/^#define TITLE 		3$/
+TMAIL	defs.h	/^#define TMAIL	"\/usr\/ucb\/Mail"	\/* Mail program that/
+TO	recnews.c	/^#define TO	003		\/* To (/
+TRUE	defs.h	/^#define	TRUE	1	\/* boolean true					*\/$/
+UE	virtterm.c	/^#define UE _tstr[7]		\/* underline end *\/$/
+ULINE	virtterm.c	/^#define ULINE 0200$/
+UNKNOWN	rparams.h	/^#define UNKNOWN 0001	\/* possible modes for news pr/
+UNLINK	params.h	/^#define UNLINK(/
+UNPROC	inews.c	/^#define UNPROC	0002	\/* Unprocessed input *\/$/
+US	virtterm.c	/^#define US _tstr[6]		\/* underline *\/$/
+USERMEM	compress.c	/^# define USERMEM 	450000	\/* default user memory *\//
+UXMIT	defs.h	/^#define UXMIT	"uux -r -z -gd -c %s!rnews '<' %s" \//
+Usage	compress.c	/^Usage(/
+V7MAIL	defs.h	/^#define V7MAIL			\/* Local mail format is V7 (/
+WEEKS	defs.h	/^#define WEEKS	(/
+WTR	control.c	/^#define	WTR	1$/
+XENIX_16	compress.c	/^#  define XENIX_16$/
+XN	virtterm.c	/^#define XN _tflg[2]		\/* no newline after wrap *\/$/
+XPATH	header.c	/^#define XPATH		26$/
+XREF	header.c	/^#define XREF		24$/
+XT	virtterm.c	/^#define XT _tflg[6]		\/* tabs are destructive *\/$/
+ZAPNOTES	defs.h	/^#define ZAPNOTES		\/* if you want old style notes h/
+_amove	virtterm.c	/^_amove(/
+_aputc	virtterm.c	/^_aputc(/
+_ckclrlin	virtterm.c	/^_ckclrlin(/
+_clrtoeol	virtterm.c	/^_clrtoeol(/
+_dolog	funcs.c	/^_dolog(/
+_dshift	virtterm.c	/^_dshift(/
+_fixlines	virtterm.c	/^_fixlines(/
+_hmove	virtterm.c	/^_hmove(/
+_relhmove	virtterm.c	/^_relhmove(/
+_sclear	virtterm.c	/^_sclear(/
+_setul	virtterm.c	/^_setul(/
+_ushift	virtterm.c	/^_ushift(/
+_vmove	virtterm.c	/^_vmove(/
+_zap	virtterm.c	/^_zap(/
+addch	virtterm.c	/^addch(/
+addhist	ifuncs.c	/^addhist(/
+addnum	visual.c	/^addnum(/
+addrecips	recmail.c	/^addrecips(/
+addstr	virtterm.c	/^addstr(/
+aflag	rparams.h	/^#define aflag	options[2].flag$/
+any	recnews.c	/^any(/
+appfile	visual.c	/^appfile(/
+argparse	control.c	/^argparse(/
+arpadate	funcs2.c	/^arpadate(/
+art_open	params.h	/^#define art_open fopen$/
+article_line	postnews.c	/^article_line(/
+aselect	rfuncs.c	/^aselect(/
+askyes	postnews.c	/^askyes(/
+back	rfuncs.c	/^back(/
+bcopy	funcs2.c	/^bcopy(/
+beep	virtterm.c	/^beep(/
+botscreen	virtterm.c	/^botscreen(/
+briefdate	rfuncs2.c	/^briefdate(/
+broadcast	ifuncs.c	/^broadcast(/
+buildfname	fullname.c	/^buildfname(/
+byebye	postnews.c	/^byebye(/
+bzero	header.c	/^bzero(/
+c_cancel	control.c	/^c_cancel(/
+c_checkgroups	control.c	/^c_checkgroups(/
+c_ihave	control.c	/^c_ihave(/
+c_newgroup	control.c	/^c_newgroup(/
+c_rmgroup	control.c	/^c_rmgroup(/
+c_sendme	control.c	/^c_sendme(/
+c_sendsys	control.c	/^c_sendsys(/
+c_senduuname	control.c	/^c_senduuname(/
+c_unimp	control.c	/^c_unimp(/
+c_unknown	control.c	/^c_unknown(/
+c_version	control.c	/^c_version(/
+caesar_command	readr.c	/^caesar_command(/
+cancel	inews.c	/^cancel(/
+cancel_command	readr.c	/^cancel_command(/
+catchcont	readr.c	/^catchcont(/
+catchterm	rfuncs.c	/^catchterm(/
+cdump	rfuncs2.c	/^cdump(/
+cflag	rparams.h	/^#define cflag	options[4].flag$/
+cgtdate	funcs2.c	/^cgtdate(/
+checkbatch	ifuncs.c	/^checkbatch(/
+checkin	visual.c	/^checkin(/
+chrcnt	expire.c	/^chrcnt(/
+cl_block	compress.c	/^cl_block (/
+cl_hash	compress.c	/^cl_hash(/
+cleanup	readnews.c	/^cleanup(/
+clear	rparams.h	/^#define clear(/
+clearin	visual.c	/^clearin(/
+clearok	visual.c	/^#define clearok(/
+closedir	ndir.c	/^closedir(/
+clrline	virtterm.c	/^clrline(/
+codetabof	compress.c	/^#define codetabof(/
+command	readr.c	/^command(/
+compress	compress.c	/^compress(/
+control	control.c	/^control(/
+cookedterm	virtterm.c	/^cookedterm(/
+copystat	compress.c	/^copystat(/
+countit	virtterm.c	/^countit(/
+cout	rfuncs2.c	/^cout(/
+createng	inews.c	/^createng(/
+ctlcheck	control.c	/^ctlcheck(/
+dash	rfuncs2.c	/^dash(/
+dates	ifuncs.c	/^dates(/
+de_stack	compress.c	/^# define de_stack		(/
+decompress	compress.c	/^decompress(/
+dhprint	digest.c	/^dhprint(/
+digest	digest.c	/^digest(/
+direct_reply	visual.c	/^direct_reply(/
+dirname	funcs.c	/^dirname(/
+docmd	unbatch.c	/^docmd(/
+dospool	inews.c	/^dospool(/
+dounspool	inews.c	/^dounspool(/
+dprint	digest.c	/^dprint(/
+dprinta	digest.c	/^dprinta(/
+dsaveart	digest.c	/^dsaveart(/
+dscan	digest.c	/^dscan(/
+dump_tab	compress.c	/^dump_tab(/
+dumpcode	encode.c	/^dumpcode(/
+edit_article	postnews.c	/^edit_article(/
+eflag	rparams.h	/^#define eflag	options[13].flag$/
+encode	encode.c	/^encode(/
+eq	control.c	/^#define eq(/
+erase	virtterm.c	/^erase(/
+errchk	digest.c	/^#define	errchk(/
+errmsg	funcs.c	/^errmsg(/
+error	ifuncs.c	/^error(/
+even	visual.c	/^#define even(/
+exists	ifuncs.c	/^exists(/
+fascist	funcs.c	/^fascist(/
+fcopy	expire.c	/^fcopy(/
+fflag	rparams.h	/^#define fflag	options[11].flag$/
+fiddle	berknews.c	/^fiddle(/
+field	logdir.c	/^field(/
+findend	visual.c	/^findend(/
+findex	checknews.c	/^findex(/
+findfname	funcs2.c	/^findfname(/
+findhist	funcs2.c	/^findhist(/
+findparent	visual.c	/^findparent(/
+findrcline	checknews.c	/^findrcline(/
+fixfrom	header.c	/^fixfrom(/
+fldget	funcs2.c	/^fldget(/
+flushout	encode.c	/^flushout(/
+fmthdr	visual.c	/^fmthdr(/
+followup	postnews.c	/^followup(/
+for	ifuncs.c	/^	for (/
+foreground	compress.c	/^foreground(/
+frmread	header.c	/^frmread(/
+frombreak	recnews.c	/^frombreak(/
+fromline	berknews.c	/^fromline(/
+fsubr	funcs.c	/^fsubr(/
+ftime	ftime.c	/^ftime(/
+fullname	fullname.c	/^fullname(/
+fwait	funcs.c	/^fwait(/
+gensender	ifuncs.c	/^gensender(/
+get	rparams.h	/^#define get(/
+get_distribution	postnews.c	/^get_distribution(/
+get_newsgroup	postnews.c	/^get_newsgroup(/
+get_notify	pathinit.c	/^get_notify(/
+get_summary	postnews.c	/^get_summary(/
+getcode	compress.c	/^getcode(/
+getfield	header.c	/^getfield(/
+getident	ifuncs.c	/^getident(/
+getmailname	visual.c	/^getmailname(/
+getnextart	readr.c	/^getnextart(/
+getnum	digest.c	/^#define	getnum(/
+getpr	postnews.c	/^getpr(/
+getuser	checknews.c	/^getuser(/
+growline	visual.c	/^growline(/
+hdr	readr.c	/^hdr(/
+help	rfuncs2.c	/^help(/
+hfgets	header.c	/^hfgets(/
+hflag	rparams.h	/^#define hflag	options[9].flag$/
+hfopen	funcs2.c	/^hfopen(/
+histfile	funcs2.c	/^histfile(/
+history	ifuncs.c	/^history(/
+hprint	rfuncs2.c	/^hprint(/
+hread	header.c	/^hread(/
+htabof	compress.c	/^#define htabof(/
+hwrite	header.h	/^#define hwrite(/
+idlock	ifuncs.c	/^idlock(/
+idunlock	ifuncs.c	/^idunlock(/
+ignoring	rfuncs2.c	/^ignoring(/
+ihwrite	header.c	/^ihwrite(/
+in_stack	compress.c	/^in_stack(/
+init	postnews.c	/^init(/
+initdbm	funcs2.c	/^initdbm(/
+initterm	virtterm.c	/^initterm(/
+input	inews.c	/^input(/
+insert	inews.c	/^insert(/
+intuitfrom	header.c	/^intuitfrom(/
+isheader	digest.c	/^isheader(/
+isin	postnews.c	/^isin(/
+islegal	expire.c	/^islegal(/
+isok	recmail.c	/^#define isok(/
+iswanted	postnews.c	/^iswanted(/
+its	header.c	/^#define its(/
+lcase	checknews.c	/^lcase(/
+lflag	rparams.h	/^#define lflag	options[5].flag$/
+lhwrite	header.h	/^#define lhwrite(/
+linecnt	rfuncs2.c	/^linecnt(/
+localize	inews.c	/^localize(/
+lock	ifuncs.c	/^lock(/
+log	funcs.c	/^log(/
+logdir	logdir.c	/^logdir(/
+logerr	funcs.c	/^logerr(/
+logerror	batch.c	/^logerror(/
+loop	digest.c	/^#define	loop		for(/
+mailback	recmail.c	/^mailback(/
+mailhdr	control.c	/^mailhdr(/
+mailto	recmail.c	/^mailto(/
+makeargs	ifuncs.c	/^makeargs(/
+makehimask	checknews.c	/^makehimask(/
+mclose	control.c	/^mclose(/
+mhopen	control.c	/^mhopen(/
+min	compress.c	/^#define	min(/
+mkdir	funcs.c	/^mkdir(/
+mknewsg	inews.c	/^mknewsg(/
+mkparents	expire.c	/^mkparents(/
+modify_article	postnews.c	/^modify_article(/
+move	virtterm.c	/^move(/
+msg	visual.c	/^msg(/
+mvaddstr	virtterm.c	/^mvaddstr(/
+nchk	checknews.c	/^nchk(/
+newrc	rfuncs.c	/^newrc(/
+newssave	ifuncs.c	/^newssave(/
+next_ng_command	readr.c	/^next_ng_command(/
+nextbit	rfuncs.c	/^nextbit(/
+nextng	rfuncs.c	/^nextng(/
+nflag	rparams.h	/^#define nflag	options[3].flag$/
+ngcat	checknews.c	/^ngcat(/
+ngdel	checknews.c	/^ngdel(/
+ngfcheck	ifuncs.c	/^ngfcheck(/
+nghprint	readr.c	/^nghprint(/
+ngline	sendnews.c	/^ngline(/
+ngmatch	checknews.c	/^ngmatch(/
+nstrip	checknews.c	/^nstrip(/
+oflag	inews.c	/^#define oflag	options[10].flag$/
+oident	header.c	/^oident(/
+onalarm	visual.c	/^onalarm(/
+onint	visual.c	/^onint(/
+onintr	compress.c	/^onintr (/
+onsig	ifuncs.c	/^onsig(/
+onstop	visual.c	/^onstop(/
+oops	compress.c	/^oops (/
+opendir	ndir.c	/^opendir(/
+outline	visual.c	/^outline(/
+output	compress.c	/^output(/
+pack12	decode.c	/^pack12(/
+pack6bit	decode.c	/^pack6bit(/
+parse_notify	pathinit.c	/^parse_notify(/
+pathinit	pathinit.c	/^pathinit(/
+pflag	rparams.h	/^#define pflag	options[0].flag$/
+plodput	virtterm.c	/^plodput(/
+post_article	postnews.c	/^post_article(/
+post_checks	postnews.c	/^post_checks(/
+pout	rfuncs2.c	/^pout(/
+pprint	readr.c	/^pprint(/
+pre_checks	postnews.c	/^pre_checks(/
+prefix	funcs.c	/^prefix(/
+prep_article	postnews.c	/^prep_article(/
+prget	visual.c	/^prget(/
+printcodes	compress.c	/^printcodes(/
+process	process.c	/^process(/
+prratio	compress.c	/^prratio(/
+prun	visual.c	/^prun(/
+ptrncmp	checknews.c	/^ptrncmp(/
+pushback	visual.c	/^pushback(/
+qfflush	rfuncs2.c	/^qfflush(/
+rawterm	virtterm.c	/^rawterm(/
+rcsort	rfuncs.c	/^rcsort(/
+readdir	ndir.c	/^readdir(/
+readr	readr.c	/^readr(/
+rebuilddbm	expire.c	/^rebuilddbm(/
+recording	postnews.c	/^recording(/
+refresh	virtterm.c	/^refresh(/
+remember	expire.c	/^remember(/
+rename	batch.c	/^rename(/
+reply	visual.c	/^reply(/
+reply_command	readr.c	/^reply_command(/
+replyname	funcs2.c	/^replyname(/
+reset_infp	ifuncs.c	/^reset_infp(/
+rflag	rparams.h	/^#define rflag	options[6].flag$/
+rightgroup	rfuncs.c	/^rightgroup(/
+rindex	compress.c	/^rindex(/
+rotate	caesar.c	/^rotate(/
+rwaccess	ifuncs.c	/^rwaccess(/
+s_close	funcs2.c	/^s_close(/
+s_find	funcs2.c	/^s_find(/
+s_openr	funcs2.c	/^s_openr(/
+s_read	funcs2.c	/^s_read(/
+save	rfuncs2.c	/^save(/
+save_article	postnews.c	/^save_article(/
+saveart	readr.c	/^#define	saveart	oobit = bit;strcpy(/
+savehist	ifuncs.c	/^savehist(/
+selectng	rfuncs.c	/^selectng(/
+senderof	ifuncs.c	/^senderof(/
+sendmefunc	control.c	/^sendmefunc(/
+set	rparams.h	/^#define set(/
+setmsg	pathinit.c	/^setmsg(/
+sflag	rparams.h	/^#define sflag	options[7].flag$/
+shcmd	visual.c	/^shcmd(/
+showtail	readr.c	/^showtail(/
+sigmask	visual.c	/^#define sigmask(/
+sizeof	ndir.h	/^    (/
+skin	header.c	/^skin(/
+sortactive	rfuncs.c	/^sortactive(/
+stabof	compress.c	/^#define stabof(/
+strpbrk	funcs.c	/^strpbrk(/
+suser	control.c	/^suser(/
+tab_prefixof	compress.c	/^#define tab_prefixof(/
+tab_suffixof	compress.c	/^# define tab_suffixof(/
+tailpath	funcs2.c	/^tailpath(/
+tfappend	visual.c	/^tfappend(/
+tfget	visual.c	/^tfget(/
+tflag	rparams.h	/^#define tflag	options[1].flag$/
+tfput	visual.c	/^tfput(/
+tfseek	visual.c	/^tfseek(/
+timer	visual.c	/^timer(/
+titmat	rfuncs2.c	/^titmat(/
+tprint	rfuncs2.c	/^tprint(/
+transmit	ifuncs.c	/^transmit(/
+ttycooked	visual.c	/^ttycooked(/
+ttyowait	visual.c	/^ttyowait(/
+ttyraw	visual.c	/^ttyraw(/
+ttysave	visual.c	/^ttysave(/
+type	header.c	/^type(/
+uflag	rparams.h	/^#define uflag	options[12].flag$/
+ulall	expire.c	/^ulall(/
+uname	uname.c	/^uname(/
+unixtovms	funcs.c	/^unixtovms(/
+unlock	ifuncs.c	/^unlock(/
+updaterc	rfuncs.c	/^updaterc(/
+updscr	visual.c	/^updscr(/
+ushell	funcs.c	/^ushell(/
+ushift	virtterm.c	/^ushift(/
+valid_ng	postnews.c	/^valid_ng(/
+validng	funcs.c	/^validng(/
+vcmd	visual.c	/^vcmd(/
+verifyname	control.c	/^verifyname(/
+version	compress.c	/^version(/
+vflush	visual.c	/^vflush(/
+vgetc	visual.c	/^vgetc(/
+vhprint	visual.c	/^vhprint(/
+vmsdelete	funcs.c	/^vmsdelete(/
+vmslink	funcs.c	/^vmslink(/
+vmstounix	funcs.c	/^vmstounix(/
+vputc	visual.c	/^vputc(/
+vsave	visual.c	/^vsave(/
+winch	virtterm.c	/^winch(/
+winch_upd	visual.c	/^winch_upd(/
+writeerr	compress.c	/^writeerr(/
+writeoutrc	readnews.c	/^writeoutrc(/
+xBC	virtterm.c	/^#define xBC _tstr[9]		\/* backspace *\/$/
+xPC	virtterm.c	/^#define xPC _tstr[22]		\/* for reading pad characte/
+xUP	virtterm.c	/^#define xUP _tstr[4]		\/* up one line *\/$/
+xart_open	params.h	/^#define xart_open xfopen$/
+xerror	checknews.c	/^xerror(/
+xflag	rparams.h	/^#define xflag	options[8].flag$/
+xfopen	funcs.c	/^xfopen(/
+xmit_command	readr.c	/^xmit_command(/
+xshell	funcs.c	/^xshell(/
+xtabf	visual.c	/^xtabf(/
+xtabs	visual.c	/^xtabs(/
+xxit	checknews.c	/^xxit(/
+yep	checknews.c	/^yep(/

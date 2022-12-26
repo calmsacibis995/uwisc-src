@@ -1,0 +1,120 @@
+***************
+*** 17,22
+  #include "artio.h"
+  #include "bits.h"
+  #include "util.h"
+  #include "INTERN.h"
+  #include "head.h"
+  
+
+--- 17,23 -----
+  #include "artio.h"
+  #include "bits.h"
+  #include "util.h"
++ #include "server.h"
+  #include "INTERN.h"
+  #include "head.h"
+  
+***************
+*** 180,185
+  bool copy;				/* do you want it savestr()ed? */
+  {
+      char *s = Nullch, *t;
+  
+  #ifdef CACHESUBJ
+      if (!subj_list) {
+
+--- 181,190 -----
+  bool copy;				/* do you want it savestr()ed? */
+  {
+      char *s = Nullch, *t;
++ #ifdef SERVER
++     int eoo;				/* End of server output */
++     char ser_line[256];
++ #endif
+  
+  #ifdef CACHESUBJ
+      if (!subj_list) {
+***************
+*** 208,213
+  	else {
+  	    s = safemalloc((MEM_SIZE)256);
+  	    *s = '\0';
+  	    if (artopen(artnum) != Nullfp) {
+  		do {
+  		    if (fgets(s,256,artfp) == Nullch)
+
+--- 213,229 -----
+  	else {
+  	    s = safemalloc((MEM_SIZE)256);
+  	    *s = '\0';
++ #ifdef SERVER
++ 	    sprintf(ser_line, "HEAD %ld", artnum);
++ 	    put_server(ser_line);
++ 	    eoo = 0;
++ 	    if (get_server(ser_line, 256) >= 0 && ser_line[0] == CHAR_OK) {
++ 		do {
++ 		    if (get_server(s, 256) < 0 || (*s == '.')) {
++ 			strcpy(s, "Title: \n");
++ 			eoo = 1;
++ 		    }
++ #else	/* not SERVER */
+  	    if (artopen(artnum) != Nullfp) {
+  		do {
+  		    if (fgets(s,256,artfp) == Nullch)
+***************
+*** 212,217
+  		do {
+  		    if (fgets(s,256,artfp) == Nullch)
+  			strcpy(s, "Title: \n");
+  		} while (strnNE(s,"Title:",6) && strnNE(s,"Subject:",8));
+  		s[strlen(s)-1] = '\0';
+  		t = index(s,':')+1;
+
+--- 228,234 -----
+  		do {
+  		    if (fgets(s,256,artfp) == Nullch)
+  			strcpy(s, "Title: \n");
++ #endif	/* SERVER */
+  		} while (strnNE(s,"Title:",6) && strnNE(s,"Subject:",8));
+  #ifdef SERVER
+  		if (!eoo)
+***************
+*** 213,218
+  		    if (fgets(s,256,artfp) == Nullch)
+  			strcpy(s, "Title: \n");
+  		} while (strnNE(s,"Title:",6) && strnNE(s,"Subject:",8));
+  		s[strlen(s)-1] = '\0';
+  		t = index(s,':')+1;
+  		while (*t == ' ') t++;
+
+--- 230,241 -----
+  			strcpy(s, "Title: \n");
+  #endif	/* SERVER */
+  		} while (strnNE(s,"Title:",6) && strnNE(s,"Subject:",8));
++ #ifdef SERVER
++ 		if (!eoo)
++ 			while (get_server(ser_line, sizeof (ser_line)) >= 0 &&
++ 				ser_line[0] != '.');
++ #endif
++ #ifndef SERVER
+  		s[strlen(s)-1] = '\0';
+  #endif
+  		t = index(s,':')+1;
+***************
+*** 214,219
+  			strcpy(s, "Title: \n");
+  		} while (strnNE(s,"Title:",6) && strnNE(s,"Subject:",8));
+  		s[strlen(s)-1] = '\0';
+  		t = index(s,':')+1;
+  		while (*t == ' ') t++;
+  		strcpy(s, t);
+
+--- 237,243 -----
+  #endif
+  #ifndef SERVER
+  		s[strlen(s)-1] = '\0';
++ #endif
+  		t = index(s,':')+1;
+  		while (*t == ' ') t++;
+  		strcpy(s, t);

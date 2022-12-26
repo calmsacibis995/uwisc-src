@@ -1,0 +1,156 @@
+***************
+*** 48,53
+  #include "rcln.h"
+  #include "last.h"
+  #include "search.h"
+  #include "INTERN.h"
+  #include "ng.h"
+  #include "artstate.h"			/* somebody has to do it */
+
+--- 39,45 -----
+  #include "rcln.h"
+  #include "last.h"
+  #include "search.h"
++ #include "server.h"
+  #include "INTERN.h"
+  #include "ng.h"
+  #include "artstate.h"			/* somebody has to do it */
+***************
+*** 110,115
+  do_newsgroup(start_command)
+  char *start_command;			/* command to fake up first */
+  {
+      char oldmode = mode;
+      register long i;			/* scratch */
+      int skipstate;			/* how many unavailable articles */
+
+--- 102,112 -----
+  do_newsgroup(start_command)
+  char *start_command;			/* command to fake up first */
+  {
++ #ifdef SERVER
++     char ser_line[256];
++     char artname[32];
++     static long our_pid;
++ #endif
+      char oldmode = mode;
+      register long i;			/* scratch */
+      int skipstate;			/* how many unavailable articles */
+***************
+*** 117,122
+      
+      char *whatnext = "%sWhat next? [%s]";
+  
+  #ifdef ARTSEARCH
+      srchahead = (scanon && ((ART_NUM)toread[ng]) >= scanon ? -1 : 0);
+  					/* did they say -S? */
+
+--- 114,124 -----
+      
+      char *whatnext = "%sWhat next? [%s]";
+  
++ #ifdef SERVER
++     if (our_pid == 0)		/* Agreed, this is gross */
++ 	our_pid = getpid();
++ #endif
++ 
+  #ifdef ARTSEARCH
+      srchahead = (scanon && ((ART_NUM)toread[ng]) >= scanon ? -1 : 0);
+  					/* did they say -S? */
+***************
+*** 125,130
+      mode = 'a';
+      recent_art = curr_art = 0;
+      exit_code = NG_NORM;
+      if (eaccess(ngdir,5)) {		/* directory read protected? */
+  	if (eaccess(ngdir,0)) {
+  #ifdef VERBOSE
+
+--- 127,133 -----
+      mode = 'a';
+      recent_art = curr_art = 0;
+      exit_code = NG_NORM;
++ #ifndef SERVER
+      if (eaccess(ngdir,5)) {		/* directory read protected? */
+  	if (eaccess(ngdir,0)) {
+  #ifdef VERBOSE
+***************
+*** 165,170
+  	mode = oldmode;
+  	return -1;
+      }
+  
+  #ifdef CACHESUBJ
+      subj_list = Null(char **);		/* no subject list till needed */
+
+--- 168,183 -----
+  	mode = oldmode;
+  	return -1;
+      }
++ #else	/* SERVER */
++     sprintf(ser_line, "GROUP %s", ngname);
++     put_server(ser_line);
++     if (get_server(ser_line, sizeof(ser_line)) < 0) {
++ 	fprintf(stderr, "rrn: Unexpected close of server socket.\n");
++ 	finalize(1);
++     }
++     if (*ser_line != CHAR_OK)
++ 	return (-1);
++ #endif /* SERVER */
+  
+  #ifdef CACHESUBJ
+      subj_list = Null(char **);		/* no subject list till needed */
+***************
+*** 329,334
+  	    default:
+  		putchar('.');
+  		fflush(stdout);
+  #define READDIR
+  #ifdef READDIR
+  		{			/* fast skip patch */
+
+--- 342,348 -----
+  	    default:
+  		putchar('.');
+  		fflush(stdout);
++ #ifndef SERVER
+  #define READDIR
+  #ifdef READDIR
+  		{			/* fast skip patch */
+***************
+*** 341,346
+  		    art = newart - 1;
+  		}
+  #endif
+  		break;
+  	    }
+  	    oneless(art);		/* mark deleted as read */
+
+--- 355,361 -----
+  		    art = newart - 1;
+  		}
+  #endif
++ #endif
+  		break;
+  	    }
+  	    oneless(art);		/* mark deleted as read */
+***************
+*** 450,455
+      if (artfp != Nullfp) {		/* article still open? */
+  	fclose(artfp);			/* close it */
+  	artfp = Nullfp;			/* and tell the world */
+  	openart = 0;
+      }
+      putchar('\n') FLUSH;
+
+--- 465,474 -----
+      if (artfp != Nullfp) {		/* article still open? */
+  	fclose(artfp);			/* close it */
+  	artfp = Nullfp;			/* and tell the world */
++ #ifdef SERVER
++ 	sprintf(artname, "/tmp/rrn%ld.%ld", (long) openart, our_pid);
++ 	UNLINK(artname);
++ #endif
+  	openart = 0;
+      }
+      putchar('\n') FLUSH;

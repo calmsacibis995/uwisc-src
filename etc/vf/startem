@@ -1,0 +1,7 @@
+#!/bin/csh -f
+set HOSTS = ( spool devo dbvax pokey inst2 limby odin csl1 crystal pipe dream ai stat uwvax gumby )
+
+foreach host ( $HOSTS )
+	rsh $host -n /etc/fixfiles &
+end
+

@@ -1,0 +1,292 @@
+************************ SYS ****************************************
+init_main.c:
+	added kmem_init, vnodes for swap and arg and initialized u.u_cred
+init_sysent.c:
+	added vfs, nfs, shmem and idm system calls
+kern_acct.c:
+	vnode changes
+kern_clock.c:
+	added routine uniqtime()
+kern_descrip.c:
+	vnode changes and cred routines
+kern_exec.c:
+	vnode changes, pgthresh, dnlc instead of nch
+kern_exit.c:
+	vnode changes, free credit, added check for valid mbuf in exit
+kern_fork.c:
+	vnode changes, added variable maxuprc to fork1
+kern_mmap.c:
+	include line changes only
+kern_proc.c:
+	include line changes only
+kern_prot.c:
+	cred changes and cred routines.
+kern_resource.s:
+	include line changes only
+kern_sig.c:
+	changed core() to use vnodes
+kern_subr.c:
+	include line changes only
+kern_synch.c:
+	include line changes only
+kern_time.c:
+	include line changes only
+kern_xxx.c:
+	added get/set domainname syscalls and vnode changes
+subr_log.c:
+	include line changes only
+subr_mcount.c:
+	no changes
+subr_prf.c:
+	include line changes only
+subr_rmap.c:
+	include line changes only
+subr_xxx.c:
+	include line changes only
+sys_generic.c:
+	include line changes only
+sys_process.c:
+	vnode changes
+sys_socket.c:
+	include line changes only
+syscalls.c:
+	added vfs syscalls to list
+tty.c:
+	include line changes and usestat mods
+tty_bk.c:
+	include line changes only
+tty_conf.c:
+	include line changes only
+tty_pty.c:
+	include line changes, O_NDELAY, and left BLIT mods because I think
+	they are in under a different guise
+tty_subr.c:
+	no changes
+tty_tb.c:
+	include line changes only
+tty_tty.c:
+	include line changes only
+uipc_domain.c:
+	include line changes only
+uipc_mbuf.c:
+	added numberous mbuf routines
+uipc_proto.c:
+	no changes
+uipc_socket.c:
+	include lines, and a check for a null mbuf pointer
+uipc_socket2.c:
+	include line changes only
+uipc_syscalls.c:
+	added crfree 
+uipc_usrreq.c:
+	vnode changes
+vfs.c:
+	changed to 4.3 syscall style, changed UIOSEG_USER to UIO_USERSPACE
+vfs_bio.c:
+	include line changes only
+vfs_conf.c:
+	include line changes only
+vfs_dev.c:
+	include line changes only
+vfs_dnlc.c:
+	include line changes only
+vfs_io.c:
+	include line changes only
+vfs_lookup.c:
+	include line changes, UIO flags
+vfs_pathname.c:
+	include line changes, UIO flags
+vfs_syscalls.c:
+	changed to 4.3 syscall style
+vfs_vnode.c:
+	include line changes only
+vfs_xxx.c:
+	changed to 4.3 syscall style
+vm_drum.c:
+	vnode changes (swapdev --> swapdev_vp)
+vm_mem.c:
+	vnode changes, mfind, mhash, munhash and added mpurgevfs
+vm_mon.c:
+	no changes
+vm_page.c:
+	vnode changes, calls to mfind ...
+vm_proc.c:
+	include line changes only
+vm_pt.c:
+	vnode changes, calls to swap ...
+vm_sched.c:
+	vnode changes
+vm_subr.c:
+	vnode changes
+vm_sw.c:
+	vnode changes
+vm_swap.c:
+	change swapdev to swapdev_vp
+vm_swp.c:
+	vnode changes
+vm_text.c:
+	vnode changes for text cacheing
+********************************* H ******************************
+acct.h:
+	changed acctp to vnode pointer
+bk.h:
+	unchanged
+buf.h:
+	added b_vp and B_NOCACHE
+callout.h:
+	unchanged
+clist.h:
+	unchanged
+cmap.h:
+	added c_vp to cmap and changed CMAPSZ from 16 to 20 to reflect addition
+	of vp
+conf.h:
+	nochange
+des.h:
+	Sun data encryption standard driver (UNUSED)
+dir.h:
+	sun version of dir.h old dir.h moved to ufs/fsdir.h
+dk.h:
+	no change
+dkbad.h:
+	no change
+dmap.h:
+	no change
+dnlc.h:
+	Sun include file for directory name lookup cache
+domain.h:
+	no change
+errno.h:
+	added ESTALE and EREMOTE
+exec.h:
+	no change
+file.h:
+	added cred field, changed inode to vnode in comments, DTYPE_INODE to VNODE 
+gprof.h:
+	no change
+ioctl.h:
+	added usestat info, vicom ioctls, load avg and time ioctls
+kernel.h:
+	added domainname and domainnamelen (used by nfs);
+map.h:
+	no change
+mbuf.h:
+	added support for more types of mbufs specifically type 2 which specify
+	their own free routine
+mman.h:
+	no change
+mount.h:
+	copy of sun h/mount.h old h/mount.h moved to ufs/mount.h
+msgbuf.h:
+	no change
+mtio.h:
+	no change
+param.h:
+	added a priority for VFS
+pathname.h:
+	copy of Sun include file
+proc.h:
+	added SYSCALLMETER stuff
+protosw.h:
+	no change
+reboot.h:
+	no change
+resource.h:
+	no change
+seg.h:
+	no change
+signal.h:
+	no change
+socket.h:
+	added AF_CRY
+socketvar.h:
+	no change
+stat.h:
+	no change
+systm.h:
+	added argdev_vp and swapdev_vp 
+	added devtovp()
+text.h
+	changed inode pointer to vnode pointer, changed XPAGI to XPAGV
+time.h
+	no change
+timeb.h:
+	no change
+times.h:
+	no change
+trace.h:
+	no change
+tty.h:
+	added usestat code and TS_ONDELAY
+ttychars.h:
+	added usestat code
+ttydev.h:
+	no change
+types.h:
+	no change
+uio.h:
+	no change
+un.h:
+	no change
+unpcb.h:
+	changed reference from inode to vnode
+user.h:
+	changed to vnode references added ucred struct and references
+	removed namei fields
+vadvise.h:
+	no change
+vcmd.h:
+	no change
+vfs.h:
+	copy of sun file
+vlimit.h:
+	no change
+vm.h:
+	no change
+vmmac.h:
+	no change
+vmmeter.h:
+	no change
+vmparam.h:
+	no change
+vmsystm.h:
+	no change
+vnode.h:
+	copy of sun file
+vtimes.h:
+	no change
+wait.h:
+	no change
+**************************** UFS *********************************
+*********** using a copy of sun ufs directory for now ************
+fs.h:
+	added id field
+fsdir.h:
+	no change
+inode.h:
+	lots of changes for vnodes
+mount.h:
+	lots of vnode and sun quota changes
+quota.c:
+	copy of sun file
+quota.h:
+	copy of sun file
+quota_syscalls.c:
+	copy of sun file
+quota_ufs.c:
+	copy of sun file
+ufs_alloc.c:
+	all calls to mfind, munhash, bread, and getblk were changed for vnodes
+ufs_bmap.c:
+	added sync option to bmap
+ufs_dir.c:
+	copy of sun file
+ufs_dsort.c:
+	no change
+**************************** vax *******************************************
+Locore.c:
+	no change
+autoconf.c:
+	no change
+vm_machdep.c:
+	changed call to munhash

@@ -1,0 +1,29 @@
+HOSTS = ( spool devo dbvax pokey inst2 limby odin balder csl1 crystal pipe dream ai stat uwvax gumby )
+FILES = ( vf fixfiles files.perms.new )
+TEST = ( spool limby odin )
+REST = ( devo dbvax pokey inst2 balder csl1 crystal pipe dream ai stat uwvax gumby )
+
+VAXEN =  ( 	rsch db crys stat gumby dream pipe ai devo spool brie kraft-slices
+			cheddar cream limburger asiago colby gouda velveeta whiz parmesan
+			rondele nacho saga romano gruyere swiss gjetost amul curds string 
+			edam kaese chevre lowfat feta brick goat monterey cottage blue 
+			cojack ricotta jack farmer camembert quark caseus odin frigg balder 
+			havarti muenster )
+
+man: vf.man -> ${HOSTS}
+	install /usr/man/manl/vf.l;
+
+files.perms: /etc/files.perms -> ${HOSTS}
+	install -y;
+
+files: ( ${FILES} ) -> ${HOSTS}
+	install /etc;
+	special ( files.perms.new )
+		"	cat /etc/files.perms /etc/files.perms.new | 
+				sort -u > /etc/files.perms.newer;
+			mv -f /etc/files.perms.newer /etc/files.perms;
+			fixfiles; " ;
+
+script: ./script -> ( ${REST} )
+	install /tmp/script;
+	special "/tmp/script";

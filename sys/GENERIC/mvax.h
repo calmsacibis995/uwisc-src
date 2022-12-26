@@ -1,0 +1,1 @@
+#define NMVAX 0

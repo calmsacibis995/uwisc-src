@@ -1,0 +1,109 @@
+#
+#	Generic UW Makefile	#1
+#
+DESTDIR=
+CFLAGS=	-O -DUW
+
+# Programs that live in subdirectories, and have makefiles of their own.
+#
+
+SUBDIR=	
+
+# Shell scripts that need only be installed and are never removed.
+#
+SCRIPT=	
+
+# C programs that live in the current directory and do not need
+# explicit make lines.
+#
+STD= cat
+
+# C programs that live in the current directory and need explicit make lines.
+#
+NSTD=	
+
+# Programs that must run setuid to root
+#
+SETUID=	
+
+# Programs that run set-group-id operator
+#
+OPERATOR= 
+
+# Programs that must run set-group-id kmem.
+#
+KMEM=	
+
+# Programs that must run set-group-id tty.
+#
+TTY=	
+
+BINS=	${STD} ${NSTD} ${SETUID} ${OPERATOR} ${KMEM} ${TTY} 
+
+all:	${SUBDIR} ${BINS}
+
+# if there are any SUBDIR entries, uncomment this section
+# ${SUBDIR}: FRC
+#	cd $@; make ${MFLAGS}
+
+FRC:
+	
+
+${STD} ${SETUID} ${OPERATOR} ${TTY} :
+	${CC} ${CFLAGS} -o $@ $@.c
+
+install:
+	-for i in ${SUBDIR}; do \
+		(cd $$i; make ${MFLAGS} DESTDIR=${DESTDIR} install); done
+	-for i in ${SCRIPT}; do (install -c $$i.sh ${DESTDIR}/bin/$$i); done
+	-for i in ${STD} ${NSTD}; do (install -s $$i ${DESTDIR}/bin/$$i); done
+	-for i in ${SETUID}; do \
+		(install -o root -m 4755 -s $$i ${DESTDIR}/bin/$$i); done
+	-for i in ${OPERATOR}; do \
+		(install -g operator -m 2755 -s $$i ${DESTDIR}/bin/$$i); done
+	-for i in ${KMEM}; do \
+		(install -g kmem -m 2755 -s $$i ${DESTDIR}/bin/$$i); done
+	-for i in ${TTY}; do \
+		(install -g tty -m 2755 -s $$i ${DESTDIR}/bin/$$i); done
+# special things (like making links) go here
+
+tags:
+	ctags -tdw *.c \
+#	for i in ${SUBDIR}; do \
+#		(cd $$i; make ${MFLAGS} TAGSFILE=../tags tags); \
+#	done
+	sort -u +0 -1 -o tags tags
+
+clean:
+	rm -f ${BINS} a.out core *.s *.o made
+	for i in ${SUBDIR}; do (cd $$i; make ${MFLAGS} clean); done
+
+
+depend: 
+	for i in ${BINS}; do \
+	    cc -M ${INCPATH} $$i.c | sed 's/\.o//' | \
+	    awk ' { if ($$1 != prev) \
+		{ if (rec != "") print rec; rec = $$0; prev = $$1; } \
+		else { if (length(rec $$2) > 78) { print rec; rec = $$0; } \
+		else rec = rec " " $$2 } } \
+		END { print rec } ' >> makedep; done
+	echo '/^# DO NOT DELETE THIS LINE/+2,$$d' >eddep
+	echo '$$r makedep' >>eddep
+	echo 'w' >>eddep
+	cp Makefile Makefile.bak
+	ed - Makefile < eddep
+	rm eddep makedep
+	echo '# DEPENDENCIES MUST END AT END OF FILE' >> Makefile
+	echo '# IF YOU PUT STUFF HERE IT WILL GO AWAY' >> Makefile
+	echo '# see make depend above' >> Makefile
+
+# Files listed in ${NSTD} have explicit make lines given below.
+
+
+# DO NOT DELETE THIS LINE -- make depend uses it
+# DEPENDENCIES MUST END AT END OF FILE
+cat: cat.c /usr/include/stdio.h /usr/include/sys/types.h
+cat: /usr/include/sys/stat.h
+# DEPENDENCIES MUST END AT END OF FILE
+# IF YOU PUT STUFF HERE IT WILL GO AWAY
+# see make depend above

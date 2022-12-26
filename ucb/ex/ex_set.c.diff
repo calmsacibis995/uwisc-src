@@ -1,0 +1,144 @@
+diff ./ex_set.c /usr/src/ucb/ex/ex_set.c
+1,2c1,2
+< /* Copyright (c) 1980 Regents of the University of California */
+< static char *sccsid = "@(#)ex_set.c	6.3 10/30/80";
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_set.c	7.2	6/27/83";
+10c10
+< char	optname[LBSIZE];
+---
+> char	optname[ONMSZ];
+14c14
+< 	register char *cp, *t, *p;
+---
+> 	register char *cp;
+17,19d16
+< 	int overflow = 0;
+< 	char *index();
+< 	char buf[20];
+21d17
+< 	short speed;
+34c30
+< 			if (cp < &optname[LBSIZE - 2])
+---
+> 			if (cp < &optname[ONMSZ - 2])
+36,45c32
+< 			else {
+< 				overflow++;
+< 				getchar();
+< 			}
+< 			if( cp != optname && (*(cp-1) == '\\' && peekchar() != EOF))
+< 				*(cp-1) = getchar();
+< 		} while (!isspace(c=peekchar()) && c != EOF);
+< 		if(overflow) {
+< 			serror("Option too long.");
+< 		}
+---
+> 		} while (isalnum(peekchar()));
+54,83d40
+< 		if(*cp == '?') { /* a conditional set */
+< 			if(!*++cp) {
+< 				serror("%s: No such option@- 'set all' gives all option values", "?");
+< 			}
+< 			/* copy arg */
+< 			for(t = buf, p = cp; ( (*++p != ':') && (*t++ = *p)) && (t < &buf[19]););
+< 			*t = '\0';
+< 			switch(*cp) {
+< 			 case 'T':	/* set based on term type */
+< 				if(strcmp(buf,ttytype)) {
+< 					goto next;
+< 				}
+< 				break;
+< 
+< 			 case 'S':	/* set based on term speed */
+< 				speed = atoi(buf);
+< 				if(	   (speed == 300  && ospeed != B300)
+< 					|| (speed == 1200 && ospeed != B1200)
+< 					|| (speed == 2400 && ospeed != B2400)
+< 					|| (speed == 4800 && ospeed != B4800)
+< 					|| (speed == 9600 && ospeed != B9600) )
+< 					goto next;
+< 				break;
+< 			 default:
+< 				serror("%c: No such condition@- 'set all' gives all option values", *cp);
+< 			}
+< 			cp = p;
+< 			if(*cp == ':')
+< 				cp++;
+< 		}
+89,97d45
+< 		/* separate out the option name, t now points to the [ = value] */
+< 		c = 0;
+< 		if( (t = index (cp,'=')) == NULL)
+< 			t = "";
+< 		else {
+< 			c = '=';
+< 			*t++ = '\0';
+< 		}
+< 
+101c49,52
+< 				goto next;
+---
+> dontset:
+> 				ignore(getchar());	/* = */
+> 				ignore(getnum());	/* value */
+> 				continue;
+106c57
+< 				goto next;
+---
+> 				goto dontset;
+110c61
+< 				goto next;
+---
+> 				goto dontset;
+118c69,71
+< 		if (*t == '?') {
+---
+> 		c = skipwh();
+> 		if (peekchar() == '?') {
+> 			ignchar();
+132c85
+< 		if (*t == '\0' )
+---
+> 		if (c != 0 || setend())
+134c87
+< 		if (c != '=')
+---
+> 		if (getchar() != '=')
+139c92
+< 			if (!isdigit(*t))
+---
+> 			if (!isdigit(peekchar()))
+141c94
+< 			op->ovalue = atoi(t);
+---
+> 			op->ovalue = getnum();
+143a97,98
+> 			if (value(HARDTABS) <= 0)
+> 				value(HARDTABS) = TABS;
+152a108,118
+> 			cp = optname;
+> 			while (!setend()) {
+> 				if (cp >= &optname[ONMSZ])
+> 					error("String too long@in option assignment");
+> 				/* adb change:  allow whitepace in strings */
+> 				if( (*cp = getchar()) == '\\')
+> 					if( peekchar() != EOF)
+> 						*cp = getchar();
+> 				cp++;
+> 			}
+> 			*cp = 0;
+171c137
+< 				setterm(t);
+---
+> 				setterm(optname);
+173,178c139
+< 				if(*t == '&') {
+< 					*t = ' ';
+< 					(void) strcat(op->osvalue,t);
+< 				} else {
+< 					CP(op->osvalue, t);
+< 				}
+---
+> 				CP(op->osvalue, optname);

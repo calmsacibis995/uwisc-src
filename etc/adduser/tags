@@ -1,0 +1,23 @@
+Mmain	main.c	/^main(argc, argv)$/
+abnquit	main.c	/^abnquit()$/
+add	add.c	/^add()	\/* Now we've got all the info we need.  Let'/
+addgroup	add.c	/^addgroup()$/
+addpasswd	add.c	/^addpasswd()$/
+adduniverse	add.c	/^adduniverse()$/
+adduser	add.c	/^adduser()$/
+check_unique	getdata.c	/^check_unique(logname)$/
+eat_shit	getdata.c	/^eat_shit(s)	\/* kills all spaces and control charac/
+finduid	add.c	/^finduid()$/
+get_inst_data	getdata.c	/^get_inst_data()$/
+getdata	getdata.c	/^getdata()$/
+gethome	getdata.c	/^gethome()$/
+lpset	add.c	/^lpset()$/
+mail_aliases	add.c	/^mail_aliases()$/
+make_lower	getdata.c	/^make_lower(s)$/
+mkhomedir	add.c	/^mkhomedir()$/
+quit	main.c	/^quit(stat)	\/* normal exit, kill lock and go away, /
+resset	add.c	/^resset()$/
+setdiskq	add.c	/^setdiskq()$/
+ssnok	getdata.c	/^ssnok(carr)$/
+upd_hash	add.c	/^upd_hash()$/
+usage	main.c	/^usage()$/

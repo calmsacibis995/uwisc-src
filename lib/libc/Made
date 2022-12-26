@@ -1,0 +1,98 @@
+cd vax/csu; make  DEFS=""
+cd gen; make  DEFS=""
+`genlib' is up to date.
+cd inet; make  DEFS=""
+`inetlib' is up to date.
+cd net; make  DEFS=""
+cc -p -c -O -DADDRSORT -DUW res_init.c
+ld -X -r res_init.o
+mv a.out profiled/res_init.o
+cc -O -DADDRSORT -DUW -c res_init.c
+ld -x -r res_init.o
+mv a.out res_init.o
+cc -p -c -O -DADDRSORT -DUW res_mkquery.c
+ld -X -r res_mkquery.o
+mv a.out profiled/res_mkquery.o
+cc -O -DADDRSORT -DUW -c res_mkquery.c
+ld -x -r res_mkquery.o
+mv a.out res_mkquery.o
+cc -p -c -O -DADDRSORT -DUW res_send.c
+ld -X -r res_send.o
+mv a.out profiled/res_send.o
+cc -O -DADDRSORT -DUW -c res_send.c
+ld -x -r res_send.o
+mv a.out res_send.o
+building profiled netlib
+building normal netlib
+cd ns; make  DEFS=""
+`nslib' is up to date.
+cd rpc; make  DEFS=""
+`rpclib' is up to date.
+cd stdio; make  DEFS=""
+`stdiolib' is up to date.
+cd yp; make  DEFS=""
+`yplib' is up to date.
+cd vax; make  DEFS=""
+cd gen; make  DEFS=""
+`genlib' is up to date.
+cd net; make  DEFS=""
+`netlib' is up to date.
+cd stdio; make  DEFS=""
+`stdiolib' is up to date.
+cd sys; make  DEFS=""
+`syslib' is up to date.
+cd compat-4.1; make  DEFS=""
+`compat-4.1lib' is up to date.
+`vaxlib' is up to date.
+cd compat-4.1; make  DEFS=""
+`compat-4.1lib' is up to date.
+cd compat-sys5; make  DEFS=""
+`compat-sys5lib' is up to date.
+cd net/named; make  DEFS=""
+cc -p -c -O -DADDRSORT -DUW gethostnamadr.c
+ld -X -r gethostnamadr.o
+mv a.out profiled/gethostnamadr.o
+cc -O -DADDRSORT -DUW -c gethostnamadr.c
+ld -x -r gethostnamadr.o
+mv a.out gethostnamadr.o
+building profiled hostlib
+building normal hostlib
+cd net/table; make  DEFS=""
+`tablelib' is up to date.
+rm -rf t1 tmp
+mkdir tmp
+for i in gen inet net ns rpc stdio yp vax compat-4.1 compat-sys5; do (cd tmp; ar x ../$i/${i}lib); done
+cd tmp; ar x ../net/named/hostlib
+cd tmp; ar x ../net/table/tablelib
+ls tmp/*.o | sort -t/ +1 > t1
+ar cr libc.a `lorder \`cat t1\` | tsort` vax/csu/mon.o
+tsort: cycle in data
+tsort: tmp/pmap_getport.o
+tsort: tmp/clnt_udp.o
+tsort: tmp/auth_none.o
+tsort: cycle in data
+tsort: tmp/findiop.o
+tsort: tmp/flsbuf.o
+tsort: tmp/malloc.o
+tsort: tmp/bcopy.o
+ar ma findiop.o libc.a exit.o
+ar ma exit.o libc.a fakcu.o
+rm -f t1 tmp/*
+for i in gen inet net ns rpc stdio yp vax compat-4.1 compat-sys5; do (cd tmp; ar x ../$i/${i}lib_p); done
+cd tmp; ar x ../net/named/hostlib_p
+cd tmp; ar x ../net/table/tablelib_p
+ls tmp/*.o | sort -t/ +1 > t1
+ls tmp/*.o | sort -t/ +1 > t1
+ar cr libc_p.a `lorder \`cat t1\` | tsort` vax/csu/mon.o
+tsort: cycle in data
+tsort: tmp/pmap_getport.o
+tsort: tmp/clnt_udp.o
+tsort: tmp/auth_none.o
+tsort: cycle in data
+tsort: tmp/findiop.o
+tsort: tmp/flsbuf.o
+tsort: tmp/malloc.o
+tsort: tmp/bcopy.o
+ar ma findiop.o libc_p.a exit.o
+ar ma exit.o libc_p.a fakcu.o
+rm -rf t1 tmp

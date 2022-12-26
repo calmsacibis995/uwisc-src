@@ -1,0 +1,138 @@
+diff ./ex_io.c /usr/src/ucb/ex/ex_io.c
+54d53
+< 		accessfile();
+225d223
+< 		char *s, *rindex();
+232,236c230
+< 		/* pretty strange kludge, run csh fast if possible */
+< 		if( (s = rindex(svalue(SHELL),'/')) && (strcmp(++s,"csh") == 0))
+< 			execl(svalue(SHELL), "sh", "-f", "-c", genbuf, 0);
+< 		else
+< 			execl(svalue(SHELL), "sh", "-c", genbuf, 0);
+---
+> 		execl(svalue(SHELL), "sh", "-c", genbuf, 0);
+285a280
+> struct glob G;
+289,291d283
+< 	char *index();
+< 	char *rindex();
+< 	struct glob G;
+301,312c293,294
+< 
+< 	if(*str == '>') {	/* use path prefix of previous file */
+< 		str++;
+< 		if(index(savedfile,'/')) {
+< 			strcpy(file,savedfile);
+< 			*(rindex(file,'/')+1) = '\0';
+< 		} else
+< 			file[0] = '\0';
+< 	} else
+< 		file[0] = '\0';
+< 	strcat(file, str);
+< 	accessfile();
+---
+> samef:
+> 	CP(file, str);
+328c310
+< 	io = open(file,0);
+---
+> 	io = open(file, 0);
+373c355
+< 		case 0405:	/* Interdata? overlay */
+---
+> 		case 0405:	/* data overlay on exec */
+394a377,381
+> #ifdef mbb
+> 			/* C/70 has a 10 bit byte */
+> 			if (magic & 03401600)
+> #else
+> 			/* Everybody else has an 8 bit byte */
+395a383
+> #endif
+425,456d412
+< accessfile()
+< {
+< 	struct stat sbuf;
+< 	char filebuf[BUFSIZ];
+< 	char *v, *p;
+< 
+< 	if( stat(file, &sbuf)     >= 0 ||	/* one exists here */
+< 		*file == '/'			   ||	/* absolute reference */
+< 		strncmp(file,"./",2)  == 0 ||	/* relative reference */
+< 		strncmp(file,"../",3) == 0 		/* relative reference */
+< 		)
+< 		return;
+< 
+< 	v = svalue(PATH);
+< 	while(isspace(*v))
+< 		v++;
+< 	while(*v != '\0') {
+< 		for(p = filebuf;*v && !isspace(*v); *p++ = *v++) /* copy path to buf */
+< 			;
+< 		*p++ = '/';
+< 		*p = '\0';
+< 		strcat(filebuf,file);	/* copy file onto end of buf */
+< 		if( stat(filebuf, &sbuf) >= 0) {
+< 			strcpy(file, filebuf);
+< 			return;
+< 		}
+< 		while(*v && isspace(*v))	/* skip white space */
+< 			v++;
+< 	}
+< 	return;
+< }
+< 
+459c415
+<  	line *first, *last, *a;
+---
+> 	line *first, *last, *a;
+463c419
+<  	first = addr2 + 1;
+---
+> 	first = addr2 + 1;
+465,471c421,427
+<  	last = dot;
+<  	for (a=first; a<=last; a++) {
+<  		if (a==first+5 && last-first > 10)
+<  			a = last - 4;
+<  		getline(*a);
+<  		checkmodeline(linebuf);
+<  	}
+---
+> 	last = dot;
+> 	for (a=first; a<=last; a++) {
+> 		if (a==first+5 && last-first > 10)
+> 			a = last - 4;
+> 		getline(*a);
+> 		checkmodeline(linebuf);
+> 	}
+684c640
+< 					if (kflag && !isfilter)
+---
+> 					if (kflag)
+758c714
+< 	if(kflag)
+---
+> 	if(kflag && !isfilter)
+793,795c749,750
+< 	short	savepeekc;
+< 	char	*saveglobp;
+< 	int f;
+---
+> 	char *saveglobp;
+> 	short savepeekc;
+807c762
+< 	if ( (f=open(fil, 0)) < 0) {
+---
+> 	if (open(fil, 0) < 0) {
+816,819d770
+< 	} else if(f != 0) {
+< #include <fcntl.h>
+< 		fcntl(f,F_DUPFD,0);
+< 		close(f);
+893a845
+> #if USG | USG3TTY
+894a847,849
+> # define index strchr
+> # define rindex strrchr
+> #endif

@@ -1,0 +1,36 @@
+***************
+*** 15,20
+  #include "bits.h"
+  #include "last.h"
+  #include "rcstuff.h"
+  #include "INTERN.h"
+  #include "final.h"
+  
+
+--- 15,21 -----
+  #include "bits.h"
+  #include "last.h"
+  #include "rcstuff.h"
++ #include "ngdata.h"
+  #include "INTERN.h"
+  #include "final.h"
+  
+***************
+*** 54,59
+      if (bizarre)
+  	resetty();
+      UNLINK(lockname);
+      if (status < 0) {
+  	chdir("/usr/tmp");
+  	sigset(SIGILL,SIG_DFL);
+
+--- 55,63 -----
+      if (bizarre)
+  	resetty();
+      UNLINK(lockname);
++ #ifdef SERVER
++     UNLINK(active_name);
++ #endif
+      if (status < 0) {
+  	chdir("/usr/tmp");
+  	sigset(SIGILL,SIG_DFL);

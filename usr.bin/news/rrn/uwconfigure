@@ -1,0 +1,8 @@
+#!/bin/sh
+ed - Makefile << __EOF__
+/rnbin/s;rnbin = ;&$(DESTDIR);
+/rnlib/s;rnlib = ;&$(DESTDIR);
+/mansrc/s;mansrc = ;&$(DESTDIR);
+w
+q
+__EOF__

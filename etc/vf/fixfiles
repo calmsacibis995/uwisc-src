@@ -1,0 +1,35 @@
+#!/bin/csh -f
+
+set MYNAME = $0
+set PROGRAM = ( /etc/vf )
+set DATE = ( `date` )
+set ERRS = ( /etc/files.errs )
+set LIST = ( /etc/files.perms )
+set HOST = ( `hostname` )
+set RCPTS = ( root@${HOST}, tom@uwvax )
+
+if ! { ${PROGRAM} -c ${LIST} >& ${ERRS} } then
+	set STATUS = $status # before it changes
+	if ( ${STATUS} == 75 ) then
+		set ACTION = "have been auto-corrected and need no attention."
+	else
+		set ACTION = "are SERIOUS and may require immediate attention."
+	endif
+	set MESG = ( `/usr/local/sysexit ${STATUS}` )
+
+	(echo "The following error messages were generated when";\
+	 echo "the program ${PROGRAM} was run on the host ${HOST}";\
+	 echo "on ${DATE}.";\
+	 echo " ";\
+	 echo "Its exit status (${STATUS}) indicates "'"'"${MESG}"'".';\
+	 echo "Please consult the manual for details.";\
+	 echo " ";\
+	 echo "Errors:";\
+	 sed 's/^/	/'  ${ERRS}; \
+	 echo " ";\
+	 echo "These errors ${ACTION}";\
+	 echo " ";\
+	 echo "			--the ${MYNAME} script.";\
+	 echo " "; ) \
+		 | /usr/ucb/mail -s "${MYNAME} error report" ${RCPTS}
+endif

@@ -1,0 +1,28 @@
+pstat: pstat.c /usr/include/sys/param.h /usr/include/machine/machparam.h
+pstat: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/dir.h
+pstat: /usr/include/sys/file.h /usr/include/sys/user.h
+pstat: /usr/include/machine/pcb.h /usr/include/sys/dmap.h
+pstat: /usr/include/sys/time.h /usr/include/time.h /usr/include/sys/resource.h
+pstat: /usr/include/errno.h /usr/include/sys/proc.h /usr/include/sys/text.h
+pstat: /usr/include/sys/map.h /usr/include/sys/ioctl.h
+pstat: /usr/include/sys/ttychars.h /usr/include/sys/ttydev.h
+pstat: /usr/include/sys/tty.h /usr/include/sys/ttychars.h
+pstat: /usr/include/sys/ttydev.h /usr/include/sys/conf.h /usr/include/sys/vm.h
+pstat: /usr/include/sys/vmparam.h /usr/include/machine/vmparam.h
+pstat: /usr/include/sys/vmmac.h /usr/include/sys/vmmeter.h
+pstat: /usr/include/sys/vmsystm.h /usr/include/nlist.h
+pstat: /usr/include/machine/pte.h /usr/include/stdio.h
+pstat: pstat.c /usr/include/sys/param.h /usr/include/machine/machparam.h
+pstat: /usr/include/signal.h /usr/include/sys/types.h /usr/include/sys/dir.h
+pstat: /usr/include/sys/file.h /usr/include/sys/user.h
+pstat: /usr/include/machine/pcb.h /usr/include/sys/dmap.h
+pstat: /usr/include/sys/time.h /usr/include/time.h /usr/include/sys/resource.h
+pstat: /usr/include/errno.h /usr/include/sys/proc.h /usr/include/sys/text.h
+pstat: /usr/include/sys/map.h /usr/include/sys/ioctl.h
+pstat: /usr/include/sys/ttychars.h /usr/include/sys/ttydev.h
+pstat: /usr/include/sys/tty.h /usr/include/sys/ttychars.h
+pstat: /usr/include/sys/ttydev.h /usr/include/sys/conf.h /usr/include/sys/vm.h
+pstat: /usr/include/sys/vmparam.h /usr/include/machine/vmparam.h
+pstat: /usr/include/sys/vmmac.h /usr/include/sys/vmmeter.h
+pstat: /usr/include/sys/vmsystm.h /usr/include/nlist.h
+pstat: /usr/include/machine/pte.h /usr/include/stdio.h

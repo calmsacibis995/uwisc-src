@@ -1,0 +1,53 @@
+.TH rmuser UW "22 May 1986"
+.UC 4
+.SH NAME
+rmuser \- procedure for removing users
+.SH SYNOPSIS
+rmuser [-c class] [-f filename] [-h] user [user...]
+.B rmuser
+.br
+.SH DESCRIPTION
+.I rmuser
+allows a user or group of users to be removed from a machine.
+Only the super-user may run this program.  In the normal case, the user(s)
+will be removed from /etc/passwd, /etc/group, and /etc/user (if the machine
+is an instructional machine).  Unless specified, a user's home directory
+will be removed.  The user's /usr/spool/mail file will also be removed.
+.PP
+Users with user-id <= 7 cannot be removed using rmuser.  This is to reprevent
+accidental removal of important accounts.
+.PP
+Following are examples of how to use rmuser:
+.IP
+rmuser joe sally john
+.PP
+This will remove "joe","sally" and "john"  from the machine.  If the
+account does not exist, an error message will be printed.
+.IP
+rmuser -h joe
+.PP
+This will remove joe from /etc/passwd, /etc/group and /etc/user, but
+will keep his home directory.  The directory will be owned by the super-user.
+.IP
+rmuser -f filename
+.PP
+This will remove the users contained in the file "filename".  The format
+of the file must be a list of user names, one per line.
+.IP
+rmuser -c class
+.PP
+This is for use on instructional machines only. It will remove all users
+that are in a specific class.  Not yet implemented.
+.SH FILES
+.PD 0
+.TP 25
+/etc/user	
+login, student id number, and courses on an instructional machine
+.TP 25
+.br
+/etc/passwd
+.PD
+.SH SEE ALSO
+passwd(1), finger(1), chsh(1), chfn(1), passwd(5), vipw(8)
+the password file.
+

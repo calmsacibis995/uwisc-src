@@ -1,0 +1,97 @@
+*** clri.c	Tue Oct 21 13:14:20 1986
+--- /usr/staff/tadl/nfs/etc/clri.c	Sun May 18 18:37:13 1986
+***************
+*** 1,28 ****
+--- 1,23 ----
+!<static char sccsid[] = "@(#)clri.c 2.2 4/11/82";
+  
+-</* static char *sccsid = "@(#)clri.c	4.1 (Berkeley) 10/1/80"; */
+-<
+  /*
+   * clri filsys inumber ...
+   */
+  
+-<#ifndef SIMFS
+  #include <sys/param.h>
+!<#include <sys/inode.h>
+!<#include <sys/fs.h>
+!<#else
+!<#include "../h/param.h"
+!<#include "../h/inode.h"
+!<#include "../h/fs.h"
+!<#endif
+  
+  #define ISIZE	(sizeof(struct dinode))
+  #define	NI	(MAXBSIZE/ISIZE)
+-<struct	ino {
+-<	char	junk[ISIZE];
+-<};
+-<struct	ino	buf[NI];
+  
+  union {
+  	char		dummy[SBSIZE];
+  	struct fs	sblk;
+---------------
+!>#ifndef lint
+!>/* @(#)clri.c	2.1 86/04/17 NFSSRC */ 
+!>static	char *sccsid = "@(#)clri.c 1.1 86/02/03 SMI"; /* from UCB 2.2 4/11/82 */
+!>#endif
+  
+  /*
+   * clri filsys inumber ...
+   */
+  
+  #include <sys/param.h>
+!>#include <sys/time.h>
+!>#include <sys/vnode.h>
+!>#include <ufs/inode.h>
+!>#include <ufs/fs.h>
+  
+  #define ISIZE	(sizeof(struct dinode))
+  #define	NI	(MAXBSIZE/ISIZE)
+  
++>struct	dinode	buf[NI];
++>
+  union {
+  	char		dummy[SBSIZE];
+  	struct fs	sblk;
+***************
+*** 39,44 ****
+--- 34,40 ----
+---------------
+  	unsigned n;
+  	int j, k;
+  	long off;
++>	long gen;
+  
+  	if (argc < 3) {
+  		printf("usage: clri filsys inumber ...\n");
+***************
+*** 86,93 ****
+--- 82,90 ----
+  		lseek(f, off, 0);
+  		read(f, (char *)buf, sblock.fs_bsize);
+  		j = itoo(&sblock, n);
+!<		for (k = 0; k < ISIZE; k++)
+!<			buf[j].junk[k] = 0;
+  		lseek(f, off, 0);
+  		write(f, (char *)buf, sblock.fs_bsize);
+  	}
+---------------
+  		lseek(f, off, 0);
+  		read(f, (char *)buf, sblock.fs_bsize);
+  		j = itoo(&sblock, n);
+!>		gen = buf[j].di_gen;
+!>		bzero((caddr_t)&buf[j], ISIZE);
+!>		buf[j].di_gen = gen + 1;
+  		lseek(f, off, 0);
+  		write(f, (char *)buf, sblock.fs_bsize);
+  	}
+***************
+*** 104,106 ****
+--- 101,104 ----
+---------------
+  			return(0);
+  	return(1);
+  }
++>

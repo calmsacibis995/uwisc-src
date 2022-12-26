@@ -1,0 +1,39 @@
+cc -O  -c any.c
+cc -O  -c atob.c
+cc -O  -c copy.c
+cc -O  -c getword.c
+cc -O  -c isnumber.c
+cc -O  -c isblank.c
+cc -O  -c ltrunc.c
+cc -O  -c pmatch.c
+cc -O  -c strdup.c
+cc -O  -c strecat.c
+cc -O  -c stricmp.c
+cc -O  -c to_lower.c
+cc -O  -c instr.c
+cc -O  -c iinstr.c
+cc -O  -c fsleep.c
+cc -O  -c ptypair.c
+cc -O  -c setenv.c
+/lib/cpp -E  bset.s | as -o bset.o
+ld -x -r bset.o
+mv a.out bset.o
+ar cvr libloc.a any.o atob.o copy.o getword.o isnumber.o isblank.o  ltrunc.o pmatch.o strdup.o strecat.o stricmp.o to_lower.o  instr.o iinstr.o fsleep.o ptypair.o setenv.o bset.o
+a - any.o
+a - atob.o
+a - copy.o
+a - getword.o
+a - isnumber.o
+a - isblank.o
+a - ltrunc.o
+a - pmatch.o
+a - strdup.o
+a - strecat.o
+a - stricmp.o
+a - to_lower.o
+a - instr.o
+a - iinstr.o
+a - fsleep.o
+a - ptypair.o
+a - setenv.o
+a - bset.o

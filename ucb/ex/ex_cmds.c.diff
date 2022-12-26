@@ -1,0 +1,30 @@
+diff ./ex_cmds.c /usr/src/ucb/ex/ex_cmds.c
+1,2c1,2
+< /* Copyright (c) 1980 Regents of the University of California */
+< static char *sccsid = "@(#)ex_cmds.c	6.3 11/3/80";
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_cmds.c	7.7	6/10/83";
+391d390
+< 			CP(savedfile, file);
+406,413d404
+< 			case 'o':
+< 				tail("pop");
+< 				poptag(exclam());
+< 				if (!inopen)
+< 					lchng = chng - 1;
+< 				else
+< 					nochng();
+< 				continue;
+599d589
+< #ifndef MASSCOMP
+602d591
+< #endif MASSCOMP
+609c598
+< #endif SIGTSTP
+---
+> #endif
+679c668
+< 				printf("@(#) Version 3.6, 11/3/80."+5);
+---
+> 				printf("@(#) Version 3.7, 6/10/83."+5);

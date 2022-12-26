@@ -1,0 +1,25 @@
+yacc -d awk.g.y
+
+conflicts: 95 shift/reduce
+cc -O -DUW -c y.tab.c
+rm y.tab.c
+mv y.tab.o awk.g.o
+cmp -s y.tab.h awk.h || cp y.tab.h awk.h
+lex  awk.lx.l
+cc -O -DUW -c lex.yy.c
+rm lex.yy.c
+mv lex.yy.o awk.lx.o
+cc -O -DUW -c b.c
+cc -O -DUW -c main.c
+ex - <tokenscript
+cc -O -DUW -c token.c
+cc -O -DUW -c tran.c
+cc -O -DUW -c lib.c
+cc -O -DUW -c run.c
+cc -O -DUW -c parse.c
+cc -O -DUW -c proc.c
+cc -o proc proc.o token.o
+proc >proctab.c
+cc -O -DUW -c proctab.c
+cc -O -DUW -c freeze.c
+cc -O -DUW awk.g.o  awk.lx.o b.o main.o token.o tran.o lib.o run.o parse.o proctab.o freeze.o  -lm -o awk

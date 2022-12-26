@@ -1,0 +1,216 @@
+***************
+*** 564,569
+  
+  #ifndef PIPESAVER		/* % */
+  #   ifdef CONDSUB
+  #	define PIPESAVER "%(%B=^0$?<%A:tail +%Bc %A |) %b"
+  #   else
+  #	define PIPESAVER "tail +%Bc %A | %b"
+
+--- 564,572 -----
+  
+  #ifndef PIPESAVER		/* % */
+  #   ifdef CONDSUB
++ #	ifdef SERVER
++ #		define PIPESAVER "%(%B=^0$?<%P/rrn%a.%$:tail +%Bc %P/rrn%a.%$ |) %b"
++ #	else
+  #		define PIPESAVER "%(%B=^0$?<%A:tail +%Bc %A |) %b"
+  #	endif
+  #   else
+***************
+*** 565,570
+  #ifndef PIPESAVER		/* % */
+  #   ifdef CONDSUB
+  #	define PIPESAVER "%(%B=^0$?<%A:tail +%Bc %A |) %b"
+  #   else
+  #	define PIPESAVER "tail +%Bc %A | %b"
+  #   endif
+
+--- 568,574 -----
+  #		define PIPESAVER "%(%B=^0$?<%P/rrn%a.%$:tail +%Bc %P/rrn%a.%$ |) %b"
+  #	else
+  #		define PIPESAVER "%(%B=^0$?<%A:tail +%Bc %A |) %b"
++ #	endif
+  #   else
+  #	ifdef SERVER
+  #		define PIPESAVER "tail +%Bc %P/rrn%a.%$ | %b"
+***************
+*** 566,571
+  #   ifdef CONDSUB
+  #	define PIPESAVER "%(%B=^0$?<%A:tail +%Bc %A |) %b"
+  #   else
+  #	define PIPESAVER "tail +%Bc %A | %b"
+  #   endif
+  #endif
+
+--- 570,578 -----
+  #		define PIPESAVER "%(%B=^0$?<%A:tail +%Bc %A |) %b"
+  #	endif
+  #   else
++ #	ifdef SERVER
++ #		define PIPESAVER "tail +%Bc %P/rrn%a.%$ | %b"
++ #	else
+  #		define PIPESAVER "tail +%Bc %A | %b"
+  #	endif
+  #   endif
+***************
+*** 568,573
+  #   else
+  #	define PIPESAVER "tail +%Bc %A | %b"
+  #   endif
+  #endif
+  
+  #ifndef NORMSAVER		/* % and ~ */
+
+--- 575,581 -----
+  #	else
+  #		define PIPESAVER "tail +%Bc %A | %b"
+  #	endif
++ #   endif
+  #endif
+  
+  #ifndef NORMSAVER		/* % and ~ */
+***************
+*** 571,576
+  #endif
+  
+  #ifndef NORMSAVER		/* % and ~ */
+  #   define NORMSAVER "%X/norm.saver %A %P %c %a %B %C \"%b\""
+  #endif
+  
+
+--- 579,587 -----
+  #endif
+  
+  #ifndef NORMSAVER		/* % and ~ */
++ #	ifdef SERVER
++ #	   define NORMSAVER "%X/norm.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\""
++ #	else
+  #	   define NORMSAVER "%X/norm.saver %A %P %c %a %B %C \"%b\""
+  #	endif
+  #endif
+***************
+*** 572,577
+  
+  #ifndef NORMSAVER		/* % and ~ */
+  #   define NORMSAVER "%X/norm.saver %A %P %c %a %B %C \"%b\""
+  #endif
+  
+  #ifndef MBOXSAVER		/* % and ~ */
+
+--- 583,589 -----
+  #	   define NORMSAVER "%X/norm.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\""
+  #	else
+  #	   define NORMSAVER "%X/norm.saver %A %P %c %a %B %C \"%b\""
++ #	endif
+  #endif
+  
+  #ifndef MBOXSAVER		/* % and ~ */
+***************
+*** 576,581
+  
+  #ifndef MBOXSAVER		/* % and ~ */
+  #   ifdef MININACT		/* 2.10.2 site? */
+  #	define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %`date`\""
+  #   else
+  #	ifdef CONDSUB
+
+--- 588,596 -----
+  
+  #ifndef MBOXSAVER		/* % and ~ */
+  #   ifdef MININACT		/* 2.10.2 site? */
++ #	ifdef SERVER
++ #	    define MBOXSAVER "%X/mbox.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\" \"From %T %`date`\""
++ #	else
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %`date`\""
+  #	endif
+  #   else
+***************
+*** 577,582
+  #ifndef MBOXSAVER		/* % and ~ */
+  #   ifdef MININACT		/* 2.10.2 site? */
+  #	define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %`date`\""
+  #   else
+  #	ifdef CONDSUB
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
+
+--- 592,598 -----
+  #	    define MBOXSAVER "%X/mbox.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\" \"From %T %`date`\""
+  #	else
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %`date`\""
++ #	endif
+  #   else
+  #	ifdef CONDSUB
+  #	    ifdef SERVER
+***************
+*** 579,584
+  #	define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %`date`\""
+  #   else
+  #	ifdef CONDSUB
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
+  					/* header munging with a vengeance */
+  #	else
+
+--- 595,603 -----
+  #	endif
+  #   else
+  #	ifdef CONDSUB
++ #	    ifdef SERVER
++ #		define MBOXSAVER "%X/mbox.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
++ #	    else
+  #		define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
+  #	    endif
+  					/* header munging with a vengeance */
+***************
+*** 580,585
+  #   else
+  #	ifdef CONDSUB
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
+  					/* header munging with a vengeance */
+  #	else
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %[posted]\""
+
+--- 599,605 -----
+  #		define MBOXSAVER "%X/mbox.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
+  #	    else
+  #		define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
++ #	    endif
+  					/* header munging with a vengeance */
+  #	else
+  #	    ifdef SERVER
+***************
+*** 582,587
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %(%[date]=^\\(\\w*\\), \\(\\w*\\)-\\(\\w*\\)-\\(\\w*\\) \\([^ ]*\\)?%1 %3 %(%2=..?%2: %2) %5 19%4)\""
+  					/* header munging with a vengeance */
+  #	else
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %[posted]\""
+  #	endif
+  #   endif
+
+--- 602,610 -----
+  #	    endif
+  					/* header munging with a vengeance */
+  #	else
++ #	    ifdef SERVER
++ #		define MBOXSAVER "%X/mbox.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\" \"From %T %[posted]\""
++ #	    else
+  #		define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %[posted]\""
+  #	    endif
+  #	endif
+***************
+*** 583,588
+  					/* header munging with a vengeance */
+  #	else
+  #	    define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %[posted]\""
+  #	endif
+  #   endif
+  #endif
+
+--- 606,612 -----
+  #		define MBOXSAVER "%X/mbox.saver %P/rrn%a.%$ %P %c %a %B %C \"%b\" \"From %T %[posted]\""
+  #	    else
+  #		define MBOXSAVER "%X/mbox.saver %A %P %c %a %B %C \"%b\" \"From %T %[posted]\""
++ #	    endif
+  #	endif
+  #   endif
+  #endif

@@ -1,0 +1,37 @@
+What's new.
+
+	1) The "secondary" line in the boot file takes another parameter.
+	   This is the name of the file to keep a backup copy of the
+	   last successful zone transfer for that zone.
+	   The line looks as follows now:
+
+	secondary Berkeley.EDU        128.32.0.10 128.32.0.4 /etc/ucbhosts.bak
+
+	This file is then read when the secondary server can't initialy
+	do a zone transfer from the master server.
+
+	2) Store cache data read from a file into another hashtable and then 
+	   only use it to find the root name server. This is done by
+	   building a query asking "who the root name servers are?"
+	   This query is then sent to the servers listed in the named.ca file.
+	   This leaves the authority for this data with the owner of the data
+	   and the authority controls the TTL's and who the actual 
+	   root servers are. 
+
+	3) Fix some the data base load routines to be a little forgiving of 
+	   errors when reading the files.
+
+	4) Fix some memory leaks.
+
+	5) remove support of defunct MD and MF records
+
+	6) When dumping the data base quote HINFO since some 
+	   people leave spaces.
+
+	7) Only syslog " secondary can't find master" once per failure.
+
+	8) Fix receiving an SOA for a sub domain when doing a zone transfer
+	   for a zone which has a sub domain.
+
+	9) Lay the ground work for sorting address in responces
+	   for queries from the local machine.

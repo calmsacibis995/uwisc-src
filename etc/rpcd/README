@@ -1,0 +1,2 @@
+this is sun's inetd, which is not the same as ucb's inetd. We called
+it rpcd (Remote Procedure Call daemon) since that is all we use it for.

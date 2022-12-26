@@ -1,0 +1,21 @@
+OBJS = main.o rconf.o util.o
+SRCS = main.c rconf.c util.c rmuser.h
+CFLAGS= -O
+
+main.o: main.c rmuser.h
+	cc -c ${CFLAGS} main.c
+
+rconf.o: rconf.c
+	cc -c ${CFLAGS} rconf.c
+
+util.o: util.c rmuser.h
+	cc -c ${CFLAGS} util.c
+
+rmuser: ${OBJS}
+	cc ${CFLAGS} -o rmuser ${OBJS} -ldbm
+
+install: rmuser
+	install -s rmuser ${DESTDIR}/etc/rmuser
+
+clean:
+	rm -f rmuser core a.out *.o

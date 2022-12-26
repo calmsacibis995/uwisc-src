@@ -1,0 +1,27 @@
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c acu.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c cmds.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c cmdtab.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c cu.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c hunt.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c log.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c partab.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c remote.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c tip.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c tipout.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c value.c
+	cc -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -c vars.c
+	cc -c -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' -DV831 -DHAYES acutab.c
+	cc -c -DBUFSIZ=1024 -O -DDEFBR=1200 -DDEFFS=BUFSIZ -DACULOG -DDIALINOUT='"/usr/lib/uucp/acucntrl"' remcap.c
+	cd aculib; make 
+	cc -O -I../ -DITTACCT -c biz22.c
+	cc -O -I../ -DITTACCT -c biz31.c
+	cc -O -I../ -DITTACCT -c df.c
+	cc -O -I../ -DITTACCT -c dn11.c
+	cc -O -I../ -DITTACCT -c hayes.c
+	cc -O -I../ -DITTACCT -c ventel.c
+	cc -O -I../ -DITTACCT -c v831.c
+	cc -O -I../ -DITTACCT -c v3451.c
+	ar cu aculib.a *.o
+	ranlib aculib.a
+	cc -o tip  acu.o cmds.o cmdtab.o cu.o hunt.o  log.o partab.o remote.o tip.o tipout.o value.o vars.o acutab.o remcap.o ../uucp/ulockf.o \
+		aculib/aculib.a

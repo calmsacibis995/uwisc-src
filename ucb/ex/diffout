@@ -1,0 +1,1332 @@
+diff ./Makefile /usr/src/ucb/ex/Makefile
+1,7c1
+< #
+< # Copyright (c) 1980 Regents of the University of California.
+< # All rights reserved.  The Berkeley software License Agreement
+< # specifies the terms and conditions for redistribution.
+< #
+< #	@(#)Makefile	7.11 (Berkeley) 5/31/85
+< #
+---
+> #	Makefile	7.8	83/07/09
+38c32
+< OPTIONS= -DCRYPT -DLISPCODE -DCHDIR -DUCVISUAL -DVFORK -DVMUNIX -DFASTTAG
+---
+> OPTIONS= -DCRYPT -DLISPCODE -DCHDIR -DUCVISUAL -DVFORK -DVMUNIX -DSTDIO
+48c42
+< 	ex_set.o ex_subr.o ex_tagio.o ex_temp.o ex_tty.o ex_unix.o \
+---
+> 	ex_set.o ex_subr.o ex_temp.o ex_tty.o ex_unix.o \
+55c49
+< SRC3=	ex_set.c ex_subr.c ex_tagio.c ex_temp.c ex_tty.c ex_unix.c
+---
+> SRC3=	ex_set.c ex_subr.c ex_temp.c ex_tty.c ex_unix.c
+85,86c79,80
+< ex_vars.h:
+< 	csh makeoptions ${CFLAGS}
+---
+> # ex_vars.h:
+> # 	csh makeoptions ${CFLAGS}
+Only in .: TODO
+diff ./bcopy.c /usr/src/ucb/ex/bcopy.c
+1,10d0
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)bcopy.c	7.3 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+11a2
+> static char *sccsid = "@(#)bcopy.c	7.1	7/8/81";
+Only in .: diffout
+diff ./ex.c /usr/src/ucb/ex/ex.c
+1,16c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< char *copyright =
+< "@(#) Copyright (c) 1980 Regents of the University of California.\n\
+<  All rights reserved.\n";
+< #endif not lint
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex.c	7.1	7/8/81";
+164a151,161
+> 	 * Initialize end of core pointers.
+> 	 * Normally we avoid breaking back to fendcore after each
+> 	 * file since this can be expensive (much core-core copying).
+> 	 * If your system can scatter load processes you could do
+> 	 * this as ed does, saving a little core, but it will probably
+> 	 * not often make much difference.
+> 	 */
+> 	fendcore = (line *) sbrk(0);
+> 	endcore = fendcore - 2;
+> 
+> 	/*
+246,256d242
+< 
+< 	/*
+< 	 * Initialize end of core pointers.
+< 	 * Normally we avoid breaking back to fendcore after each
+< 	 * file since this can be expensive (much core-core copying).
+< 	 * If your system can scatter load processes you could do
+< 	 * this as ed does, saving a little core, but it will probably
+< 	 * not often make much difference.
+< 	 */
+< 	fendcore = (line *) sbrk(0);
+< 	endcore = fendcore - 2;
+diff ./ex.h /usr/src/ucb/ex/ex.h
+1,8c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex.h	7.7 (Berkeley) 5/31/85
+<  */
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> /* sccs id:	@(#)ex.h	7.5	6/10/83  */
+186c180
+< var	char	genbuf[MAXBSIZE]; /* Working buffer when manipulating linebuf */
+---
+> var	char	genbuf[LBSIZE];	/* Working buffer when manipulating linebuf */
+230d223
+< var	long	bsize;		/* Block size for disk i/o */
+Only in /usr/src/ucb/ex: ex.o
+diff ./ex_addr.c /usr/src/ucb/ex/ex_addr.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_addr.c	7.3 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_addr.c	7.1	7/8/81";
+Only in /usr/src/ucb/ex: ex_addr.o
+diff ./ex_argv.h /usr/src/ucb/ex/ex_argv.h
+1,8c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_argv.h	7.3 (Berkeley) 5/31/85
+<  */
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> /* sccs id:	@(#)ex_argv.h	7.2	7/26/81  */
+diff ./ex_cmds.c /usr/src/ucb/ex/ex_cmds.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_cmds.c	7.10 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_cmds.c	7.7	6/10/83";
+526a519
+> 					sync();
+675c668
+< 				printf("@(#) Version 3.7, 6/7/85."+5);
+---
+> 				printf("@(#) Version 3.7, 6/10/83."+5);
+diff ./ex_cmds2.c /usr/src/ucb/ex/ex_cmds2.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_cmds2.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_cmds2.c	7.2	6/10/83";
+diff ./ex_cmdsub.c /usr/src/ucb/ex/ex_cmdsub.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_cmdsub.c	7.7 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_cmdsub.c	7.2	10/31/81";
+94c86
+< 			putchar(' ' | QUOTE);
+---
+> 			putchar(' ');
+480,483c472,482
+< 	struct stat sbuf;
+< #ifdef FASTTAG
+< 	int iof;
+< 	char iofbuf[MAXBSIZE];
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+> 	/*
+> 	 * We have lots of room so we bring in stdio and do
+> 	 * a binary search on the tags file.
+> 	 */
+> # undef EOF
+> # include <stdio.h>
+> # undef getchar
+> # undef putchar
+> 	FILE *iof;
+> 	char iofbuf[BUFSIZ];
+485a485
+> 	struct stat sbuf;
+523,525c523,525
+< #ifdef FASTTAG
+< 		iof = topen(fn, iofbuf);
+< 		if (iof == -1)
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+> 		iof = fopen(fn, "r");
+> 		if (iof == NULL)
+528c528,529
+< 		fstat(iof, &sbuf);
+---
+> 		setbuf(iof, iofbuf);
+> 		fstat(fileno(iof), &sbuf);
+530c531
+< 		if (top == 0L )
+---
+> 		if (top == 0L || iof == NULL)
+542,548d542
+< 		if (fstat(io, &sbuf) < 0)
+< 			bsize = LBSIZE;
+< 		else {
+< 			bsize = sbuf.st_blksize;
+< 			if (bsize <= 0)
+< 				bsize = LBSIZE;
+< 		}
+556c550
+< #ifdef FASTTAG
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+558c552
+< 			tseek(iof, mid);
+---
+> 			fseek(iof, mid, 0);
+561c555
+< 				if(tgets(linebuf, sizeof linebuf, iof)==NULL)
+---
+> 				if(fgets(linebuf, sizeof linebuf, iof)==NULL)
+564c558
+< 			if(tgets(linebuf, sizeof linebuf, iof)==NULL)
+---
+> 			if(fgets(linebuf, sizeof linebuf, iof)==NULL)
+566,567c560
+< #ifdef TDEBUG
+< 			printf("tag: %o %o %o %s\n", bot, mid, top, linebuf);
+---
+> 			linebuf[strlen(linebuf)-1] = 0;	/* was '\n' */
+569d561
+< #endif
+572,574c564,565
+< 			if ((*lp || !iswhite(*cp)) && (value(TAGLENGTH)==0 ||
+< 			    lp-lasttag < value(TAGLENGTH))) {
+< #ifdef FASTTAG
+---
+> 			if ((*lp || !iswhite(*cp)) && (value(TAGLENGTH)==0 || lp-lasttag < value(TAGLENGTH))) {
+> #ifdef STDIO		/* mjm: was VMUNIX */
+588,589c579,580
+< #ifdef FASTTAG
+< 			tclose(iof);
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+> 			fclose(iof);
+670,671c661,662
+< #ifdef FASTTAG
+< 		tclose(iof);
+---
+> #ifdef STDIO		/* mjm: was VMUNIX */
+> 		fclose(iof);
+diff ./ex_data.c /usr/src/ucb/ex/ex_data.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_data.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_data.c	7.1	7/8/81";
+61d52
+< 	"modeline",	0,	ONOFF,		0,	0,	0,
+diff ./ex_extern.c /usr/src/ucb/ex/ex_extern.c
+1,10c1
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_extern.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> static char *sccs_id = "@(#)ex_extern.c	7.2	7/26/81";
+Only in /usr/src/ucb/ex: ex_extern.o
+diff ./ex_get.c /usr/src/ucb/ex/ex_get.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_get.c	7.6 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_get.c	7.1	7/8/81";
+74c66
+< 	static char inline[BUFSIZ];
+---
+> 	static char inline[128];
+113,118c105,110
+< 	c = read(0, inline, sizeof inline - 1);
+< 	if(c <= 0)
+< 		return(lastc = EOF);
+< 	inline[c] = '\0';
+< 	input = inline;
+< 	goto top;
+---
+> /* mjm:	if (read(0, (char *) &lastc, 1) != 1)	CHANGED and added else */
+> 	if (read(0, inline, 1) != 1)
+> 		lastc = EOF;
+> 	else				/* mjm: lastc is a short! */
+> 		lastc = inline[0];	/* mjm: in rightmost 8 bits ! */
+> 	return (lastc);
+diff ./ex_io.c /usr/src/ucb/ex/ex_io.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_io.c	7.11 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_io.c	7.6	7/30/83";
+424d415
+< 	struct stat statb;
+429,435d419
+< 	if (fstat(io, &statb) < 0)
+< 		bsize = LBSIZE;
+< 	else {
+< 		bsize = statb.st_blksize;
+< 		if (bsize <= 0)
+< 			bsize = LBSIZE;
+< 	}
+438,449c422,426
+< 	/*
+< 	 *	if the modeline variable is set,
+< 	 *	check the first and last five lines of the file
+< 	 *	for a mode line.
+< 	 */
+< 	if (value(MODELINE)) {
+< 		for (a=first; a<=last; a++) {
+< 			if (a==first+5 && last-first > 10)
+< 				a = last - 4;
+< 			getline(*a);
+< 			checkmodeline(linebuf);
+< 		}
+---
+> 	for (a=first; a<=last; a++) {
+> 		if (a==first+5 && last-first > 10)
+> 			a = last - 4;
+> 		getline(*a);
+> 		checkmodeline(linebuf);
+650c627
+< 			ninbuf = read(io, genbuf, bsize) - 1;
+---
+> 			ninbuf = read(io, genbuf, LBSIZE) - 1;
+660,663c637,640
+< 			if (kflag) {
+< 				fp = genbuf;
+< 				while(fp < &genbuf[ninbuf]) {
+< 					if (*fp++ & 0200) {
+---
+> 			fp = genbuf;
+> 			while(fp < &genbuf[ninbuf]) {
+> 				if (*fp++ & 0200) {
+> 					if (kflag)
+665,667c642,643
+< 	cntch);
+< 						break;
+< 					}
+---
+> cntch);
+> 					break;
+705d680
+< 	struct stat statb;
+712,719c687
+< 	if (fstat(io, &statb) < 0)
+< 		bsize = LBSIZE;
+< 	else {
+< 		bsize = statb.st_blksize;
+< 		if (bsize <= 0)
+< 			bsize = LBSIZE;
+< 	}
+< 	nib = bsize;
+---
+> 	nib = BUFSIZ;
+735c703
+< 				nib = bsize - 1;
+---
+> 				nib = BUFSIZ - 1;
+893,900c861,863
+< 	if (&beg[-3] < line)
+< 		return;
+< 	if (!(  ( (beg[-3] == ' ' || beg[-3] == '\t')
+< 	        && beg[-2] == 'e'
+< 		&& beg[-1] == 'x')
+< 	     || ( (beg[-3] == ' ' || beg[-3] == '\t')
+< 	        && beg[-2] == 'v'
+< 		&& beg[-1] == 'i'))) return;
+---
+> 	if (beg[-2] != 'e' && beg[-2] != 'v') return;
+> 	if (beg[-1] != 'x' && beg[-1] != 'i') return;
+> 
+diff ./ex_put.c /usr/src/ucb/ex/ex_put.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_put.c	7.9 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_put.c	7.7	10/16/81";
+diff ./ex_re.c /usr/src/ucb/ex/ex_re.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_re.c	7.5 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_re.c	7.3	6/18/83";
+diff ./ex_re.h /usr/src/ucb/ex/ex_re.h
+1,8c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_re.h	7.3 (Berkeley) 5/31/85
+<  */
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> /* sccs id:	@(#)ex_re.h	7.2	7/26/81  */
+diff ./ex_set.c /usr/src/ucb/ex/ex_set.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_set.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_set.c	7.2	6/27/83";
+diff ./ex_subr.c /usr/src/ucb/ex/ex_subr.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_subr.c	7.10 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_subr.c	7.5	7/9/83";
+629a622,676
+> #define	std_nerrs (sizeof std_errlist / sizeof std_errlist[0])
+> 
+> #define	error(i)	i
+> 
+> #ifdef lint
+> char	*std_errlist[] = {
+> #else
+> # ifdef VMUNIX
+> char	*std_errlist[] = {
+> # else
+> short	std_errlist[] = {
+> # endif
+> #endif
+> 	error("Error 0"),
+> 	error("Not super-user"),
+> 	error("No such file or directory"),
+> 	error("No such process"),
+> 	error("Interrupted system call"),
+> 	error("Physical I/O error"),
+> 	error("No such device or address"),
+> 	error("Argument list too long"),
+> 	error("Exec format error"),
+> 	error("Bad file number"),
+> 	error("No children"),
+> 	error("No more processes"),
+> 	error("Not enough core"),
+> 	error("Permission denied"),
+> 	error("Bad address"),
+> 	error("Block device required"),
+> 	error("Mount device busy"),
+> 	error("File exists"),
+> 	error("Cross-device link"),
+> 	error("No such device"),
+> 	error("Not a directory"),
+> 	error("Is a directory"),
+> 	error("Invalid argument"),
+> 	error("File table overflow"),
+> 	error("Too many open files"),
+> 	error("Not a typewriter"),
+> 	error("Text file busy"),
+> 	error("File too large"),
+> 	error("No space left on device"),
+> 	error("Illegal seek"),
+> 	error("Read-only file system"),
+> 	error("Too many links"),
+> 	error("Broken pipe"),
+> #ifndef V6
+> 	error("Math argument"),
+> 	error("Result too large"),
+> #endif
+> 	error("Quota exceeded")		/* Berkeley quota systems only */
+> };
+> 
+> #undef	error
+> 
+650,651d696
+< 	extern int sys_nerr;
+< 	extern char *sys_errlist[];
+655,656c700,701
+< 	if (e >= 0 && e <= sys_nerr)
+< 		error(sys_errlist[e]);
+---
+> 	if (e >= 0 && errno <= std_nerrs)
+> 		error(std_errlist[e]);
+910d954
+< 	struct winsize win;
+929,932d972
+< 		if (ioctl(0, TIOCGWINSZ, &win) >= 0)
+< 			if (win.ws_row != winsz.ws_row ||
+< 			    win.ws_col != winsz.ws_col)
+< 				winch();
+Only in .: ex_tagio.c
+diff ./ex_temp.c /usr/src/ucb/ex/ex_temp.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_temp.c	7.5 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_temp.c	7.4	7/30/83";
+diff ./ex_temp.h /usr/src/ucb/ex/ex_temp.h
+1,8c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_temp.h	7.4 (Berkeley) 5/31/85
+<  */
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> /* sccs id:	@(#)ex_temp.h	7.3	8/2/81  */
+diff ./ex_tty.c /usr/src/ucb/ex/ex_tty.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_tty.c	7.10 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_tty.c	7.6	6/10/83";
+66c58,59
+< 	register int unknown;
+---
+> 	register int unknown, i;
+> 	register int l;
+77c70,81
+< 	setsize();
+---
+> 	i = LINES = tgetnum("li");
+> 	if (LINES <= 5)
+> 		LINES = 24;
+> 	if (LINES > TUBELINES)
+> 		LINES = TUBELINES;
+> 	l = LINES;
+> 	if (ospeed < B1200)
+> 		l = 9;	/* including the message line at the bottom */
+> 	else if (ospeed < B2400)
+> 		l = 17;
+> 	if (l > LINES)
+> 		l = LINES;
+92,95c96
+< 	if (CS && SC && RC) {
+< 		if (AL==NULL) AL="";
+< 		if (DL==NULL) DL="";
+< 	}
+---
+> 	if (CS && SC && RC) AL=DL="";
+125a127,132
+> 	options[WINDOW].ovalue = options[WINDOW].odefault = l - 1;
+> 	if (defwind) options[WINDOW].ovalue = defwind;
+> 	options[SCROLL].ovalue = options[SCROLL].odefault = HC ? 11 : ((l-1) / 2);
+> 	COLUMNS = tgetnum("co");
+> 	if (COLUMNS <= 4)
+> 		COLUMNS = 1000;
+137a145,146
+> 	if (i <= 0)
+> 		LINES = 2;
+147,181d155
+< }
+< 
+< setsize()
+< {
+< 	register int l, i;
+< 	struct winsize win;
+< 
+< 	if (ioctl(0, TIOCGWINSZ, &win) < 0) {
+< 		i = LINES = tgetnum("li");
+< 		COLUMNS = tgetnum("co");
+< 	} else {
+< 		if ((LINES = winsz.ws_row = win.ws_row) == 0)
+< 			LINES = tgetnum("li");
+< 		i = LINES;
+< 		if ((COLUMNS = winsz.ws_col = win.ws_col) == 0)
+< 			COLUMNS = tgetnum("co");
+< 	}
+< 	if (LINES <= 5)
+< 		LINES = 24;
+< 	if (LINES > TUBELINES)
+< 		LINES = TUBELINES;
+< 	l = LINES;
+< 	if (ospeed < B1200)
+< 		l = 9;	/* including the message line at the bottom */
+< 	else if (ospeed < B2400)
+< 		l = 17;
+< 	if (l > LINES)
+< 		l = LINES;
+< 	if (COLUMNS <= 4)
+< 		COLUMNS = 1000;
+< 	options[WINDOW].ovalue = options[WINDOW].odefault = l - 1;
+< 	if (defwind) options[WINDOW].ovalue = defwind;
+< 	options[SCROLL].ovalue = options[SCROLL].odefault = HC ? 11 : ((l-1) / 2);
+< 	if (i <= 0)
+< 		LINES = 2;
+diff ./ex_tty.h /usr/src/ucb/ex/ex_tty.h
+0a1,2
+> /* Copyright (c) 1981 Regents of the University of California */
+> /* sccs id:	@(#)ex_tty.h	7.3	9/9/81  */
+2,9d3
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_tty.h	7.5 (Berkeley) 5/31/85
+<  */
+< 
+< /*
+119d112
+< var	struct winsize winsz;	/* Save window size for stopping comparisons */
+diff ./ex_tune.h /usr/src/ucb/ex/ex_tune.h
+0a1,2
+> /* Copyright (c) 1981 Regents of the University of California */
+> /*	ex_tune.h	7.5	83/07/02	*/
+2,9d3
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_tune.h	7.8 (Berkeley) 5/31/85
+<  */
+< 
+< /*
+64c58
+< #define	TAGSIZE		128		/* Tag length */
+---
+> #define	TAGSIZE		32		/* Tag length */
+114c108
+< #define	TUBELINES	70
+---
+> #define	TUBELINES	66
+116c110
+< #define	TUBESIZE	7000	/* 70 * 100 */
+---
+> #define	TUBESIZE	6600	/* 66 * 100 */
+diff ./ex_unix.c /usr/src/ucb/ex/ex_unix.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_unix.c	7.5 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1979 Regents of the University of California */
+> static char *sccsid = "@(#)ex_unix.c	7.2	6/10/83";
+245d236
+< 	struct stat statb;
+278,284d268
+< 		if (fstat(io, &statb) < 0)
+< 			bsize = LBSIZE;
+< 		else {
+< 			bsize = statb.st_blksize;
+< 			if (bsize <= 0)
+< 				bsize = LBSIZE;
+< 		}
+diff ./ex_v.c /usr/src/ucb/ex/ex_v.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_v.c	7.8 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_v.c	7.4 6/18/83";
+58,60d49
+< jmp_buf venv;
+< int	winch();
+< 
+74d62
+< 	int resize;
+76,82d63
+< 	if (resize = setjmp(venv)) {
+< 		setsize();
+< 		initev = (char *)0;
+< 		inopen = 0;
+< 		addr1 = addr2 = dot;
+< 	}
+< 	(void)signal(SIGWINCH, winch);
+139d119
+< 	(void)signal(SIGWINCH, SIG_DFL);
+185d164
+< 	int resize;
+212,218d190
+< 	if (resize = setjmp(venv)) {
+< 		setsize();
+< 		initev = (char *)0;
+< 		inopen = 0;
+< 		addr1 = addr2 = dot;
+< 	}
+< 	(void)signal(SIGWINCH, winch);
+241d212
+< 	(void)signal(SIGWINCH, SIG_DFL);
+424,430d394
+< }
+< 
+< winch()
+< {
+< 	vsave();
+< 	setty(normf);
+< 	longjmp(venv, 1);
+diff ./ex_vadj.c /usr/src/ucb/ex/ex_vadj.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vadj.c	7.9 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vadj.c	7.6	11/17/81";
+757c749
+< 		vputp(tgoto(CM, 0, LINES-1), 1);/* Go to lower left corner */
+---
+> 		vputp(tgoto(CM, 0, 23), 1);	/* Go to lower left corner */
+diff ./ex_vars.h /usr/src/ucb/ex/ex_vars.h
+1,8c1
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_vars.h	7.4 (Berkeley) 5/31/85
+<  */
+< 
+---
+> /*  sccs id  @(#)ex_vars.h	7.2	7/26/81 */
+22,49c15,41
+< #define MODELINE        13
+< #define NUMBER          14
+< #define OPEN            15
+< #define OPTIMIZE        16
+< #define PARAGRAPHS      17
+< #define PROMPT          18
+< #define READONLY        19
+< #define REDRAW          20
+< #define REMAP           21
+< #define REPORT          22
+< #define SCROLL          23
+< #define SECTIONS        24
+< #define SHELL           25
+< #define SHIFTWIDTH      26
+< #define SHOWMATCH       27
+< #define SLOWOPEN        28
+< #define TABSTOP         29
+< #define TAGLENGTH       30
+< #define TAGS            31
+< #define TERM            32
+< #define TERSE           33
+< #define TIMEOUT         34
+< #define TTYTYPE         35
+< #define WARN            36
+< #define WINDOW          37
+< #define WRAPSCAN        38
+< #define WRAPMARGIN      39
+< #define WRITEANY        40
+---
+> #define NUMBER          13
+> #define OPEN            14
+> #define OPTIMIZE        15
+> #define PARAGRAPHS      16
+> #define PROMPT          17
+> #define READONLY        18
+> #define REDRAW          19
+> #define REMAP           20
+> #define REPORT          21
+> #define SCROLL          22
+> #define SECTIONS        23
+> #define SHELL           24
+> #define SHIFTWIDTH      25
+> #define SHOWMATCH       26
+> #define SLOWOPEN        27
+> #define TABSTOP         28
+> #define TAGLENGTH       29
+> #define TAGS            30
+> #define TERM            31
+> #define TERSE           32
+> #define TIMEOUT         33
+> #define TTYTYPE         34
+> #define WARN            35
+> #define WINDOW          36
+> #define WRAPSCAN        37
+> #define WRAPMARGIN      38
+> #define WRITEANY        39
+51c43
+< #define	NOPTS	41
+---
+> #define	NOPTS	40
+diff ./ex_vget.c /usr/src/ucb/ex/ex_vget.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vget.c	6.8 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vget.c	6.5 6/18/83";
+639d630
+< 	int (*Oint)();
+657d647
+< 	Oint = signal(SIGINT, trapalarm);
+686d675
+< 	signal(SIGINT,Oint);
+692,693c681
+< 	if (vcatch)
+< 		longjmp(vreslab,1);
+---
+> 	longjmp(vreslab,1);
+diff ./ex_vis.h /usr/src/ucb/ex/ex_vis.h
+1,8c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  *
+<  *	@(#)ex_vis.h	7.4 (Berkeley) 5/31/85
+<  */
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> /* sccs id:	@(#)ex_vis.h	7.1	7/8/81  */
+diff ./ex_vmain.c /usr/src/ucb/ex/ex_vmain.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vmain.c	7.7 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vmain.c	7.3	6/10/83";
+430c422
+< 				addr = dot - vcline + 2 - (cnt-1)*basWLINES;
+---
+> 				addr = dot - vcline + 2 + (cnt-1)*basWLINES;
+1133,1137c1125
+< 		} while (isalpha(*cp) || isdigit(*cp) || *cp == '_'
+< #ifdef LISPCODE
+< 			|| (value(LISP) && *cp == '-')
+< #endif LISPCODE
+< 			);
+---
+> 		} while (isalpha(*cp) || isdigit(*cp) || *cp == '_');
+diff ./ex_voper.c /usr/src/ucb/ex/ex_voper.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_voper.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_voper.c	7.2	10/31/81";
+diff ./ex_vops.c /usr/src/ucb/ex/ex_vops.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vops.c	7.7 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vops.c	7.2	10/31/81";
+637d628
+< 	int oldmask;
+641d631
+< 	oldmask = sigblock(sigmask(SIGWINCH));
+689d678
+< 	(void)sigsetmask(oldmask);
+795c784
+< 	if (dot > wdot || (dot == wdot && wcursor != 0 && cursor > wcursor)) {
+---
+> 	if (dot > wdot) {
+diff ./ex_vops2.c /usr/src/ucb/ex/ex_vops2.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vops2.c	6.8 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vops2.c	6.5 7/26/81";
+123d114
+< 	int oldmask;
+213d203
+< 	oldmask = sigblock(sigmask(SIGWINCH));
+391d380
+< 	(void)sigsetmask(oldmask);
+diff ./ex_vops3.c /usr/src/ucb/ex/ex_vops3.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vops3.c	7.3 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vops3.c	7.1	7/8/81";
+diff ./ex_vput.c /usr/src/ucb/ex/ex_vput.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vput.c	7.4 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vput.c	7.2	7/9/81";
+diff ./ex_vwind.c /usr/src/ucb/ex/ex_vwind.c
+1,10c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ex_vwind.c	7.3 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)ex_vwind.c	7.1	7/8/81";
+diff ./expreserve.c /usr/src/ucb/ex/expreserve.c
+1,16c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< char *copyright =
+< "@(#) Copyright (c) 1980 Regents of the University of California.\n\
+<  All rights reserved.\n";
+< #endif not lint
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)expreserve.c	7.12 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)expreserve.c	7.8	8/14/83";
+260c246
+< 			notify(H.Uid, H.Savedfile, (int) name, H.Time);
+---
+> 			notify(H.Uid, H.Savedfile, (int) name);
+317c303
+< notify(uid, fname, flag, time)
+---
+> notify(uid, fname, flag)
+320d305
+< 	time_t	time;
+324,327c309
+< 	char	cmd[BUFSIZ];
+< 	char	hostname[128];
+< 	char	croak[128];
+< 	char	*timestamp, *ctime();
+---
+> 	char cmd[BUFSIZ];
+331,333d312
+< 	gethostname(hostname, sizeof(hostname));
+< 	timestamp = ctime(&time);
+< 	timestamp[16] = 0;	/* blast from seconds on */
+335d313
+< 	setuid(getuid());
+340,348d317
+< 	/*
+< 	 *	flag says how the editor croaked:
+< 	 * "the editor was killed" is perhaps still not an ideal
+< 	 * error message.  Usually, either it was forcably terminated
+< 	 * or the phone was hung up, but we don't know which.
+< 	 */
+< 	sprintf(croak, flag
+< 		? "the system went down"
+< 		: "the editor was killed");
+351c320,321
+< "Subject: editor saved ``LOST''\n");
+---
+> "A copy of an editor buffer of yours was saved when %s.\n",
+> 		flag ? "the system went down" : "the editor was killed");
+353c323,324
+< "You were editing a file without a name\n");
+---
+> "No name was associated with this buffer so it has been named \"LOST\".\n");
+> 	} else
+355,367c326,332
+< "at <%s> on the machine ``%s'' when %s.\n", timestamp, hostname, croak);
+< 		fprintf(mf,
+< "Since the file had no name, it has been named \"LOST\".\n");
+< 	} else {
+< 		fprintf(mf,
+< "Subject: editor saved ``%s''\n", fname);
+< 		fprintf(mf,
+< "You were editing the file \"%s\"\n", fname);
+< 		fprintf(mf,
+< "at <%s> on the machine ``%s''\n", timestamp, hostname);
+< 		fprintf(mf,
+< "when %s.\n", croak);
+< 	}
+---
+> "A copy of an editor buffer of your file \"%s\"\nwas saved when %s.\n", fname,
+> 		/*
+> 		 * "the editor was killed" is perhaps still not an ideal
+> 		 * error message.  Usually, either it was forcably terminated
+> 		 * or the phone was hung up, but we don't know which.
+> 		 */
+> 		flag ? "the system went down" : "the editor was killed");
+369c334
+< "\nYou can retrieve most of your changes to this file\n");
+---
+> "This buffer can be retrieved using the \"recover\" command of the editor.\n");
+371c336
+< "using the \"recover\" command of the editor.\n");
+---
+> "An easy way to do this is to give the command \"ex -r %s\".\n",fname);
+373,375c338
+< "An easy way to do this is to give the command \"vi -r %s\".\n", fname);
+< 	fprintf(mf,
+< "This method also works using \"ex\" and \"edit\".\n");
+---
+> "This works for \"edit\" and \"vi\" also.\n");
+Only in /usr/src/ucb/ex: exrecover
+diff ./exrecover.c /usr/src/ucb/ex/exrecover.c
+1,16c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< char *copyright =
+< "@(#) Copyright (c) 1980 Regents of the University of California.\n\
+<  All rights reserved.\n";
+< #endif not lint
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)exrecover.c	7.9 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+---
+> /* Copyright (c) 1981 Regents of the University of California */
+> static char *sccsid = "@(#)exrecover.c	7.6	7/3/83";
+771,787d756
+< }
+< 
+< /*
+<  * Must avoid stdio because expreserve uses sbrk to do memory
+<  * allocation and stdio uses malloc.
+<  */
+< fprintf(fp, fmt, a1, a2, a3, a4, a5)
+< 	FILE *fp;
+< 	char *fmt;
+< 	char *a1, *a2, *a3, *a4, *a5;
+< {
+< 	char buf[BUFSIZ];
+< 
+< 	if (fp != stderr)
+< 		return;
+< 	sprintf(buf, fmt, a1, a2, a3, a4, a5);
+< 	write(2, buf, strlen(buf));
+Only in /usr/src/ucb/ex: exrecover.o
+diff ./makefile.370 /usr/src/ucb/ex/makefile.370
+1,7d0
+< #
+< # Copyright (c) 1980 Regents of the University of California.
+< # All rights reserved.  The Berkeley software License Agreement
+< # specifies the terms and conditions for redistribution.
+< #
+< #	@(#)makefile.370	1.2 (Berkeley) 5/31/85
+< #
+diff ./makefile.70 /usr/src/ucb/ex/makefile.70
+1,7d0
+< #
+< # Copyright (c) 1980 Regents of the University of California.
+< # All rights reserved.  The Berkeley software License Agreement
+< # specifies the terms and conditions for redistribution.
+< #
+< #	@(#)makefile.70	7.3 (Berkeley) 5/31/85
+< #
+diff ./makefile.c70 /usr/src/ucb/ex/makefile.c70
+1,7d0
+< #
+< # Copyright (c) 1980 Regents of the University of California.
+< # All rights reserved.  The Berkeley software License Agreement
+< # specifies the terms and conditions for redistribution.
+< #
+< #	@(#)makefile.c70	1.2 (Berkeley) 5/31/85
+< #
+diff ./makefile.u3 /usr/src/ucb/ex/makefile.u3
+1,7d0
+< #
+< # Copyright (c) 1980 Regents of the University of California.
+< # All rights reserved.  The Berkeley software License Agreement
+< # specifies the terms and conditions for redistribution.
+< #
+< #	@(#)makefile.u3	1.3 (Berkeley) 5/31/85
+< #
+diff ./makeoptions /usr/src/ucb/ex/makeoptions
+2,9d1
+< # Copyright (c) 1980 Regents of the University of California.
+< # All rights reserved.  The Berkeley software License Agreement
+< # specifies the terms and conditions for redistribution.
+< #
+< #	@(#)makeoptions	6.4 (Berkeley) 5/31/85
+< #
+< 
+< #
+13c5
+< cat < ex_data.c > /tmp/$$.c
+---
+> cp ex_data.c /tmp/$$.c
+29c21
+< 	1,$s/[ 	]*"//
+---
+> 	1,$s/	"//
+31,37c23,26
+< 	" begin kludge since options start at 0 but cat -n starts at 1
+< 	"              move first to end and later move it back and renumber
+< 	1m$
+< 	%!cat -n
+< 	$t0
+< 	1s/[0-9][0-9]*/0/
+< 	" end kludge
+---
+> 	1m$	" kludge since options start at 0 but num at 1
+> 	%!num
+> 	$t0	" unkludge
+> 	1s/......../     0  /	" unkludge
+39c28,31
+< 	1,$s/[ 	]*\([0-9][0-9]*\)[ 	]*\(.*\)/#define	\U\2\L	\1/
+---
+> 	1,$s/\(......\)\(.*\)/#define	\U\2\L	\1/
+> 	" get rid of extra blanks, turning into (single) tabs.
+> 	1,$s/	 */	/g
+> 	g/  */s//	/g
+48c40
+< 	/*  sccs id   @(#)  ex_vars.h  @(#)makeoptions	6.4 5/31/85  */
+---
+> 	/*  sccs id   @(#)  ex_vars.h  @(#)makeoptions	6.1 10/19/80  */
+diff ./ovprintf.c /usr/src/ucb/ex/ovprintf.c
+1,9c1,2
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)ovprintf.c	1.3 (Berkeley) 6/7/85";
+< #endif not lint
+---
+> /* Copyright (c) 1979 Regents of the University of California */
+> static char *sccsid = "@(#)ovprintf.c	1.1 8/26/80";
+diff ./printf.c /usr/src/ucb/ex/printf.c
+1,10d0
+< /*
+<  * Copyright (c) 1980 Regents of the University of California.
+<  * All rights reserved.  The Berkeley software License Agreement
+<  * specifies the terms and conditions for redistribution.
+<  */
+< 
+< #ifndef lint
+< static char *sccsid = "@(#)printf.c	7.3 (Berkeley) 6/7/85";
+< #endif not lint
+< 
+12a3,4
+> /* The local sccs version within ex */
+> static char *sccsid = "@(#)printf.c	7.1	7/8/81";
+Only in /usr/src/ucb/ex: strings
+Only in /usr/src/ucb/ex: x.c

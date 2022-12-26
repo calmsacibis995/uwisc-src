@@ -1,0 +1,1358 @@
+*** pstat.c	Thu Oct 23 15:41:21 1986
+--- /usr/staff/tadl/nfs/etc/pstat.c	Sun May 18 18:37:27 1986
+***************
+*** 1,25 ****
+--- 1,14 ----
+-</*
+-< * Copyright (c) 1980 Regents of the University of California.
+-< * All rights reserved.  The Berkeley software License Agreement
+-< * specifies the terms and conditions for redistribution.
+-< */
+-<
+  #ifndef lint
+!<char copyright[] =
+!<"@(#) Copyright (c) 1980 Regents of the University of California.\n\
+!< All rights reserved.\n";
+!<#endif not lint
+  
+-<#ifndef lint
+-<static char sccsid[] = "@(#)pstat.c	5.8 (Berkeley) 5/5/86";
+-<#endif not lint
+-<
+  /*
+   * Print system stuff
+   */
+  
+  #define mask(x) (x&0377)
+!<#define	clear(x) ((int)x&0x7fffffff)
+  
+  #include <sys/param.h>
+  #include <sys/dir.h>
+---------------
+  #ifndef lint
+!>/* @(#)pstat.c	2.2 86/05/14 NFSSRC */ 
+!>static	char *sccsid = "@(#)pstat.c 1.1 86/02/03 SMI"; /* from UCB 5.3 */
+!>#endif lint
+  
+  /*
+   * Print system stuff
+   */
+  
+  #define mask(x) (x&0377)
+!>#define	clear(x) ((int)x-KERNELBASE)
+  
+  #include <sys/param.h>
+  #include <sys/dir.h>
+***************
+*** 29,35 ****
+--- 18,25 ----
+  #include <sys/user.h>
+  #include <sys/proc.h>
+  #include <sys/text.h>
+!<#include <sys/inode.h>
+  #include <sys/map.h>
+  #include <sys/ioctl.h>
+  #include <sys/tty.h>
+---------------
+  #include <sys/user.h>
+  #include <sys/proc.h>
+  #include <sys/text.h>
+!>#include <sys/vnode.h>
+!>#include <ufs/inode.h>
+  #include <sys/map.h>
+  #include <sys/ioctl.h>
+  #include <sys/tty.h>
+***************
+*** 37,43 ****
+--- 27,32 ----
+  #include <sys/vm.h>
+  #include <nlist.h>
+  #include <machine/pte.h>
+-<#include <stdio.h>
+  
+  char	*fcore	= "/dev/kmem";
+  char	*fmem	= "/dev/mem";
+---------------
+  
+  char	*fcore	= "/dev/kmem";
+  char	*fmem	= "/dev/mem";
+***************
+*** 44,49 ****
+--- 33,45 ----
+---------------
+  char	*fnlist	= "/vmunix";
+  int	fc, fm;
+  
++>union {
++>	struct	user user;
++>	char	upages[UPAGES][NBPG];
++>} user;
++>
++>#define pcboffset	((char *)&user.user.u_pcb - (char *)&user.user)
++>
+  struct nlist nl[] = {
+  #define	SINODE	0
+  	{ "_inode" },
+***************
+*** 63,110 ****
+--- 59,108 ----
+  	{ "_Usrptmap" },
+  #define	USRPT	8
+  	{ "_usrpt" },
+!<#define	SWAPMAP	9
+  	{ "_swapmap" },
+!<#define	SDH	10
+  	{ "_dh11" },
+!<#define	SNDH	11
+  	{ "_ndh11" },
+!<#define	SNPROC	12
+  	{ "_nproc" },
+!<#define	SNTEXT	13
+  	{ "_ntext" },
+!<#define	SNFILE	14
+  	{ "_nfile" },
+!<#define	SNINODE	15
+  	{ "_ninode" },
+!<#define	SNSWAPMAP 16
+  	{ "_nswapmap" },
+!<#define	SPTY	17
+  	{ "_pt_tty" },
+!<#define	SDMMIN	18
+  	{ "_dmmin" },
+!<#define	SDMMAX	19
+  	{ "_dmmax" },
+!<#define	SNSWDEV	20
+  	{ "_nswdev" },
+!<#define	SSWDEVT	21
+  	{ "_swdevt" },
+!<#define	SDMF	22
+  	{ "_dmf_tty" },
+!<#define	SNDMF	23
+  	{ "_ndmf" },
+!<#define	SNPTY	24
+  	{ "_npty" },
+!<#define	SDHU	25
+  	{ "_dhu_tty" },
+!<#define	SNDHU	26
+  	{ "_ndhu" },
+!<#define	SYSMAP	27
+  	{ "_Sysmap" },
+-<#define	SDMZ	28
+-<	{ "_dmz_tty" },
+-<#define	SNDMZ	29
+-<	{ "_ndmz" },
+  	{ "" }
+  };
+  
+---------------
+  	{ "_Usrptmap" },
+  #define	USRPT	8
+  	{ "_usrpt" },
+!>#define	SNSWAP	9
+!>	{ "_nswap" },
+!>#define	SWAPMAP	10
+  	{ "_swapmap" },
+!>#define	SDH	11
+  	{ "_dh11" },
+!>#define	SNDH	12
+  	{ "_ndh11" },
+!>#define	SNPROC	13
+  	{ "_nproc" },
+!>#define	SNTEXT	14
+  	{ "_ntext" },
+!>#define	SNFILE	15
+  	{ "_nfile" },
+!>#define	SNINODE	16
+  	{ "_ninode" },
+!>#define	SNSWAPMAP 17
+  	{ "_nswapmap" },
+!>#define	SPTY	18
+  	{ "_pt_tty" },
+!>#define	SDMMIN	19
+  	{ "_dmmin" },
+!>#define	SDMMAX	20
+  	{ "_dmmax" },
+!>#define	SNSWDEV	21
+  	{ "_nswdev" },
+!>#define	SSWDEVT	22
+  	{ "_swdevt" },
+!>#define	SDMF	23
+  	{ "_dmf_tty" },
+!>#define	SNDMF	24
+  	{ "_ndmf" },
+!>#define	SNPTY	25
+  	{ "_npty" },
+!>#define	SDHU	26
+  	{ "_dhu_tty" },
+!>#define	SNDHU	27
+  	{ "_ndhu" },
+!>#define	SZS	28
+!>	{ "_zs_tty" },
+!>#define	SNZS	29
+!>	{ "_nzs" },
+!>#define	SYSMAP	30
+  	{ "_Sysmap" },
+  	{ "" }
+  };
+  
+***************
+*** 124,131 ****
+--- 122,127 ----
+  int	kflg;
+  struct	pte *Usrptma;
+  struct	pte *usrpt;
+-<u_long	getw();
+-<off_t	mkphys();
+  
+  main(argc, argv)
+  char **argv;
+---------------
+  
+  main(argc, argv)
+  char **argv;
+***************
+*** 189,198 ****
+--- 185,192 ----
+  			exit(1);
+  		}
+  	}
+!<	if (argc>1) {
+  		fcore = fmem = argv[1];
+-<		kflg++;
+-<	}
+  	if ((fc = open(fcore, 0)) < 0) {
+  		printf("Can't find %s\n", fcore);
+  		exit(1);
+---------------
+  			exit(1);
+  		}
+  	}
+!>	if (argc>1)
+  		fcore = fmem = argv[1];
+  	if ((fc = open(fcore, 0)) < 0) {
+  		printf("Can't find %s\n", fcore);
+  		exit(1);
+***************
+*** 229,245 ****
+--- 223,241 ----
+  		dousr();
+  	if (swpf||totflg)
+  		doswap();
+  }
+  
+  usage()
+  {
+  
+!<	printf("usage: pstat -[aixptfs] [-u [ubase]] [system] [core]\n");
+  }
+  
+  doinode()
+  {
+  	register struct inode *ip;
+  	struct inode *xinode, *ainode;
+  	register int nin;
+  	int ninode;
+---------------
+  		dousr();
+  	if (swpf||totflg)
+  		doswap();
++>	exit(0);
+  }
+  
+  usage()
+  {
+  
+!>	printf("usage: pstat -[aixptfs] [-u ubase] [system] [core]\n");
+  }
+  
+  doinode()
+  {
+  	register struct inode *ip;
++>	register struct vnode *vp;
+  	struct inode *xinode, *ainode;
+  	register int nin;
+  	int ninode;
+***************
+*** 248,266 ****
+--- 244,253 ----
+  	ninode = getw(nl[SNINODE].n_value);
+  	xinode = (struct inode *)calloc(ninode, sizeof (struct inode));
+  	ainode = (struct inode *)getw(nl[SINODE].n_value);
+!<	if (ninode < 0 || ninode > 10000) {
+!<		fprintf(stderr, "number of inodes is preposterous (%d)\n",
+!<			ninode);
+!<		return;
+!<	}
+!<	if (xinode == NULL) {
+!<		fprintf(stderr, "can't allocate memory for inode table\n");
+!<		return;
+!<	}
+!<	lseek(fc, mkphys((off_t)ainode), 0);
+  	read(fc, xinode, ninode * sizeof(struct inode));
+  	for (ip = xinode; ip < &xinode[ninode]; ip++)
+!<		if (ip->i_count)
+  			nin++;
+  	if (totflg) {
+  		printf("%3d/%3d inodes\n", nin, ninode);
+---------------
+  	ninode = getw(nl[SNINODE].n_value);
+  	xinode = (struct inode *)calloc(ninode, sizeof (struct inode));
+  	ainode = (struct inode *)getw(nl[SINODE].n_value);
+!>	lseek(fc, mkphys((int)ainode), 0);
+  	read(fc, xinode, ninode * sizeof(struct inode));
+  	for (ip = xinode; ip < &xinode[ninode]; ip++)
+!>		if (ip->i_vnode.v_count)
+  			nin++;
+  	if (totflg) {
+  		printf("%3d/%3d inodes\n", nin, ninode);
+***************
+*** 267,319 ****
+--- 254,344 ----
+  		return;
+  	}
+  	printf("%d/%d active inodes\n", nin, ninode);
+!<printf("   LOC      FLAGS    CNT DEVICE  RDC WRC  INO  MODE  NLK UID   SIZE/DEV\n");
+  	for (ip = xinode; ip < &xinode[ninode]; ip++) {
+!<		if (ip->i_count == 0)
+  			continue;
+  		printf("%8.1x ", ainode + (ip - xinode));
+  		putf(ip->i_flag&ILOCKED, 'L');
+  		putf(ip->i_flag&IUPD, 'U');
+-<		putf(ip->i_flag&IACC, 'A');
+-<		putf(ip->i_flag&IMOUNT, 'M');
+  		putf(ip->i_flag&IWANT, 'W');
+-<		putf(ip->i_flag&ITEXT, 'T');
+-<		putf(ip->i_flag&ICHG, 'C');
+-<		putf(ip->i_flag&ISHLOCK, 'S');
+-<		putf(ip->i_flag&IEXLOCK, 'E');
+  		putf(ip->i_flag&ILWAIT, 'Z');
+!<		printf("%4d", ip->i_count&0377);
+!<		printf("%4d,%3d", major(ip->i_dev), minor(ip->i_dev));
+!<		printf("%4d", ip->i_shlockc&0377);
+!<		printf("%4d", ip->i_exlockc&0377);
+  		printf("%6d", ip->i_number);
+!<		printf("%6x", ip->i_mode & 0xffff);
+  		printf("%4d", ip->i_nlink);
+!<		printf("%4d", ip->i_uid);
+  		if ((ip->i_mode&IFMT)==IFBLK || (ip->i_mode&IFMT)==IFCHR)
+  			printf("%6d,%3d", major(ip->i_rdev), minor(ip->i_rdev));
+  		else
+  			printf("%10ld", ip->i_size);
+  		printf("\n");
+  	}
+  	free(xinode);
+  }
+  
+-<u_long
+  getw(loc)
+  	off_t loc;
+  {
+!<	u_long word;
+  
+  	if (kflg)
+!<		loc &= 0x7fffffff;
+  	lseek(fc, loc, 0);
+  	read(fc, &word, sizeof (word));
+  	return (word);
+  }
+  
+  putf(v, n)
+  {
+  	if (v)
+  		printf("%c", n);
+  	else
+---------------
+  		return;
+  	}
+  	printf("%d/%d active inodes\n", nin, ninode);
+!>printf("  ILOC   IFLAG   IDEVICE   INO   MODE NLK  UID  SIZE/DEV VFLAG CNT SHC EXC TYPE\n");
+!>	if (kflg)
+!>		ainode = (struct inode *)((int)ainode + KERNELBASE);
+  	for (ip = xinode; ip < &xinode[ninode]; ip++) {
+!>		vp = &ip->i_vnode;
+!>		if (vp->v_count == 0)
+  			continue;
+  		printf("%8.1x ", ainode + (ip - xinode));
++>		putf(ip->i_flag&IACC, 'A');
++>		putf(ip->i_flag&ICHG, 'C');
+  		putf(ip->i_flag&ILOCKED, 'L');
++>		putf(ip->i_flag&IREF, 'R');
++>		putf(ip->i_flag&ITEXT, 'T');
+  		putf(ip->i_flag&IUPD, 'U');
+  		putf(ip->i_flag&IWANT, 'W');
+  		putf(ip->i_flag&ILWAIT, 'Z');
+!>		printf("%3d,%3d", major(ip->i_dev), minor(ip->i_dev));
+  		printf("%6d", ip->i_number);
+!>		printf("%7o", ip->i_mode & 0xffff);
+  		printf("%4d", ip->i_nlink);
+!>		printf("%5d", ip->i_uid);
+  		if ((ip->i_mode&IFMT)==IFBLK || (ip->i_mode&IFMT)==IFCHR)
+  			printf("%6d,%3d", major(ip->i_rdev), minor(ip->i_rdev));
+  		else
+  			printf("%10ld", ip->i_size);
++>		printf(" ");
++>		putf(vp->v_flag&VROOT, 'R');
++>		putf(vp->v_flag&VSHLOCK, 'S');
++>		putf(vp->v_flag&VEXLOCK, 'E');
++>		putf(vp->v_flag&VTEXT, 'T');
++>		putf(vp->v_flag&VLWAIT, 'Z');
++>		printf("%4d", vp->v_count&0377);
++>		printf("%4d", vp->v_shlockc&0377);
++>		printf("%4d", vp->v_exlockc&0377);
++>		switch (vp->v_type) {
++>			case VNON:
++>				printf(" VNON");
++>				break;
++>			case VREG:
++>				printf(" VREG");
++>				break;
++>			case VDIR:
++>				printf(" VDIR");
++>				break;
++>			case VBLK:
++>				printf(" VBLK");
++>				break;
++>			case VCHR:
++>				printf(" VCHR");
++>				break;
++>			case VLNK:
++>				printf(" VLNK");
++>				break;
++>			case VSOCK:
++>				printf(" VSOC");
++>				break;
++>			case VBAD:
++>				printf(" VBAD");
++>				break;
++>			default:
++>				printf(" ????");
++>				break;
++>		}
+  		printf("\n");
+  	}
+  	free(xinode);
+  }
+  
+  getw(loc)
+  	off_t loc;
+  {
+!>	int word;
+  
+  	if (kflg)
+!>		loc -= KERNELBASE;
+  	lseek(fc, loc, 0);
+  	read(fc, &word, sizeof (word));
++>	if (kflg && word >= KERNELBASE)
++>		word -= KERNELBASE;
+  	return (word);
+  }
+  
+  putf(v, n)
+  {
++>
+  	if (v)
+  		printf("%c", n);
+  	else
+***************
+*** 325,366 ****
+--- 350,380 ----
+  	register struct text *xp;
+  	int ntext;
+  	struct text *xtext, *atext;
+!<	int ntx, ntxca;
+  
+!<	ntx = ntxca = 0;
+  	ntext = getw(nl[SNTEXT].n_value);
+  	xtext = (struct text *)calloc(ntext, sizeof (struct text));
+  	atext = (struct text *)getw(nl[STEXT].n_value);
+!<	if (ntext < 0 || ntext > 10000) {
+!<		fprintf(stderr, "number of texts is preposterous (%d)\n",
+!<			ntext);
+!<		return;
+!<	}
+!<	if (xtext == NULL) {
+!<		fprintf(stderr, "can't allocate memory for text table\n");
+!<		return;
+!<	}
+!<	lseek(fc, mkphys((off_t)atext), 0);
+  	read(fc, xtext, ntext * sizeof (struct text));
+!<	for (xp = xtext; xp < &xtext[ntext]; xp++) {
+!<		if (xp->x_iptr != NULL)
+!<			ntxca++;
+!<		if (xp->x_count != 0)
+  			ntx++;
+-<	}
+  	if (totflg) {
+!<		printf("%3d/%3d texts active, %3d used\n", ntx, ntext, ntxca);
+  		return;
+  	}
+!<	printf("%d/%d active texts, %d used\n", ntx, ntext, ntxca);
+!<	printf("\
+!<   LOC   FLAGS DADDR     CADDR  RSS SIZE     IPTR   CNT CCNT      FORW     BACK\n");
+  	for (xp = xtext; xp < &xtext[ntext]; xp++) {
+!<		if (xp->x_iptr == NULL)
+  			continue;
+  		printf("%8.1x", atext + (xp - xtext));
+  		printf(" ");
+!<		putf(xp->x_flag&XPAGI, 'P');
+  		putf(xp->x_flag&XTRC, 'T');
+  		putf(xp->x_flag&XWRIT, 'W');
+  		putf(xp->x_flag&XLOAD, 'L');
+---------------
+  	register struct text *xp;
+  	int ntext;
+  	struct text *xtext, *atext;
+!>	int ntx;
+  
+!>	ntx = 0;
+  	ntext = getw(nl[SNTEXT].n_value);
+  	xtext = (struct text *)calloc(ntext, sizeof (struct text));
+  	atext = (struct text *)getw(nl[STEXT].n_value);
+!>	lseek(fc, mkphys((int)atext), 0);
+  	read(fc, xtext, ntext * sizeof (struct text));
+!>	for (xp = xtext; xp < &xtext[ntext]; xp++)
+!>		if (xp->x_vptr!=NULL)
+  			ntx++;
+  	if (totflg) {
+!>		printf("%3d/%3d texts\n", ntx, ntext);
+  		return;
+  	}
+!>	printf("%d/%d active texts\n", ntx, ntext);
+!>	printf("   LOC   FLAGS DADDR      CADDR  RSS SIZE      VPTR  CNT CCNT\n");
+!>	if (kflg)
+!>		atext = (struct text *)((int)atext + KERNELBASE);
+  	for (xp = xtext; xp < &xtext[ntext]; xp++) {
+!>		if (xp->x_vptr == NULL)
+  			continue;
+  		printf("%8.1x", atext + (xp - xtext));
+  		printf(" ");
+!>		putf(xp->x_flag&XPAGV, 'P');
+  		putf(xp->x_flag&XTRC, 'T');
+  		putf(xp->x_flag&XWRIT, 'W');
+  		putf(xp->x_flag&XLOAD, 'L');
+***************
+*** 367,380 ****
+--- 381,392 ----
+  		putf(xp->x_flag&XLOCK, 'K');
+  		putf(xp->x_flag&XWANT, 'w');
+  		printf("%5x", xp->x_daddr[0]);
+!<		printf("%10x", xp->x_caddr);
+  		printf("%5d", xp->x_rssize);
+  		printf("%5d", xp->x_size);
+!<		printf("%10.1x", xp->x_iptr);
+  		printf("%5d", xp->x_count&0377);
+  		printf("%5d", xp->x_ccount);
+-<		printf("%10x", xp->x_forw);
+-<		printf("%9x", xp->x_back);
+  		printf("\n");
+  	}
+  	free(xtext);
+---------------
+  		putf(xp->x_flag&XLOCK, 'K');
+  		putf(xp->x_flag&XWANT, 'w');
+  		printf("%5x", xp->x_daddr[0]);
+!>		printf("%11x", xp->x_caddr);
+  		printf("%5d", xp->x_rssize);
+  		printf("%5d", xp->x_size);
+!>		printf("%10.1x", xp->x_vptr);
+  		printf("%5d", xp->x_count&0377);
+  		printf("%5d", xp->x_ccount);
+  		printf("\n");
+  	}
+  	free(xtext);
+***************
+*** 387,406 ****
+--- 399,410 ----
+  	register struct proc *pp;
+  	register loc, np;
+  	struct pte apte;
+  
+  	nproc = getw(nl[SNPROC].n_value);
+  	xproc = (struct proc *)calloc(nproc, sizeof (struct proc));
+  	aproc = (struct proc *)getw(nl[SPROC].n_value);
+!<	if (nproc < 0 || nproc > 10000) {
+!<		fprintf(stderr, "number of procs is preposterous (%d)\n",
+!<			nproc);
+!<		return;
+!<	}
+!<	if (xproc == NULL) {
+!<		fprintf(stderr, "can't allocate memory for proc table\n");
+!<		return;
+!<	}
+!<	lseek(fc, mkphys((off_t)aproc), 0);
+  	read(fc, xproc, nproc * sizeof (struct proc));
+  	np = 0;
+  	for (pp=xproc; pp < &xproc[nproc]; pp++)
+---------------
+  	register struct proc *pp;
+  	register loc, np;
+  	struct pte apte;
++>	struct pte uutl[UPAGES];
+  
+  	nproc = getw(nl[SNPROC].n_value);
+  	xproc = (struct proc *)calloc(nproc, sizeof (struct proc));
+  	aproc = (struct proc *)getw(nl[SPROC].n_value);
+!>	lseek(fc, mkphys((int)aproc), 0);
+  	read(fc, xproc, nproc * sizeof (struct proc));
+  	np = 0;
+  	for (pp=xproc; pp < &xproc[nproc]; pp++)
+***************
+*** 412,417 ****
+--- 416,423 ----
+---------------
+  	}
+  	printf("%d/%d processes\n", np, nproc);
+  	printf("   LOC    S    F POIP PRI      SIG  UID SLP TIM  CPU  NI   PGRP    PID   PPID    ADDR   RSS SRSS SIZE    WCHAN    LINK   TEXTP\n");
++>	if (kflg)
++>		aproc = (struct proc *)((int)aproc + KERNELBASE);
+  	for (pp=xproc; pp<&xproc[nproc]; pp++) {
+  		if (pp->p_stat==0 && allflg==0)
+  			continue;
+***************
+*** 429,451 ****
+--- 435,455 ----
+  		printf(" %6d", pp->p_pgrp);
+  		printf(" %6d", pp->p_pid);
+  		printf(" %6d", pp->p_ppid);
+-<		if (kflg)
+-<			pp->p_addr = (struct pte *)clear((int)pp->p_addr);
+  		if (pp->p_flag & SLOAD) {
+!<			lseek(fc, (long)pp->p_addr, 0);
+!<			read(fc, &apte, sizeof(apte));
+!<			printf(" %8x", apte.pg_pfnum);
+  		} else
+  			printf(" %8x", pp->p_swaddr);
+  		printf(" %4x", pp->p_rssize);
+  		printf(" %4x", pp->p_swrss);
+  		printf(" %5x", pp->p_dsize+pp->p_ssize);
+!<		printf(" %7x", clear(pp->p_wchan));
+!<		printf(" %7x", clear(pp->p_link));
+!<		printf(" %7x", clear(pp->p_textp));
+  		printf("\n");
+  	}
+-<	free(xproc);
+  }
+  
+  static char mesg[] =
+---------------
+  		printf(" %6d", pp->p_pgrp);
+  		printf(" %6d", pp->p_pid);
+  		printf(" %6d", pp->p_ppid);
+  		if (pp->p_flag & SLOAD) {
+!>			if (getkpte(pp->p_addr, UPAGES, uutl) == 1)
+!>				printf(" %8x",uutl[pcboffset/CLBYTES].pg_pfnum);
+!>			else
+!>				printf(" ????????");
+  		} else
+  			printf(" %8x", pp->p_swaddr);
+  		printf(" %4x", pp->p_rssize);
+  		printf(" %4x", pp->p_swrss);
+  		printf(" %5x", pp->p_dsize+pp->p_ssize);
+!>		printf(" %7x", (int)pp->p_wchan & 0x0fffffff);
+!>		printf(" %7x", (int)pp->p_link & 0x0fffffff);
+!>		printf(" %7x", (int)pp->p_textp & 0x0fffffff);
+  		printf("\n");
+  	}
+  }
+  
+  static char mesg[] =
+***************
+*** 464,470 ****
+--- 468,474 ----
+  	printf("1 cons\n");
+  	if (kflg)
+  		nl[SKL].n_value = clear(nl[SKL].n_value);
+!<	lseek(fc, (long)nl[SKL].n_value, 0);
+  	read(fc, tty, sizeof(*tty));
+  	printf(mesg);
+  	ttyprt(&tty[0], 0);
+---------------
+  	printf("1 cons\n");
+  	if (kflg)
+  		nl[SKL].n_value = clear(nl[SKL].n_value);
+!>	lseek(fc, mkphys((int)nl[SKL].n_value), 0);
+  	read(fc, tty, sizeof(*tty));
+  	printf(mesg);
+  	ttyprt(&tty[0], 0);
+***************
+*** 476,483 ****
+--- 480,487 ----
+  		dottytype("dmf", SDMF, SNDMF);
+  	if (nl[SNDHU].n_type != 0)
+  		dottytype("dhu", SDHU, SNDHU);
+!<	if (nl[SNDMZ].n_type != 0)
+!<		dottytype("dmz", SDMZ, SNDMZ);
+  	if (nl[SNPTY].n_type != 0)
+  		dottytype("pty", SPTY, SNPTY);
+  }
+---------------
+  		dottytype("dmf", SDMF, SNDMF);
+  	if (nl[SNDHU].n_type != 0)
+  		dottytype("dhu", SDHU, SNDHU);
+!>	if (nl[SNZS].n_type != 0)
+!>		dottytype("zs", SZS, SNZS);
+  	if (nl[SNPTY].n_type != 0)
+  		dottytype("pty", SPTY, SNPTY);
+  }
+***************
+*** 495,501 ****
+--- 499,505 ----
+  		nl[number].n_value = clear(nl[number].n_value);
+  		nl[type].n_value = clear(nl[type].n_value);
+  	}
+!<	lseek(fc, (long)nl[number].n_value, 0);
+  	read(fc, &ntty, sizeof(ntty));
+  	printf("%d %s lines\n", ntty, name);
+  	if (ntty > ttyspace) {
+---------------
+  		nl[number].n_value = clear(nl[number].n_value);
+  		nl[type].n_value = clear(nl[type].n_value);
+  	}
+!>	lseek(fc, mkphys((int)nl[number].n_value), 0);
+  	read(fc, &ntty, sizeof(ntty));
+  	printf("%d %s lines\n", ntty, name);
+  	if (ntty > ttyspace) {
+***************
+*** 505,511 ****
+--- 509,515 ----
+  			return;
+  		}
+  	}
+!<	lseek(fc, (long)nl[type].n_value, 0);
+  	read(fc, tty, ntty * sizeof(struct tty));
+  	printf(mesg);
+  	for (tp = tty; tp < &tty[ntty]; tp++)
+---------------
+  			return;
+  		}
+  	}
+!>	lseek(fc, mkphys((int)nl[type].n_value), 0);
+  	read(fc, tty, ntty * sizeof(struct tty));
+  	printf(mesg);
+  	for (tp = tty; tp < &tty[ntty]; tp++)
+***************
+*** 557,563 ****
+--- 561,567 ----
+  		break;
+  
+  	case NETLDISC:
+!<		printf(" berknet\n");
+  		break;
+  
+  	case TABLDISC:
+---------------
+  		break;
+  
+  	case NETLDISC:
+!>		printf(" net\n");
+  		break;
+  
+  	case TABLDISC:
+***************
+*** 564,583 ****
+--- 568,602 ----
+  		printf(" tab\n");
+  		break;
+  
+  	default:
+  		printf(" %d\n", tp->t_line);
+  	}
+  }
+  
+  dousr()
+  {
+!<	struct user U;
+  	register i, j, *ip;
+-<	register struct nameidata *nd = &U.u_nd;
+  
+-<	/* This wins only if CLBYTES >= sizeof (struct user) */
+  	lseek(fm, ubase * NBPG, 0);
+  	read(fm, &U, sizeof(U));
+  	printf("pcb");
+  	ip = (int *)&U.u_pcb;
+  	while (ip < &U.u_arg[0]) {
+---------------
+  		printf(" tab\n");
+  		break;
+  
++>	case NTABLDISC:
++>		printf(" ntab\n");
++>		break;
++>
+  	default:
+  		printf(" %d\n", tp->t_line);
+  	}
+  }
+  
++>/*
++> * ubase is the physical page number which contains the pcb of the
++> * u area.  It is assumed than pcb is on a page boundary if the user area
++> * is larger than CLBYTES.
++> */
+  dousr()
+  {
+!>#define	U user.user
+!>	struct ucred UC;
+  	register i, j, *ip;
+  
+  	lseek(fm, ubase * NBPG, 0);
++>	if (sizeof(U) > CLBYTES)
++>		read(fm, &U.u_pcb, sizeof(U) - pcboffset);
++>	else
+  		read(fm, &U, sizeof(U));
++>	if (kflg)
++>		clear(U.u_cred);
++>	lseek(fc, mkphys((int)U.u_cred), 0);
++>	read(fc, &UC, sizeof(UC));
+  	printf("pcb");
+  	ip = (int *)&U.u_pcb;
+  	while (ip < &U.u_arg[0]) {
+***************
+*** 589,634 ****
+--- 608,652 ----
+  	}
+  	if ((ip - (int *)&U.u_pcb) % 4 != 0)
+  		printf("\n");
+!<	printf("arg");
+!<	for (i=0; i<sizeof(U.u_arg)/sizeof(U.u_arg[0]); i++) {
+  		if (i%5==0)
+  			printf("\t");
+!<		printf(" %.1x", U.u_arg[i]);
+  		if (i%5==4)
+  			printf("\n");
+  	}
+  	if (i%5)
+  		printf("\n");
+!<	printf("segflg\t%d\nerror %d\n", nd->ni_segflg, U.u_error);
+!<	printf("uids\t%d,%d,%d,%d\n", U.u_uid,U.u_gid,U.u_ruid,U.u_rgid);
+  	printf("procp\t%.1x\n", U.u_procp);
+  	printf("ap\t%.1x\n", U.u_ap);
+  	printf("r_val?\t%.1x %.1x\n", U.u_r.r_val1, U.u_r.r_val2);
+!<	printf("base, count, offset %.1x %.1x %ld\n", nd->ni_base,
+!<		nd->ni_count, nd->ni_offset);
+  	printf("cdir rdir %.1x %.1x\n", U.u_cdir, U.u_rdir);
+-<	printf("dirp %.1x\n", nd->ni_dirp);
+-<	printf("dent %d %.14s\n", nd->ni_dent.d_ino, nd->ni_dent.d_name);
+-<	printf("pdir %.1o\n", nd->ni_pdir);
+  	printf("file");
+  	for (i=0; i<NOFILE; i++) {
+!<		if (i % 8 == 0)
+  			printf("\t");
+  		printf("%9.1x", U.u_ofile[i]);
+!<		if (i % 8 == 7)
+  			printf("\n");
+  	}
+-<	if (i % 8)
+  		printf("\n");
+  	printf("pofile");
+  	for (i=0; i<NOFILE; i++) {
+!<		if (i % 8 == 0)
+  			printf("\t");
+  		printf("%9.1x", U.u_pofile[i]);
+!<		if (i % 8 == 7)
+  			printf("\n");
+  	}
+-<	if (i % 8)
+  		printf("\n");
+  	printf("ssave");
+  	for (i=0; i<sizeof(label_t)/sizeof(int); i++) {
+---------------
+  	}
+  	if ((ip - (int *)&U.u_pcb) % 4 != 0)
+  		printf("\n");
+!>	printf("arg\t");
+!>	for (i=0; i<5; i++)
+!>		printf(" %.1x", U.u_arg[i]);
+!>	printf("\n");
+!>	for (i=0; i<sizeof(label_t)/sizeof(int); i++) {
+  		if (i%5==0)
+  			printf("\t");
+!>		printf("%9.1x", U.u_ssave.val[i]);
+  		if (i%5==4)
+  			printf("\n");
+  	}
+  	if (i%5)
+  		printf("\n");
+!>	printf("segflg\t%d\nerror %d\n", U.u_segflg, U.u_error);
+!>	printf("uids\t%d,%d,%d,%d\n", UC.cr_uid,UC.cr_gid,UC.cr_ruid,
+!>	    UC.cr_rgid);
+  	printf("procp\t%.1x\n", U.u_procp);
+  	printf("ap\t%.1x\n", U.u_ap);
+  	printf("r_val?\t%.1x %.1x\n", U.u_r.r_val1, U.u_r.r_val2);
+!>	printf("base, count, offset %.1x %.1x %ld\n", U.u_base,
+!>		U.u_count, U.u_offset);
+  	printf("cdir rdir %.1x %.1x\n", U.u_cdir, U.u_rdir);
+  	printf("file");
+  	for (i=0; i<NOFILE; i++) {
+!>		if (i%5==0)
+  			printf("\t");
+  		printf("%9.1x", U.u_ofile[i]);
+!>		if (i%5==4)
+  			printf("\n");
+  	}
+  	printf("\n");
+  	printf("pofile");
+  	for (i=0; i<NOFILE; i++) {
+!>		if (i%5==0)
+  			printf("\t");
+  		printf("%9.1x", U.u_pofile[i]);
+!>		if (i%5==4)
+  			printf("\n");
+  	}
+  	printf("\n");
+  	printf("ssave");
+  	for (i=0; i<sizeof(label_t)/sizeof(int); i++) {
+***************
+*** 642,654 ****
+--- 660,671 ----
+  		printf("\n");
+  	printf("sigs");
+  	for (i=0; i<NSIG; i++) {
+!<		if (i % 8 == 0)
+  			printf("\t");
+!<		printf("%.1x ", U.u_signal[i]);
+!<		if (i % 8 == 7)
+  			printf("\n");
+  	}
+-<	if (i % 8)
+  		printf("\n");
+  	printf("code\t%.1x\n", U.u_code);
+  	printf("ar0\t%.1x\n", U.u_ar0);
+---------------
+  		printf("\n");
+  	printf("sigs");
+  	for (i=0; i<NSIG; i++) {
+!>		if (i%5==0)
+  			printf("\t");
+!>		printf("%9.1x ", U.u_signal[i]);
+!>		if (i%5==4)
+  			printf("\n");
+  	}
+  	printf("\n");
+  	printf("code\t%.1x\n", U.u_code);
+  	printf("ar0\t%.1x\n", U.u_ar0);
+***************
+*** 657,663 ****
+--- 674,685 ----
+  	printf("\neosys\t%d\n", U.u_eosys);
+  	printf("ttyp\t%.1x\n", U.u_ttyp);
+  	printf("ttyd\t%d,%d\n", major(U.u_ttyd), minor(U.u_ttyd));
+!<	printf("comm %.14s\n", U.u_comm);
+  	printf("start\t%D\n", U.u_start);
+  	printf("acflag\t%D\n", U.u_acflag);
+  	printf("cmask\t%D\n", U.u_cmask);
+---------------
+  	printf("\neosys\t%d\n", U.u_eosys);
+  	printf("ttyp\t%.1x\n", U.u_ttyp);
+  	printf("ttyd\t%d,%d\n", major(U.u_ttyd), minor(U.u_ttyd));
+!>	printf("exdata\t");
+!>	ip = (int *)&U.u_exdata;
+!>	for (i = 0; i < 8; i++)
+!>		printf("%.1D ", *ip++);
+!>	printf("\n");
+!>	printf("comm\t%.14s\n", U.u_comm);
+  	printf("start\t%D\n", U.u_start);
+  	printf("acflag\t%D\n", U.u_acflag);
+  	printf("cmask\t%D\n", U.u_cmask);
+***************
+*** 672,689 ****
+--- 694,700 ----
+  	for (i = 0; i < sizeof(U.u_cru)/sizeof(int); i++)
+  		printf("%D ", ip[i]);
+  	printf("\n");
+-</*
+-<	i =  U.u_stack - &U;
+-<	while (U[++i] == 0);
+-<	i &= ~07;
+-<	while (i < 512) {
+-<		printf("%x ", 0140000+2*i);
+-<		for (j=0; j<8; j++)
+-<			printf("%9x", U[i++]);
+-<		printf("\n");
+  	}
+-<*/
+-<}
+  
+  oatoi(s)
+  char *s;
+---------------
+  
+  oatoi(s)
+  char *s;
+***************
+*** 709,724 ****
+--- 720,726 ----
+  	nfile = getw(nl[SNFILE].n_value);
+  	xfile = (struct file *)calloc(nfile, sizeof (struct file));
+  	afile = (struct file *)getw(nl[SFIL].n_value);
+!<	if (nfile < 0 || nfile > 10000) {
+!<		fprintf(stderr, "number of files is preposterous (%d)\n",
+!<			nfile);
+!<		return;
+!<	}
+!<	if (xfile == NULL) {
+!<		fprintf(stderr, "can't allocate memory for file table\n");
+!<		return;
+!<	}
+!<	lseek(fc, mkphys((off_t)afile), 0);
+  	read(fc, xfile, nfile * sizeof (struct file));
+  	for (fp=xfile; fp < &xfile[nfile]; fp++)
+  		if (fp->f_count)
+---------------
+  	nfile = getw(nl[SNFILE].n_value);
+  	xfile = (struct file *)calloc(nfile, sizeof (struct file));
+  	afile = (struct file *)getw(nl[SFIL].n_value);
+!>	lseek(fc, (mkphys((int)afile)), 0);
+  	read(fc, xfile, nfile * sizeof (struct file));
+  	for (fp=xfile; fp < &xfile[nfile]; fp++)
+  		if (fp->f_count)
+***************
+*** 729,734 ****
+--- 731,738 ----
+---------------
+  	}
+  	printf("%d/%d open files\n", nf, nfile);
+  	printf("   LOC   TYPE    FLG     CNT  MSG    DATA    OFFSET\n");
++>	if (kflg)
++>		afile = (struct file *)((int)afile + KERNELBASE);
+  	for (fp=xfile,loc=(int)afile; fp < &xfile[nfile]; fp++,loc+=sizeof(xfile[0])) {
+  		if (fp->f_count==0)
+  			continue;
+***************
+*** 751,759 ****
+--- 755,814 ----
+  		else
+  			printf("  %ld\n", fp->f_offset);
+  	}
+-<	free(xfile);
+  }
+  
+  int dmmin, dmmax, nswdev;
+  
+  doswap()
+---------------
+  		else
+  			printf("  %ld\n", fp->f_offset);
+  	}
+  }
+  
++>#ifdef sun
++>int	swap = -1;
++>char	*swapf = "/dev/drum";
++>
++>getu(p)
++>	struct proc *p;
++>{
++>	struct pte uutl[UPAGES];
++>	register int i;
++>	int ncl, size;
++>
++>	if (!kflg && swap < 0) {
++>		swap = open(swapf, 0);
++>		if (swap < 0) {
++>			perror(swapf);
++>			exit(1);
++>		}
++>	}
++>	size = roundup(sizeof (struct user), DEV_BSIZE);
++>	if ((p->p_flag & SLOAD) == 0) {
++>		if (swap < 0)
++>			return (0);
++>		(void) lseek(swap, (long)dtob(p->p_swaddr), 0);
++>		if (read(swap, (char *)&user.user, size) != size) {
++>			printf("pstat: can't read u for pid %d from %s\n",
++>			    p->p_pid, swapf);
++>			return (0);
++>		}
++>		return (1);
++>	}
++>	if (getkpte(p->p_addr, UPAGES, uutl) == 0)
++>		return (0);
++>	ncl = (size + CLBYTES - 1) / CLBYTES;
++>	while (--ncl >= 0) {
++>		i = ncl * CLSIZE;
++>		lseek(fm, (long)ctob(uutl[i].pg_pfnum), 0);
++>		if (read(fm, user.upages[i], CLBYTES) != CLBYTES) {
++>			printf("pstat: can't read page %d of u of pid %d from %s\n",
++>			    uutl[i].pg_pfnum, p->p_pid, fmem);
++>			return (0);
++>		}
++>	}
++>	return (1);
++>}
++>#else sun 
++>#ifdef vax 
++>        /* vax doesn't need this */ 
++>#else vax 
++>        put machine dependent code here 
++>#endif vax
++>#endif sun
++>
+  int dmmin, dmmax, nswdev;
+  
+  doswap()
+***************
+*** 770,813 ****
+--- 825,848 ----
+  	int db, sb;
+  	register struct mapent *me;
+  	register struct text *xp;
+!<	int i, j;
+  
+  	nproc = getw(nl[SNPROC].n_value);
+-<	ntext = getw(nl[SNTEXT].n_value);
+-<	if (nproc < 0 || nproc > 10000 || ntext < 0 || ntext > 10000) {
+-<		fprintf(stderr, "number of procs/texts is preposterous (%d, %d)\n",
+-<			nproc, ntext);
+-<		return;
+-<	}
+  	proc = (struct proc *)calloc(nproc, sizeof (struct proc));
+!<	if (proc == NULL) {
+!<		fprintf(stderr, "can't allocate memory for proc table\n");
+!<		exit(1);
+!<	}
+  	xtext = (struct text *)calloc(ntext, sizeof (struct text));
+-<	if (xtext == NULL) {
+-<		fprintf(stderr, "can't allocate memory for text table\n");
+-<		exit(1);
+-<	}
+  	nswapmap = getw(nl[SNSWAPMAP].n_value);
+  	swapmap = (struct map *)calloc(nswapmap, sizeof (struct map));
+-<	if (swapmap == NULL) {
+-<		fprintf(stderr, "can't allocate memory for swapmap\n");
+-<		exit(1);
+-<	}
+  	nswdev = getw(nl[SNSWDEV].n_value);
+  	swdevt = (struct swdevt *)calloc(nswdev, sizeof (struct swdevt));
+!<	if (swdevt == NULL) {
+!<		fprintf(stderr, "can't allocate memory for swdevt table\n");
+!<		exit(1);
+!<	}
+!<	lseek(fc, mkphys((off_t)nl[SSWDEVT].n_value), L_SET);
+  	read(fc, swdevt, nswdev * sizeof (struct swdevt));
+!<	lseek(fc, mkphys((off_t)getw(nl[SPROC].n_value)), 0);
+  	read(fc, proc, nproc * sizeof (struct proc));
+!<	lseek(fc, mkphys((off_t)getw(nl[STEXT].n_value)), 0);
+  	read(fc, xtext, ntext * sizeof (struct text));
+!<	lseek(fc, mkphys((off_t)getw(nl[SWAPMAP].n_value)), 0);
+  	read(fc, swapmap, nswapmap * sizeof (struct map));
+  	swapmap->m_name = "swap";
+  	swapmap->m_limit = (struct mapent *)&swapmap[nswapmap];
+---------------
+  	int db, sb;
+  	register struct mapent *me;
+  	register struct text *xp;
+!>	int i, j, block;
+!>	int dmap[NDMAP];
+  
+  	nproc = getw(nl[SNPROC].n_value);
+  	proc = (struct proc *)calloc(nproc, sizeof (struct proc));
+!>	ntext = getw(nl[SNTEXT].n_value);
+  	xtext = (struct text *)calloc(ntext, sizeof (struct text));
+  	nswapmap = getw(nl[SNSWAPMAP].n_value);
+  	swapmap = (struct map *)calloc(nswapmap, sizeof (struct map));
+  	nswdev = getw(nl[SNSWDEV].n_value);
+  	swdevt = (struct swdevt *)calloc(nswdev, sizeof (struct swdevt));
+!>	lseek(fc, mkphys((int)nl[SSWDEVT].n_value), 0);
+  	read(fc, swdevt, nswdev * sizeof (struct swdevt));
+!>	lseek(fc, mkphys((int)getw(nl[SPROC].n_value)), 0);
+  	read(fc, proc, nproc * sizeof (struct proc));
+!>	lseek(fc, mkphys(getw(nl[STEXT].n_value)), 0);
+  	read(fc, xtext, ntext * sizeof (struct text));
+!>	lseek(fc, mkphys(getw(nl[SWAPMAP].n_value)), 0);
+  	read(fc, swapmap, nswapmap * sizeof (struct map));
+  	swapmap->m_name = "swap";
+  	swapmap->m_limit = (struct mapent *)&swapmap[nswapmap];
+***************
+*** 815,822 ****
+--- 850,856 ----
+  	dmmax = getw(nl[SDMMAX].n_value);
+  	nswap = 0;
+  	for (sw = swdevt; sw < &swdevt[nswdev]; sw++)
+!<		if (sw->sw_freed)
+!<			nswap += sw->sw_nblks;
+  	free = 0;
+  	for (me = (struct mapent *)(swapmap+1);
+  	    me < (struct mapent *)&swapmap[nswapmap]; me++)
+---------------
+  	dmmax = getw(nl[SDMMAX].n_value);
+  	nswap = 0;
+  	for (sw = swdevt; sw < &swdevt[nswdev]; sw++)
+!>		nswap += sw->sw_nblks,
+  	free = 0;
+  	for (me = (struct mapent *)(swapmap+1);
+  	    me < (struct mapent *)&swapmap[nswapmap]; me++)
+***************
+*** 823,831 ****
+--- 857,865 ----
+  		free += me->m_size;
+  	tused = 0;
+  	for (xp = xtext; xp < &xtext[ntext]; xp++)
+!<		if (xp->x_iptr!=NULL) {
+  			tused += ctod(clrnd(xp->x_size));
+!<			if (xp->x_flag & XPAGI)
+  				tused += ctod(clrnd(ctopt(xp->x_size)));
+  		}
+  	used = tused;
+---------------
+  		free += me->m_size;
+  	tused = 0;
+  	for (xp = xtext; xp < &xtext[ntext]; xp++)
+!>		if (xp->x_vptr!=NULL) {
+  			tused += ctod(clrnd(xp->x_size));
+!>			if (xp->x_flag & XPAGV)
+  				tused += ctod(clrnd(ctopt(xp->x_size)));
+  		}
+  	used = tused;
+***************
+*** 843,849 ****
+--- 877,895 ----
+---------------
+  		waste += sb - db;
+  		if ((pp->p_flag&SLOAD) == 0)
+  			used += ctod(vusize(pp));
++>#ifdef sun
++>		if (getu(pp) && user.user.u_hole.uh_last) {
++>			used -= ctod(user.user.u_hole.uh_last -
++>			    user.user.u_hole.uh_first + 1);
+  		}
++>#else sun
++>#ifdef vax
++>        /* vax doesn't need this */
++>#else vax 
++>        put machine dependent code here
++>#endif vax
++>#endif sun
++>	}
+  	if (totflg) {
+  #define	btok(x)	((x) / (1024 / DEV_BSIZE))
+  		printf("%3d/%3d 00k swap\n",
+***************
+*** 854,865 ****
+--- 900,928 ----
+  	    btok(used), btok(tused), btok(free), btok(waste),
+  /* a dmmax/2 block goes to argmap */
+  	    btok(nswap - dmmax/2 - (used + free)));
+  	printf("avail: ");
+  	for (i = dmmax; i >= dmmin; i /= 2) {
+  		j = 0;
+  		while (rmalloc(swapmap, i) != 0)
+  			j++;
+!<		if (j) printf("%d*%dk ", j, btok(i));
+  	}
+  	free = 0;
+  	for (me = (struct mapent *)(swapmap+1);
+---------------
+  	    btok(used), btok(tused), btok(free), btok(waste),
+  /* a dmmax/2 block goes to argmap */
+  	    btok(nswap - dmmax/2 - (used + free)));
++>	block = dmmin;
++>	for (i=0, j=0; i<NDMAP; i++) {
++>		dmap[i] = rmalloc(swapmap, block);
++>		if (dmap[i] == 0)
++>			break;
++>		j += block;
++>		if (block < dmmax)
++>			block *= 2;
++>	}
++>	printf("max process allocable = %dk\n", btok(j));
++>	block = dmmin;
++>	for (j=0; j<i; j++) {
++>		rmfree(swapmap, block, dmap[j]);
++>		if (block < dmmax)
++>			block *= 2;
++>	}
+  	printf("avail: ");
+  	for (i = dmmax; i >= dmmin; i /= 2) {
+  		j = 0;
+  		while (rmalloc(swapmap, i) != 0)
+  			j++;
+!>		if (j)
+!>			printf("%d*%dk ", j, btok(i));
+  	}
+  	free = 0;
+  	for (me = (struct mapent *)(swapmap+1);
+***************
+*** 1075,1101 ****
+--- 1138,1190 ----
+  badrmfree:
+  	printf("bad rmfree\n");
+  }
+  /*
+   * "addr"  is a kern virt addr and does not correspond
+!< * To a phys addr after zipping out the high bit..
+!< * since it was valloc'd in the kernel.
+   *
+   * We return the phys addr by simulating kernel vm (/dev/kmem)
+   * when we are reading a crash dump.
+   */
+-<off_t
+  mkphys(addr)
+-<	off_t addr;
+  {
+!<	register off_t o;
+  
+  	if (!kflg)
+  		return(addr);
+  	o = addr & PGOFSET;
+  	addr >>= PGSHIFT;
+  	addr &= PG_PFNUM;
+  	addr *=  NBPW;
+!<	addr = getw(nl[SYSMAP].n_value + addr);
+  	addr = ((addr & PG_PFNUM) << PGSHIFT) | o;
+  	return(addr);
+  }
+---------------
+  badrmfree:
+  	printf("bad rmfree\n");
+  }
++>
+  /*
+   * "addr" is a kern virt addr and does not correspond
+!> * to a phys addr after subtracting off KERNELBASE
+!> * since it might have been valloc'd in the kernel.
+   *
+   * We return the phys addr by simulating kernel vm (/dev/kmem)
+   * when we are reading a crash dump.
+   */
+  mkphys(addr)
+  {
+!>	register o;
+  
+  	if (!kflg)
+  		return (addr);
+  	o = addr & PGOFSET;
++>	if (addr >= KERNELBASE)
++>		addr -= KERNELBASE;
+  	addr >>= PGSHIFT;
+  	addr &= PG_PFNUM;
+  	addr *= NBPW;
+!>	lseek(fc, clear(nl[SYSMAP].n_value + addr), 0);
+!>	read(fc, &addr, sizeof (addr));
+  	addr = ((addr & PG_PFNUM) << PGSHIFT) | o;
+  	return (addr);
++>}
++>
++>/*
++> * Get npte ptes from kernel address ptep into array kpte.
++> * XXX - ptes must not cross a kernel page boundary.
++> */
++>getkpte(ptep, npte, kpte)
++>	struct pte *ptep;
++>	int npte;
++>	struct pte kpte[];
++>{
++>	struct pte *pteaddr, apte;
++>
++>	pteaddr = &Usrptma[btokmx(ptep)];
++>	if (kflg)
++>		pteaddr = (struct pte *)clear(pteaddr);
++>	lseek(fc, (long)pteaddr, 0);
++>	if (read(fc, (char *)&apte, sizeof (apte)) != sizeof (apte))
++>		return (0);
++>	lseek(fm, (long)ctob(apte.pg_pfnum) + (((int)ptep)&PGOFSET), 0);
++>	if (read(fm, (char *)kpte, npte * sizeof (struct pte)) !=
++>	    npte * sizeof (struct pte))
++>		return (0);
++>	return (1);
+  }

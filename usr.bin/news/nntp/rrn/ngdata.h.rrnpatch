@@ -1,0 +1,20 @@
+***************
+*** 10,15
+  EXT bool writesoft INIT(FALSE);	/* rewrite the soft pointer file? */
+  EXT int softtries INIT(0), softmisses INIT(0);
+  
+  #ifdef CACHEFIRST
+      EXT ART_NUM abs1st[MAXRCLINE];	/* 1st real article in newsgroup */
+  #else
+
+--- 10,19 -----
+  EXT bool writesoft INIT(FALSE);	/* rewrite the soft pointer file? */
+  EXT int softtries INIT(0), softmisses INIT(0);
+  
++ #ifdef SERVER
++     EXT char active_name[];
++ #endif
++ 
+  #ifdef CACHEFIRST
+      EXT ART_NUM abs1st[MAXRCLINE];	/* 1st real article in newsgroup */
+  #else

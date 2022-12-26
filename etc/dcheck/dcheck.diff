@@ -1,0 +1,93 @@
+*** dcheck.c	Thu Nov  6 23:16:47 1986
+--- /usr/staff/tadl/nfs/usr.etc/dcheck.c	Sun May 18 18:58:15 1986
+***************
+*** 1,19 ****
+--- 1,7 ----
+-</*
+-< * Copyright (c) 1980 Regents of the University of California.
+-< * All rights reserved.  The Berkeley software License Agreement
+-< * specifies the terms and conditions for redistribution.
+-< */
+-<
+  #ifndef lint
+!<char copyright[] =
+!<"@(#) Copyright (c) 1980 Regents of the University of California.\n\
+!< All rights reserved.\n";
+!<#endif not lint
+!<
+!<#ifndef lint
+!<static char sccsid[] = "@(#)dcheck.c	5.1 (Berkeley) 6/6/85";
+!<#endif not lint
+!<
+  /*
+   * dcheck - check directory consistency
+   */
+---------------
+  #ifndef lint
+!>/* @(#)dcheck.c	2.1 86/04/17 NFSSRC */ 
+!>static	char *sccsid = "@(#)dcheck.c 1.1 86/02/05 SMI"; /* from UCB 2.4 */
+!>#endif
+  /*
+   * dcheck - check directory consistency
+   */
+***************
+*** 21,28 ****
+--- 9,18 ----
+  #define	MAXNINDIR	(MAXBSIZE / sizeof (daddr_t))
+  
+  #include <sys/param.h>
+!<#include <sys/inode.h>
+!<#include <sys/fs.h>
+  #include <sys/dir.h>
+  #include <stdio.h>
+  
+---------------
+  #define	MAXNINDIR	(MAXBSIZE / sizeof (daddr_t))
+  
+  #include <sys/param.h>
+!>#include <sys/time.h>
+!>#include <sys/vnode.h>
+!>#include <ufs/inode.h>
+!>#include <ufs/fs.h>
+  #include <sys/dir.h>
+  #include <stdio.h>
+  
+***************
+*** 65,78 ****
+--- 55,75 ----
+  		switch ((*argv)[1]) {
+  
+  		case 'i':
+!<			for(i=0; i<NB; i++) {
+  				n = atol(argv[1]);
+!<				if(n == 0)
+  					break;
+!<				ilist[i] = n;
+  				argv++;
+  				argc--;
+!<			}
+  			ilist[i] = 0;
+  			continue;
+  
+---------------
+  		switch ((*argv)[1]) {
+  
+  		case 'i':
+!>			i =0;
+!>			do {
+  				n = atol(argv[1]);
+!>				if (n < 2) {
+!>					if (argv[1][0] != '/') {
+!>			fprintf(stderr, "dcheck: %d not a valid inode\n", n);
+!>					} else {
+  						break;
+!>					}
+!>				} else {
+!>					ilist[i++] = n;
+!>				}
+  				argv++;
+  				argc--;
+!>			} while (i < NB);
+  			ilist[i] = 0;
+  			continue;
+  

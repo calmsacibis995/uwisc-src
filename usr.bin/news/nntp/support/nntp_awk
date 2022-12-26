@@ -1,0 +1,207 @@
+# an awk script 
+# an NNTP log summary report generator
+# NOTE: for systems that are not as yet using the new 4.3 BSD syslog
+# (and therefore have nntp messages lumped with everything else), it
+# would be best to invoke this script thusly:
+#
+#	egrep nntp syslog.old | awk -f nntp_awk > report_of_the_week
+#
+# because this script will include in the report all messages in the log
+# that it does not recognize (on the assumption that they are errors to
+# be dealt with by a human).
+#
+# Erik E. Fair <fair@ucbarpa.berkeley.edu>
+# May 17, 1986 - Norwegian Independence Day
+BEGIN{
+	readers = 0;
+	transfers = 0;
+}
+$7 == "group" {
+	readers = 1;
+	ng[$8]++;
+	next;
+}
+$7 == "ihave" {
+	transfers = 1;
+	rec[$6]++;
+	if ($9 == "accepted") {
+		rec_accept[$6]++;
+		if ($10 == "failed") rec_failed[$6]++;
+	} else if ($9 == "rejected") rec_refuse[$6]++;
+	next;
+}
+$7 == "connect" {
+	systems[$6]++;
+	next;
+}
+$7 == "exit" {
+	if ($8 > 0) readers = 1;
+	articles[$6] += $8;
+	groups[$6] += $10;
+	next;
+}
+$7 == "xmit" {
+	xmt_cpu[$6] += $9 + $11;
+	xmt_ela[$6] += $13;
+	next;
+}
+$7 == "times" {
+	cpu[$6] += $9 + $11;
+	ela[$6] += $13;
+	next;
+}
+$7 == "stats" {
+	transfers = 1;
+	xmt[$6] += $8;
+	xmt_accept[$6] += $10;
+	xmt_refuse[$6] += $12;
+	xmt_failed[$6] += $14;
+	next;
+}
+$7 == "post" {
+	readers = 1;
+	post[$6]++;
+	next;
+}
+### Print anything that we don't recognize in the report
+{
+	print;
+}
+END{
+	printf("\n");
+###############################################################################
+### Article Exchange With Peers (other servers) Statistics                  ###
+###############################################################################
+	if (transfers) {
+		for(s in rec) servers[s]++;
+		for(s in xmt) servers[s]++;
+
+		printf("NNTP peer article transfers\n\n");
+		printf("Article Reception (they contact us)\n");
+		printf("System               Rec'd  Took  Toss  Fail  Pct Elapsed    CPU  Pct\n");
+		for(s in servers) {
+
+			nrec += rec[s];
+			nrec_accept += rec_accept[s];
+			nrec_refuse += rec_refuse[s];
+			nrec_failed += rec_failed[s];
+			nrec_cpu += cpu[s];
+			nrec_ela += ela[s];
+
+			they_offered = rec[s];
+			if (they_offered == 0) they_offered = 1;
+			we_toss = (rec_refuse[s] / they_offered) * 100 + 0.5;
+
+			if (ela[s] == 0) ela[s] = 1;
+			pct = ((cpu[s] / ela[s]) * 100.0 + 0.5);
+
+			printf("%-20s %5d %5d %5d %5d %3d%% %7d %6d %3d%%\n", s, rec[s], rec_accept[s], rec_refuse[s], rec_failed[s], we_toss, ela[s], cpu[s], pct);
+		}
+
+		they_offered = nrec;
+		if (they_offered == 0) they_offered = 1;
+		we_toss = (nrec_refuse / they_offered) * 100 + 0.5;
+
+		if (nrec_ela == 0) nrec_ela = 1;
+		pct = ((nrec_cpu / nrec_ela) * 100.0 + 0.5);
+
+		printf("\n%-20s %5d %5d %5d %5d %3d%% %7d %6d %3d%%\n\n", "TOTALS", nrec, nrec_accept, nrec_refuse, nrec_failed, we_toss, nrec_ela, nrec_cpu, pct);
+
+###############################################################################
+		printf("Article Transmission (we contact them)\n");
+		printf("System                Sent  Took  Toss  Fail  Pct Elapsed    CPU  Pct\n");
+		for(s in servers) {
+
+			nxmt += xmt[s];
+			nxmt_accept += xmt_accept[s];
+			nxmt_refuse += xmt_refuse[s];
+			nxmt_failed += xmt_failed[s];
+			nxmt_ela += xmt_ela[s];
+			nxmt_cpu += xmt_cpu[s];
+
+			we_offered = xmt[s];
+			if (we_offered == 0) we_offered = 1;
+			they_toss = (xmt_refuse[s] / we_offered) * 100 + 0.5;
+
+			elapsed = xmt_ela[s];
+			if (elapsed == 0) elapsed = 1;
+			pct = ((xmt_cpu[s] / elapsed) * 100.0 + 0.5);
+
+			printf("%-20s %5d %5d %5d %5d %3d%% %7d %6d %3d%%\n", s, xmt[s], xmt_accept[s], xmt_refuse[s], xmt_failed[s], they_toss, xmt_ela[s], xmt_cpu[s], pct);
+		}
+
+		we_offered = nxmt;
+		if (we_offered == 0) we_offered = 1;
+		they_toss = (nxmt_refuse / we_offered) * 100 + 0.5;
+
+		if (nxmt_ela == 0) nxmt_ela = 1;
+		pct = ((nxmt_cpu / nxmt_ela) * 100.0 + 0.5);
+
+		printf("\n%-20s %5d %5d %5d %5d %3d%% %7d %6d %3d%%\n\n", "TOTALS", nxmt, nxmt_accept, nxmt_refuse, nxmt_failed, they_toss, nxmt_ela, nxmt_cpu, pct);
+	}
+
+###############################################################################
+### Article Readership Statistics                                           ###
+###############################################################################
+
+	if (readers) {
+		printf("NNTP readership statistics\n");
+		printf("System                Conn Articles Groups Post  Elapsed  E/A   CPU  Pct\n");
+		for(s in systems) {
+###
+### servers are different animals; they don't belong in this part of the report
+###
+			if (servers[s] > 0 && groups[s] == 0 && articles[s] == 0)
+				continue;
+###
+### report the curious server pokers elsewhere
+###
+			if (groups[s] == 0 && articles[s] == 0 && post[s] == 0) {
+				unknown[s]++;
+				curious = 1;
+				continue;
+			}
+
+			nconn += systems[s];
+			nart += articles[s];
+			ngrp += groups[s];
+			npost += post[s];
+			ncpu += cpu[s];
+			nela += ela[s];
+
+			elapsed = ela[s];
+			if (elapsed == 0) elapsed = 1;
+			pct = ((cpu[s] / elapsed) * 100 + 0.5);
+
+			atot = articles[s];
+			if (atot == 0) atot = 1;
+
+			printf("%-20s %5d %8d %6d %4d %8d %4d %5d %3d%%\n", s, systems[s], articles[s], groups[s], post[s], ela[s], elapsed / atot, cpu[s], pct);
+		}
+
+		if (nela == 0) nela = 1;
+		pct = ((ncpu / nela) * 100 + 0.5);
+		
+		atot = nart;
+		if (atot == 0) atot = 1;
+
+		printf("\n%-20s %5d %8d %6d %4d %8d %4d %5d %3d%%\n\n", "TOTALS", nconn, nart, ngrp, npost, nela, nela / atot, ncpu, pct);
+
+###############################################################################
+		if (curious) {
+			printf("Unknown NNTP server explorers\nSystem                Conn\n");
+			for(s in unknown) {
+				printf("%-20s %5d\n", s, unknown[s]);
+			}
+			printf("\n");
+		}
+###############################################################################
+		printf("Newsgroup Request Counts\n");
+		for(g in ng) {
+			x = length(g);
+			if (x > max) max = x;
+		}
+		fmt = sprintf("%%-%ds %%5d\n", max);
+		for(g in ng) printf(fmt, g, ng[g]);
+	}
+}

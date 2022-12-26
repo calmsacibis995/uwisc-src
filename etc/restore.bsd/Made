@@ -1,0 +1,9 @@
+cc -O -c main.c
+cc -O -c interactive.c
+cc -O -c restore.c
+cc -O -c dirs.c
+cc -O -c symtab.c
+cc -O -c utilities.c
+cc -O -c opendir.c
+cc  -O -o restore main.o interactive.o restore.o dirs.o symtab.o utilities.o  opendir.o  tape.o
+cc  -o rrestore main.o interactive.o restore.o dirs.o symtab.o utilities.o  opendir.o  rtape.o dumprmt.o

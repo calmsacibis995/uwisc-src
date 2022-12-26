@@ -1,0 +1,44 @@
+cd src/f77; make 
+cc -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM -DUCBPASS2  -O -I../../include -c f77.c
+Loading f77 ... done
+cd src/f77pass1; make 
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c bb.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c conv.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c data.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c equiv.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c error.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c exec.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c expr.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c fmt.c
+( sed <tokdefs.h "s/#define/%token/" ; cat gram.head gram.dcl gram.expr gram.exec gram.io ) >gram.in
+yacc  gram.in
+
+conflicts: 4 shift/reduce
+(expect 4 shift/reduce)
+mv y.tab.c gram.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c gram.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c init.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c intr.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c io.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c lex.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c main.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c misc.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c optcse.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c optim.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c optloop.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c paramset.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c proc.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c put.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c putpcc.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c regalloc.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c setfmt.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c stab.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c vax.c
+cc -O -DHERE=VAX -DTARGET=VAX -DFAMILY=PCC -DUCBVAXASM  -DUCBPASS2 -DNAMELIST -I../../include -c vaxx.c
+Loading f77pass1 ... done
+cd src/fpr; make 
+cc -O -c fpr.c
+Loading fpr ... done
+cd src/fsplit; make 
+cc -O -c fsplit.c
+Loading fsplit ... done

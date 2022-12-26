@@ -1,0 +1,75 @@
+ALLOC	fsck.h	/^#define	ALLOC(/
+DIRCT	fsck.h	/^#define	DIRCT(/
+Mmain	main.c	/^main(/
+SPECIAL	fsck.h	/^#define	SPECIAL(/
+adjust	dir.c	/^adjust(/
+allocblk	utilities.c	/^allocblk(/
+allocdir	dir.c	/^allocdir(/
+allocino	inode.c	/^allocino(/
+badsb	setup.c	/^badsb(/
+blkerr	inode.c	/^blkerr(/
+blockcheck	main.c	/^blockcheck(/
+bread	utilities.c	/^bread(/
+bwrite	utilities.c	/^bwrite(/
+catch	utilities.c	/^catch(/
+catchquit	utilities.c	/^catchquit(/
+cgdirty	fsck.h	/^#define	cgdirty(/
+checkfilesys	main.c	/^checkfilesys(/
+chgino	dir.c	/^chgino(/
+ckfini	utilities.c	/^ckfini(/
+ckinode	inode.c	/^ckinode(/
+clrbmap	fsck.h	/^#define	clrbmap(/
+clri	inode.c	/^clri(/
+descend	dir.c	/^descend(/
+dircheck	dir.c	/^dircheck(/
+direrr	dir.c	/^direrr(/
+dirscan	dir.c	/^dirscan(/
+dirty	fsck.h	/^#define	dirty(/
+dofix	utilities.c	/^dofix(/
+errexit	utilities.c	/^errexit(/
+expanddir	dir.c	/^expanddir(/
+findino	inode.c	/^findino(/
+findname	inode.c	/^findname(/
+flush	utilities.c	/^flush(/
+freeblk	utilities.c	/^freeblk(/
+freedir	dir.c	/^freedir(/
+freeino	inode.c	/^freeino(/
+fsck_readdir	dir.c	/^fsck_readdir(/
+ftypeok	utilities.c	/^ftypeok(/
+getblk	utilities.c	/^getblk(/
+getbmap	fsck.h	/^#define	getbmap(/
+getline	utilities.c	/^getline(/
+getpathname	utilities.c	/^getpathname(/
+ginode	inode.c	/^ginode(/
+iblock	inode.c	/^iblock(/
+initbarea	fsck.h	/^#define	initbarea(/
+inodirty	fsck.h	/^#define	inodirty(/
+lftempname	dir.c	/^lftempname(/
+linkup	dir.c	/^linkup(/
+makeentry	dir.c	/^makeentry(/
+mkentry	dir.c	/^mkentry(/
+outrange	inode.c	/^outrange(/
+panic	utilities.c	/^panic(/
+pass1	pass1.c	/^pass1(/
+pass1b	pass1b.c	/^pass1b(/
+pass1bcheck	pass1b.c	/^pass1bcheck(/
+pass1check	pass1.c	/^pass1check(/
+pass2	pass2.c	/^pass2(/
+pass2check	pass2.c	/^pass2check(/
+pass3	pass3.c	/^pass3(/
+pass4	pass4.c	/^pass4(/
+pass4check	pass4.c	/^pass4check(/
+pass5	pass5.c	/^pass5(/
+pfatal	utilities.c	/^pfatal(/
+pinode	inode.c	/^pinode(/
+pwarn	utilities.c	/^pwarn(/
+rawname	main.c	/^rawname(/
+reply	utilities.c	/^reply(/
+rwerr	utilities.c	/^rwerr(/
+sbdirty	fsck.h	/^#define	sbdirty(/
+setbmap	fsck.h	/^#define	setbmap(/
+setup	setup.c	/^setup(/
+signal	main.c	/^int	(/
+unrawname	main.c	/^unrawname(/
+voidquit	utilities.c	/^voidquit(/
+zapino	fsck.h	/^#define	zapino(/
